@@ -16,13 +16,13 @@ Aplicación móvil nativa en **Kotlin** con **Android Studio** para el sistema d
 
 ## 📋 Requisitos
 
-| Herramienta | Versión |
-|-------------|---------|
+| Herramienta | Versión                     |
+|-------------|-----------------------------|
 | Android Studio | Otter (2025.2.1) o superior |
-| Kotlin | 1.9+ |
-| Gradle | 8.0+ |
-| Android SDK | API 30+ (mínimo) |
-| Java | 21+ |
+| Kotlin | 1.9+                        |
+| Gradle | 8.0+                        |
+| Android SDK | API 24+ (mínimo)            |
+| Java | 21+                         |
 
 ---
 
@@ -111,7 +111,7 @@ api.login(email, password).enqueue(object : Callback<LoginResponse> {
 
 - Usar **Logcat** en Android Studio para ver logs
 - Probar endpoints con **Postman** primero (antes de Android)
-- Usar emulador con API 30+
+- Usar emulador con API 24+
 
 ---
 
