@@ -23,4 +23,10 @@ interface ApiService {
 
     @GET(Constants.ENDPOINT_AULAS)
     suspend fun obtenerAula(@Path("id") id: Int): Response<Aula>
+
+    @GET("reservas/usuario/mis-reservas")
+    suspend fun obtenerMisReservas(@Header("Authorization") token: String): Response<List<Reserva>>
+
+    @GET("incidencias")
+    suspend fun obtenerIncidencias(): Response<List<Incidencia>>
 }

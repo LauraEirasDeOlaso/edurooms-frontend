@@ -18,7 +18,7 @@
         <activity
             android:name=".ui.activities.LoginActivity"
             android:exported="true"
-            android:label="@string/app_name"
+            android:label="Login"
             android:theme="@style/Theme.EduRooms"
             tools:ignore="Instantiatable">
             <intent-filter>
@@ -30,11 +30,34 @@
 
         <!-- MainActivity (menú principal) -->
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.activities.MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
+            android:label="Menu"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
 
+        <activity
+            android:name=".ui.activities.ListaAulasActivity"
+            android:exported="true"
+            android:label="Aulas"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
+
+        <activity
+            android:name=".ui.activities.DetalleAulaActivity"
+            android:exported="true"
+            android:label="Detalle Aula"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
+
+        <activity
+            android:name=".ui.activities.ReservaActivity"
+            android:exported="true"
+            android:label="Nueva Reserva"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
+
+        <activity
+            android:name=".ui.activities.IncidenciasActivity"
+            android:exported="true"
+            android:label="Incidencias"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
     </application>
 
 </manifest>

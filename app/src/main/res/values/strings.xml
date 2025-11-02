@@ -5,4 +5,23 @@
     <string name="contrasena">Contraseña</string>
     <string name="iniciar_sesion">Iniciar Sesión</string>
     <string name="registrarse">Registrarse</string>
+    <string name="ver_aulas_disponibles">🏫 Ver Aulas Disponibles</string>
+    <string name="mis_reservas">🗓️ Mis Reservas</string>
+    <string name="reportar_incidencia">⚠️ Reportar Incidencia</string>
+    <string name="cerrar_sesi_n">Cerrar Sesión</string>
+    <string name="aulas_disponibles">Aulas Disponibles</string>
+    <string name="detalle_del_aula">Detalle del Aula</string>
+    <string name="reservar_aula">📅 Reservar Aula</string>
+    <string name="crear_reserva">Crear Reserva</string>
+    <string name="fecha_yyyy_mm_dd">Fecha (YYYY-MM-DD)</string>
+    <string name="_2025_11_15">2025-11-15</string>
+    <string name="hora_inicio_hh_mm">Hora Inicio (HH:MM)</string>
+    <string name="hora_fin_hh_mm">Hora Fin (HH:MM)</string>
+    <string name="confirmar_reserva">Confirmar Reserva</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="incidencias">Incidencias</string>
+    <string name="reportar_nueva_incidencia">Reportar Nueva Incidencia</string>
+    <string name="descripci_n_del_problema">Descripción del problema</string>
+    <string name="tipo_electrica_informatica_etc">Tipo (electrica, informatica, etc)</string>
+    <string name="incidencias_registradas">Incidencias Registradas</string>
 </resources>

@@ -7,12 +7,12 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.edurooms.app.MainActivity
 import com.edurooms.app.R
 import com.edurooms.app.data.models.LoginRequest
 import com.edurooms.app.data.network.RetrofitClient
 import com.edurooms.app.data.utils.TokenManager
 import kotlinx.coroutines.launch
+import  com.edurooms.app.ui.activities.MainActivity
 
 class LoginActivity : AppCompatActivity() {
 
