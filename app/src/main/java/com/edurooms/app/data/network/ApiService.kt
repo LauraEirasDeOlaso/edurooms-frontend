@@ -31,7 +31,7 @@ interface ApiService {
     suspend fun crearReserva(
         @Header("Authorization") token: String,
         @Body request: CrearReservaRequest
-    ): Response<Reserva>
+    ): Response<CrearReservaResponse>
 
     @GET(Constants.ENDPOINT_INCIDENCIAS)
     suspend fun obtenerIncidencias(): Response<List<Incidencia>>

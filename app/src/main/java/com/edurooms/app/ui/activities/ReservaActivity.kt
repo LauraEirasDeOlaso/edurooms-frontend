@@ -41,7 +41,7 @@ class ReservaActivity : AppCompatActivity() {
         val year = cal.get(java.util.Calendar.YEAR)
         val mes = String.format("%02d", cal.get(java.util.Calendar.MONTH) + 1)
         val dia = String.format("%02d", cal.get(java.util.Calendar.DAY_OF_MONTH))
-        val hoy = "$dia-$mes-$year"
+        val hoy = "$year-$mes-$dia"
         fechaInput.setText(hoy)
 
         // Click listeners
@@ -70,22 +70,32 @@ class ReservaActivity : AppCompatActivity() {
         // Crear reserva en el backend
         lifecycleScope.launch {
             try {
+                android.util.Log.d("RESERVA", "1. Inicio crearReserva")
+
                 val tokenManager = com.edurooms.app.data.utils.TokenManager(this@ReservaActivity)
                 val token = tokenManager.obtenerToken()
+                android.util.Log.d("RESERVA", "2. Token: ${token?.substring(0, 20)}...")
 
                 if (token == null) {
                     Toast.makeText(this@ReservaActivity, "❌ No hay sesión", Toast.LENGTH_SHORT).show()
                     return@launch
                 }
 
+                android.util.Log.d("RESERVA", "3. Creando request")
+
                 val requestBody = CrearReservaRequest(
+                    usuario_id = 1,
                     aula_id = aulaId,
                     fecha = fecha,
                     hora_inicio = horaInicio,
                     hora_fin = horaFin
                 )
 
+                android.util.Log.d("RESERVA", "4. Enviando: $requestBody")
+
                 val response = com.edurooms.app.data.network.RetrofitClient.apiService.crearReserva("Bearer $token", requestBody)
+
+                android.util.Log.d("RESERVA", "5. Response: ${response.code()}")
 
                 if (response.isSuccessful) {
                     Toast.makeText(this@ReservaActivity, "✅ Reserva creada", Toast.LENGTH_SHORT).show()
@@ -95,6 +105,7 @@ class ReservaActivity : AppCompatActivity() {
                 }
 
             } catch (e: Exception) {
+                android.util.Log.e("RESERVA", "Exception: ${e.message}", e)
                 Toast.makeText(this@ReservaActivity, "❌ Error: ${e.message}", Toast.LENGTH_SHORT).show()
             }
         }
