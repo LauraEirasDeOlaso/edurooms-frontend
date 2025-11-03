@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.edurooms.app.R
 import com.edurooms.app.data.models.CrearReservaRequest
+import com.google.gson.JsonParser
 import kotlinx.coroutines.launch
 
 
@@ -101,7 +102,18 @@ class ReservaActivity : AppCompatActivity() {
                     Toast.makeText(this@ReservaActivity, "✅ Reserva creada", Toast.LENGTH_SHORT).show()
                     finish()
                 } else {
-                    Toast.makeText(this@ReservaActivity, "❌ Error: ${response.code()}", Toast.LENGTH_SHORT).show()
+                    try {
+                        val errorBody = response.errorBody()?.string()
+                        val errorMessage = if (errorBody != null) {
+                            val jsonObject = JsonParser.parseString(errorBody).asJsonObject
+                            jsonObject.get("mensaje")?.asString ?: "Error desconocido"
+                        } else {
+                            "Error ${response.code()}"
+                        }
+                        Toast.makeText(this@ReservaActivity, "❌ $errorMessage", Toast.LENGTH_SHORT).show()
+                    } catch (e: Exception) {
+                        Toast.makeText(this@ReservaActivity, "❌ Error: ${response.code()}", Toast.LENGTH_SHORT).show()
+                    }
                 }
 
             } catch (e: Exception) {
