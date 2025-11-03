@@ -6,5 +6,7 @@ data class Aula(
     val capacidad: Int,
     val ubicacion: String,
     val codigo_qr: String,
-    val estado: String
+    val estado: String,
+    val created_at: String,
+    val update_at: String
 )

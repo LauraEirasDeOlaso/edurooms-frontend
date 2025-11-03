@@ -8,8 +8,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.edurooms.app.R
+import com.edurooms.app.data.models.CrearIncidenciaRequest
 import com.edurooms.app.data.models.Incidencia
 import com.edurooms.app.data.network.RetrofitClient
+import com.edurooms.app.data.utils.TokenManager
 import com.edurooms.app.ui.adapters.IncidenciasAdapter
 import kotlinx.coroutines.launch
 
@@ -21,9 +23,13 @@ class IncidenciasActivity : AppCompatActivity() {
     private lateinit var reportarButton: Button
     private var incidenciasLista: MutableList<Incidencia> = mutableListOf()
 
+    private var aulaIdRecibido: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_incidencias)
+
+        aulaIdRecibido = intent.getIntExtra("aula_id", 0)
 
         // Vincular vistas
         incidenciasListView = findViewById(R.id.incidenciasListView)
@@ -43,16 +49,19 @@ class IncidenciasActivity : AppCompatActivity() {
             try {
                 val response = RetrofitClient.apiService.obtenerIncidencias()
 
-                if (response.isSuccessful && response.body() != null) {
-                    incidenciasLista = response.body()!!.toMutableList()
-
-                    val adapter = IncidenciasAdapter(this@IncidenciasActivity, incidenciasLista)
-                    incidenciasListView.adapter = adapter
+                if (response.isSuccessful) {
+                    if (response.body() != null) {
+                        incidenciasLista = response.body()!!.toMutableList()
+                        val adapter = IncidenciasAdapter(this@IncidenciasActivity, incidenciasLista)
+                        incidenciasListView.adapter = adapter
+                    } else {
+                        Toast.makeText(this@IncidenciasActivity, "Sin incidencias", Toast.LENGTH_SHORT).show()
+                    }
                 } else {
-                    Toast.makeText(this@IncidenciasActivity, "Error al cargar incidencias", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@IncidenciasActivity, "Error: ${response.code()}", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
-                Toast.makeText(this@IncidenciasActivity, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@IncidenciasActivity, "Exception: ${e.message}", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -66,17 +75,52 @@ class IncidenciasActivity : AppCompatActivity() {
             return
         }
 
+        // como en back
+        if (descripcion.length < 10) {
+            Toast.makeText(this, "La descripción debe tener al menos 10 caracteres", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // AGREGAR ESTA VALIDACIÓN
+        val tiposValidos = listOf("electrica", "informatica", "estructural", "limpieza", "otro")
+        if (!tiposValidos.contains(tipo.lowercase())) {
+            Toast.makeText(this, "Tipo debe ser: electrica, informatica, estructural, limpieza, otro", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         lifecycleScope.launch {
             try {
-                // TODO: Enviar al backend
-                Toast.makeText(this@IncidenciasActivity, "✅ Incidencia reportada", Toast.LENGTH_SHORT).show()
+                // Obtener token
+                val tokenManager = TokenManager(this@IncidenciasActivity)
+                val token = tokenManager.obtenerToken()
 
-                // Limpiar campos
-                descripcionInput.setText("")
-                tipoInput.setText("")
+                if (token == null) {
+                    Toast.makeText(this@IncidenciasActivity, "❌ No hay sesión activa", Toast.LENGTH_SHORT).show()
+                    return@launch
+                }
 
-                // Recargar lista
-                cargarIncidencias()
+                // Crear request
+                val requestBody = CrearIncidenciaRequest(
+                    aula_id = if (aulaIdRecibido != 0) aulaIdRecibido else 1,
+                    descripcion = descripcion,
+                    tipo = tipo
+                )
+
+                // REALMENTE ENVIAR al backend
+                val response = RetrofitClient.apiService.crearIncidencia("Bearer $token", requestBody)
+
+                if (response.isSuccessful) {
+                    Toast.makeText(this@IncidenciasActivity, "✅ Incidencia reportada", Toast.LENGTH_SHORT).show()
+
+                    // Limpiar campos
+                    descripcionInput.setText("")
+                    tipoInput.setText("")
+
+                    // Recargar lista
+                    cargarIncidencias()
+                } else {
+                    Toast.makeText(this@IncidenciasActivity, "❌ Error: ${response.code()}", Toast.LENGTH_SHORT).show()
+                }
 
             } catch (e: Exception) {
                 Toast.makeText(this@IncidenciasActivity, "❌ Error: ${e.message}", Toast.LENGTH_SHORT).show()

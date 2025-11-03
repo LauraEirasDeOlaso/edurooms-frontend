@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.edurooms.app.R
+import com.edurooms.app.data.models.CrearReservaRequest
 import kotlinx.coroutines.launch
 
 
@@ -69,17 +70,29 @@ class ReservaActivity : AppCompatActivity() {
         // Crear reserva en el backend
         lifecycleScope.launch {
             try {
-                val requestBody = mapOf(
-                    "usuario_id" to 1,  // TODO: Obtener del token
-                    "aula_id" to aulaId,
-                    "fecha" to fecha,
-                    "hora_inicio" to horaInicio,
-                    "hora_fin" to horaFin
+                val tokenManager = com.edurooms.app.data.utils.TokenManager(this@ReservaActivity)
+                val token = tokenManager.obtenerToken()
+
+                if (token == null) {
+                    Toast.makeText(this@ReservaActivity, "❌ No hay sesión", Toast.LENGTH_SHORT).show()
+                    return@launch
+                }
+
+                val requestBody = CrearReservaRequest(
+                    aula_id = aulaId,
+                    fecha = fecha,
+                    hora_inicio = horaInicio,
+                    hora_fin = horaFin
                 )
 
-                // Hacer petición POST manual (sin endpoint específico en la interfaz)
-                Toast.makeText(this@ReservaActivity, "✅ Reserva creada", Toast.LENGTH_SHORT).show()
-                finish()
+                val response = com.edurooms.app.data.network.RetrofitClient.apiService.crearReserva("Bearer $token", requestBody)
+
+                if (response.isSuccessful) {
+                    Toast.makeText(this@ReservaActivity, "✅ Reserva creada", Toast.LENGTH_SHORT).show()
+                    finish()
+                } else {
+                    Toast.makeText(this@ReservaActivity, "❌ Error: ${response.code()}", Toast.LENGTH_SHORT).show()
+                }
 
             } catch (e: Exception) {
                 Toast.makeText(this@ReservaActivity, "❌ Error: ${e.message}", Toast.LENGTH_SHORT).show()

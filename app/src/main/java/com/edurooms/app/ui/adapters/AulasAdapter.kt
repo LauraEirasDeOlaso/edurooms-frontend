@@ -1,38 +1,42 @@
 package com.edurooms.app.ui.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.edurooms.app.R
 import com.edurooms.app.data.models.Aula
+import android.widget.TextView
 
 class AulasAdapter(
-    private val mContext: Context,
     private val aulas: List<Aula>,
     private val onAulaClick: (Aula) -> Unit
-) : ArrayAdapter<Aula>(mContext, 0, aulas) {
+) : RecyclerView.Adapter<AulasAdapter.AulaViewHolder>() {
 
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val view = convertView ?: LayoutInflater.from(mContext)
-            .inflate(R.layout.item_aula, parent, false)
+    inner class AulaViewHolder(itemView: android.view.View) : RecyclerView.ViewHolder(itemView) {
+        private val nombreText: TextView = itemView.findViewById(R.id.nombreText)
+        private val capacidadText: TextView = itemView.findViewById(R.id.capacidadText)
+        private val estadoText: TextView = itemView.findViewById(R.id.estadoText)
 
-        val aula = aulas[position]
+        fun bind(aula: Aula) {
+            nombreText.text = aula.nombre
+            capacidadText.text = "Capacidad: ${aula.capacidad}"
+            estadoText.text = "Estado: ${aula.estado}"
 
-        val nombreText: TextView = view.findViewById(R.id.nombreText)
-        val capacidadText: TextView = view.findViewById(R.id.capacidadText)
-        val estadoText: TextView = view.findViewById(R.id.estadoText)
-
-        nombreText.text = aula.nombre
-        capacidadText.text = "Capacidad: ${aula.capacidad}"
-        estadoText.text = "Estado: ${aula.estado}"
-
-        view.setOnClickListener {
-            onAulaClick(aula)
+            itemView.setOnClickListener {
+                onAulaClick(aula)
+            }
         }
-
-        return view
     }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AulaViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_aula, parent, false)
+        return AulaViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: AulaViewHolder, position: Int) {
+        holder.bind(aulas[position])
+    }
+
+    override fun getItemCount() = aulas.size
 }

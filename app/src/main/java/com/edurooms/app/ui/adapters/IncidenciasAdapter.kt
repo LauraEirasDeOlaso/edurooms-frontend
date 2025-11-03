@@ -24,9 +24,9 @@ class IncidenciasAdapter(
         val descripcionText: TextView = view.findViewById(R.id.descripcionText)
         val estadoText: TextView = view.findViewById(R.id.estadoText)
 
-        aulaText.text = "Aula: ${incidencia.aula_nombre}"
-        descripcionText.text = incidencia.descripcion
-        estadoText.text = "Estado: ${incidencia.estado}"
+        aulaText.text = "Aula: ${incidencia.aula_nombre ?: "Sin nombre"}"
+        descripcionText.text = incidencia.descripcion ?: "Sin descripción"
+        estadoText.text = "Estado: ${incidencia.estado ?: "pendiente"}"
 
         return view
     }

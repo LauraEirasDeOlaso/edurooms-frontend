@@ -57,4 +57,18 @@
         android:text="@string/reportar_incidencia"
         android:textSize="16sp" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/incidencias_activas"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp" />
+
+    <ListView
+        android:id="@+id/incidenciasListView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
+
 </LinearLayout>

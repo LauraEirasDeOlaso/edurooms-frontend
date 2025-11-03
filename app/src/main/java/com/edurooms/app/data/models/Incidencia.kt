@@ -7,6 +7,8 @@ data class Incidencia(
     val descripcion: String,
     val tipo: String,
     val estado: String,
-    val aula_nombre: String,
-    val usuario_nombre: String
+    val aula_nombre: String? = null,
+    val usuario_nombre: String? = null,
+    val created_at: String? = null,
+    val updated_at: String? = null
 )

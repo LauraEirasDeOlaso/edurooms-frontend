@@ -24,4 +24,17 @@
     <string name="descripci_n_del_problema">Descripción del problema</string>
     <string name="tipo_electrica_informatica_etc">Tipo (electrica, informatica, etc)</string>
     <string name="incidencias_registradas">Incidencias Registradas</string>
+    <string name="crear_cuenta">Crear Cuenta</string>
+    <string name="ya_tengo_cuenta">Ya tengo cuenta</string>
+    <string name="selecciona_tu_rol">Selecciona tu rol:</string>
+    <string name="confirmar_contrase_a">Confirmar Contraseña</string>
+    <string name="crear_aula">➕ Crear Aula</string>
+    <string name="eliminar_aula">🗑️ Eliminar Aula</string>
+    <string name="gestionar_usuarios">👥 Gestionar Usuarios</string>
+    <string name="incidencias_activas">Incidencias Activas</string>
+
+    <string-array name="roles_array">
+        <item>profesor</item>
+        <item>administrador</item>
+    </string-array>
 </resources>

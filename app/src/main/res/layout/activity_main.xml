@@ -20,6 +20,8 @@
         android:textSize="18sp"
         android:layout_marginBottom="30dp" />
 
+    <!-- BOTONES PARA PROFESOR Y ADMIN -->
+
     <Button
         android:id="@+id/verAulasButton"
         android:layout_width="match_parent"
@@ -44,6 +46,35 @@
         android:textSize="16sp"
         android:layout_marginBottom="30dp" />
 
+    <!-- BOTONES SOLO PARA ADMIN (ocultos por defecto) -->
+    <Button
+        android:id="@+id/crearAulaButton"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="@string/crear_aula"
+        android:textSize="16sp"
+        android:layout_marginBottom="15dp"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/eliminarAulaButton"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="@string/eliminar_aula"
+        android:textSize="16sp"
+        android:layout_marginBottom="15dp"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/gestionarUsuariosButton"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="@string/gestionar_usuarios"
+        android:textSize="16sp"
+        android:layout_marginBottom="30dp"
+        android:visibility="gone" />
+
+    <!-- BOTÓN CERRAR SESIÓN (para todos) -->
     <Button
         android:id="@+id/cerrarSesionButton"
         android:layout_width="match_parent"

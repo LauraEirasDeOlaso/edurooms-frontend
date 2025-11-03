@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:gravity="center">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/crear_cuenta"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="30dp" />
+
+    <EditText
+        android:id="@+id/nombreInput"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="Nombre Completo"
+        android:inputType="text"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/rounded_edittext" />
+
+    <EditText
+        android:id="@+id/emailInput"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/rounded_edittext" />
+
+    <EditText
+        android:id="@+id/passwordInput"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="Contraseña"
+        android:inputType="textPassword"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/rounded_edittext" />
+
+    <EditText
+        android:id="@+id/confirmarPasswordInput"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="@string/confirmar_contrase_a"
+        android:inputType="textPassword"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/rounded_edittext" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/selecciona_tu_rol"
+        android:textSize="14sp"
+        android:layout_marginBottom="10dp" />
+
+    <Spinner
+        android:id="@+id/rolSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="20dp"
+        android:entries="@array/roles_array" />
+
+    <Button
+        android:id="@+id/crearCuentaButton"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="@string/crear_cuenta"
+        android:textSize="16sp"
+        android:layout_marginBottom="10dp" />
+
+    <Button
+        android:id="@+id/irALoginButton"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="@string/ya_tengo_cuenta"
+        android:textSize="16sp" />
+
+</LinearLayout>

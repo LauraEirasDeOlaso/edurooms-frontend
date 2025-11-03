@@ -58,6 +58,11 @@
             android:exported="true"
             android:label="Incidencias"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
-    </application>
 
+        <activity
+            android:name=".ui.activities.RegisterActivity"
+            android:exported="true"
+            android:label="Registrarse"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
+    </application>
 </manifest>

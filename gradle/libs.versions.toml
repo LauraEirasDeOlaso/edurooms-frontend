@@ -15,6 +15,7 @@ gson = "2.13.2"
 coroutines = "1.10.2"
 lifecycle = "2.9.4"
 security-crypto = "1.1.0"
+recyclerview = "1.4.0"
 
 
 [libraries]
@@ -52,6 +53,7 @@ lifecycle-livedata = { group = "androidx.lifecycle", name = "lifecycle-livedata-
 
 # Security
 security-crypto = { group = "androidx.security", name = "security-crypto", version.ref = "security-crypto" }
+androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

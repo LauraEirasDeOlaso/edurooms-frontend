@@ -3,7 +3,7 @@ package com.edurooms.app.data.utils
 object Constants {
 
     // Base URL del backend
-    const val BASE_URL = "http://172.27.224.1:3000/api/"  // Para emulador
+    const val BASE_URL = "http://10.0.2.2:3000/api/"  // Para emulador
     // Dispositivo físico: "http://TU_IP_LOCAL:3000/api/"
 
     // Endpoints
@@ -11,6 +11,7 @@ object Constants {
     const val ENDPOINT_REGISTRO = "auth/registro"
     const val ENDPOINT_PERFIL = "auth/perfil"
     const val ENDPOINT_AULAS = "aulas"
+    const val ENDPOINT_AULA_DETALLE = "aulas/{id}"
     const val ENDPOINT_RESERVAS = "reservas"
     const val ENDPOINT_INCIDENCIAS = "incidencias"
 

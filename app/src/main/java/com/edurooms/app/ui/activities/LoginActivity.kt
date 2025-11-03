@@ -41,7 +41,14 @@ class LoginActivity : AppCompatActivity() {
         loginButton = findViewById(R.id.loginButton)
         registerButton = findViewById(R.id.registerButton)
 
-        // Click listeners
+        // Ir al login con los datos precargados:
+        // Obtener datos del Intent (si vienen del registro)
+        val emailDelRegistro = intent.getStringExtra("email") ?: ""
+        if (emailDelRegistro.isNotEmpty()) {
+            emailInput.setText(emailDelRegistro)
+        }
+
+            // Click listeners
         loginButton.setOnClickListener { realizarLogin() }
         registerButton.setOnClickListener { irARegistro() }
     }
@@ -65,8 +72,15 @@ class LoginActivity : AppCompatActivity() {
                 if (response.isSuccessful && response.body() != null) {
                     val loginResponse = response.body()!!
 
+                    android.util.Log.d("LOGIN", "Respuesta completa: $loginResponse")
+                    android.util.Log.d("LOGIN", "Usuario: ${loginResponse.usuario}")
+                    android.util.Log.d("LOGIN", "Rol recibido: ${loginResponse.usuario.rol}")
+
                     // Guardar token
                     tokenManager.guardarToken(loginResponse.token)
+
+                    // AGREGAR ESTO - Guardar rol
+                    tokenManager.guardarRol(loginResponse.usuario.rol)
 
                     // Mensaje de éxito
                     Toast.makeText(this@LoginActivity, "✅ Login exitoso", Toast.LENGTH_SHORT).show()
@@ -77,6 +91,7 @@ class LoginActivity : AppCompatActivity() {
                     Toast.makeText(this@LoginActivity, "❌ Credenciales inválidas", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
+                android.util.Log.e("LOGIN", "Exception: ${e.message}", e)
                 Toast.makeText(this@LoginActivity, "❌ Error: ${e.message}", Toast.LENGTH_SHORT).show()
             }
         }
@@ -88,7 +103,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun irARegistro() {
-        // TODO: Crear RegisterActivity
-        Toast.makeText(this, "Registro aún no disponible", Toast.LENGTH_SHORT).show()
+        startActivity(Intent(this, RegisterActivity::class.java))
+       // Toast.makeText(this, "Registro aún no disponible", Toast.LENGTH_SHORT).show()
     }
 }

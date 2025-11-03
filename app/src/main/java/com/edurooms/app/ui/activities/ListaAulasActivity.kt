@@ -1,12 +1,12 @@
 package com.edurooms.app.ui.activities
 
-
 import android.content.Intent
 import android.os.Bundle
-import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.edurooms.app.R
 import com.edurooms.app.data.models.Aula
 import com.edurooms.app.data.network.RetrofitClient
@@ -15,15 +15,18 @@ import kotlinx.coroutines.launch
 
 class ListaAulasActivity : AppCompatActivity() {
 
-    private lateinit var aulasListView: ListView
-    private var aulasLista: MutableList<Aula> = mutableListOf()
+    private lateinit var aulasListView: RecyclerView
+    private var aulasOriginales: List<Aula> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista_aulas)
 
+        // Vincular vista
         aulasListView = findViewById(R.id.aulasListView)
+        aulasListView.layoutManager = LinearLayoutManager(this)
 
+        // Cargar aulas
         cargarAulas()
     }
 
@@ -33,12 +36,8 @@ class ListaAulasActivity : AppCompatActivity() {
                 val response = RetrofitClient.apiService.obtenerAulas()
 
                 if (response.isSuccessful && response.body() != null) {
-                    aulasLista = response.body()!!.toMutableList()
-
-                    val adapter = AulasAdapter(this@ListaAulasActivity, aulasLista) { aula ->
-                        irAlDetalle(aula)
-                    }
-                    aulasListView.adapter = adapter
+                    aulasOriginales = response.body()!!
+                    mostrarAulas(aulasOriginales)
                 } else {
                     Toast.makeText(this@ListaAulasActivity, "Error al cargar aulas", Toast.LENGTH_SHORT).show()
                 }
@@ -48,13 +47,16 @@ class ListaAulasActivity : AppCompatActivity() {
         }
     }
 
-    private fun irAlDetalle(aula: Aula) {
-        val intent = Intent(this@ListaAulasActivity, DetalleAulaActivity::class.java)
-        intent.putExtra("aula_id", aula.id)
-        intent.putExtra("aula_nombre", aula.nombre)
-        intent.putExtra("aula_capacidad", aula.capacidad)
-        intent.putExtra("aula_ubicacion", aula.ubicacion)
-        intent.putExtra("aula_estado", aula.estado)
+    private fun mostrarAulas(aulas: List<Aula>) {
+        val adapter = AulasAdapter(aulas) { aula ->
+            irADetalleAula(aula.id)
+        }
+        aulasListView.adapter = adapter
+    }
+
+    private fun irADetalleAula(aulaId: Int) {
+        val intent = Intent(this, DetalleAulaActivity::class.java)
+        intent.putExtra("aula_id", aulaId)
         startActivity(intent)
     }
 }
