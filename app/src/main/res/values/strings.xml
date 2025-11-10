@@ -32,6 +32,9 @@
     <string name="eliminar_aula">🗑️ Eliminar Aula</string>
     <string name="gestionar_usuarios">👥 Gestionar Usuarios</string>
     <string name="incidencias_activas">Incidencias Activas</string>
+    <string name="inicio">Inicio</string>
+    <string name="aulas">Aulas</string>
+    <string name="perfil">Perfil</string>
 
     <string-array name="roles_array">
         <item>profesor</item>
