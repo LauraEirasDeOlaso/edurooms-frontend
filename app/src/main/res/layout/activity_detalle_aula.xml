@@ -1,74 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="20dp">
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/detalle_del_aula"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="20dp" />
-
-    <TextView
-        android:id="@+id/nombreText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="15dp" />
-
-    <TextView
-        android:id="@+id/capacidadText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:layout_marginBottom="10dp" />
-
-    <TextView
-        android:id="@+id/ubicacionText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:layout_marginBottom="10dp" />
-
-    <TextView
-        android:id="@+id/estadoText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:layout_marginBottom="30dp" />
-
-    <Button
-        android:id="@+id/reservarButton"
+    <!-- Contenido principal (scrolleable) -->
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="@string/reservar_aula"
-        android:textSize="16sp"
-        android:layout_marginBottom="15dp" />
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-    <Button
-        android:id="@+id/incidenciaButton"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="@string/reportar_incidencia"
-        android:textSize="16sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/incidencias_activas"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="10dp" />
+            <!-- Título -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/detalle_del_aula"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="20dp"
+                android:textColor="@color/primary" />
 
-    <ListView
-        android:id="@+id/incidenciasListView"
-        android:layout_width="match_parent"
-        android:layout_height="200dp" />
+            <!-- Nombre aula -->
+            <TextView
+                android:id="@+id/nombreText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="15dp"
+                android:textColor="@color/text_dark" />
+
+            <!-- Capacidad -->
+            <TextView
+                android:id="@+id/capacidadText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/text_light" />
+
+            <!-- Ubicación -->
+            <TextView
+                android:id="@+id/ubicacionText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/text_light" />
+
+            <!-- Estado -->
+            <TextView
+                android:id="@+id/estadoText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:layout_marginBottom="30dp"
+                android:textColor="@color/text_light" />
+
+            <!-- Botón Reservar -->
+            <Button
+                android:id="@+id/reservarButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="@string/reservar_aula"
+                android:textSize="16sp"
+                android:layout_marginBottom="15dp"
+                android:backgroundTint="@color/primary" />
+
+            <!-- Botón Reportar Incidencia -->
+            <Button
+                android:id="@+id/incidenciaButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="@string/reportar_incidencia"
+                android:textSize="16sp"
+                android:layout_marginBottom="30dp"
+                android:backgroundTint="@color/secondary" />
+
+            <!-- Título Incidencias -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/incidencias_activas"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/primary" />
+
+            <!-- Lista Incidencias -->
+            <ListView
+                android:id="@+id/incidenciasListView"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <include layout="@layout/layout_bottom_nav" />
 
 </LinearLayout>

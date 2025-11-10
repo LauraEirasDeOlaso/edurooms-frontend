@@ -35,6 +35,7 @@ class MainActivity : BaseActivity() {
 
         // Configurar Bottom Navigation desde BaseActivity
         setupBottomNavigation()
+        seleccionarItemBottomNav(R.id.nav_home)
 
         tokenManager = TokenManager(this)
 
