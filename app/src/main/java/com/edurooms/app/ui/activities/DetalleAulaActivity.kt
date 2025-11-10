@@ -12,7 +12,7 @@ import com.edurooms.app.R
 import com.edurooms.app.data.network.RetrofitClient
 import kotlinx.coroutines.launch
 
-class DetalleAulaActivity : AppCompatActivity() {
+class DetalleAulaActivity : BaseActivity() {
 
     private lateinit var nombreText: TextView
     private lateinit var capacidadText: TextView
@@ -31,6 +31,9 @@ class DetalleAulaActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_detalle_aula)
         android.util.Log.d("DETALLE", "Layout seteado")
+
+        setupBottomNavigation()
+        seleccionarItemBottomNav(R.id.nav_aulas)
 
         // Obtener aula_id del Intent
         aulaId = intent.getIntExtra("aula_id", 0)

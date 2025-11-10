@@ -80,4 +80,8 @@ open class BaseActivity : AppCompatActivity() {
             }
         }
     }
+    // Método para marcar cuál icono está activo según la Activity
+    protected fun seleccionarItemBottomNav(itemId: Int) {
+        bottomNavigation.selectedItemId = itemId
+    }
 }
