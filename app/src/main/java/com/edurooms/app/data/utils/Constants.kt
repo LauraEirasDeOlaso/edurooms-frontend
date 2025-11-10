@@ -12,6 +12,7 @@ object Constants {
     const val ENDPOINT_PERFIL = "auth/perfil"
     const val ENDPOINT_AULAS = "aulas"
     const val ENDPOINT_AULA_DETALLE = "aulas/{id}"
+
     const val ENDPOINT_RESERVAS = "reservas"
     const val ENDPOINT_INCIDENCIAS = "incidencias"
 

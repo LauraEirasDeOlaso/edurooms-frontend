@@ -9,8 +9,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.edurooms.app.R
 import com.edurooms.app.data.utils.TokenManager
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class MainActivity : AppCompatActivity() {
+// MainActivity hereda de BaseActivity para tener Bottom Navigation centralizado
+class MainActivity : BaseActivity() {
 
     private lateinit var tokenManager: TokenManager
     private lateinit var welcomeText: TextView
@@ -25,9 +27,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var gestionarUsuariosButton: Button
     private lateinit var cerrarSesionButton: Button
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // Configurar Bottom Navigation desde BaseActivity
+        setupBottomNavigation()
 
         tokenManager = TokenManager(this)
 
@@ -46,12 +53,14 @@ class MainActivity : AppCompatActivity() {
         eliminarAulaButton = findViewById(R.id.eliminarAulaButton)
         gestionarUsuariosButton = findViewById(R.id.gestionarUsuariosButton)
         cerrarSesionButton = findViewById(R.id.cerrarSesionButton)
+        bottomNavigation = findViewById(R.id.bottom_navigation)
 
         // Mostrar menú según rol
         mostrarMenuSegunRol()
 
         // Mostrar bienvenida
         welcomeText.text = "Bienvenido a EduRooms"
+
 
         // Click listeners
         verAulasButton.setOnClickListener {
@@ -107,4 +116,5 @@ class MainActivity : AppCompatActivity() {
             gestionarUsuariosButton.visibility = View.GONE
         }
     }
+
 }

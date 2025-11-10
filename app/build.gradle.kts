@@ -1,6 +1,10 @@
 @file:Suppress("DEPRECATION")
 
 
+
+
+
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -66,6 +70,7 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
     implementation(libs.androidx.appcompat)
+    implementation(libs.material)
 
      // Retrofit y Networking
     implementation(libs.retrofit)
