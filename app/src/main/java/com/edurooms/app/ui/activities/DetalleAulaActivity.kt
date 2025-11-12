@@ -33,7 +33,8 @@ class DetalleAulaActivity : BaseActivity() {
         android.util.Log.d("DETALLE", "Layout seteado")
 
         setupBottomNavigation()
-        seleccionarItemBottomNav(R.id.nav_aulas)
+        // NO llamar a :
+        //seleccionarItemBottomNav(R.id.nav_aulas)
 
         // Obtener aula_id del Intent
         aulaId = intent.getIntExtra("aula_id", 0)

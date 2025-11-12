@@ -28,7 +28,7 @@ class ReservaActivity : BaseActivity() {
 
         // Configurar Bottom Navigation
         setupBottomNavigation()
-        seleccionarItemBottomNav(R.id.nav_reservas)
+        //seleccionarItemBottomNav(R.id.nav_reservas)
 
         // Obtener aula_id del Intent
         aulaId = intent.getIntExtra("aula_id", 0)
