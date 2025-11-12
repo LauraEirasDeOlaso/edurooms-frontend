@@ -2,65 +2,88 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="15dp">
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/incidencias"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="20dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/reportar_nueva_incidencia"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="10dp" />
-
-    <EditText
-        android:id="@+id/descripcionInput"
+    <!-- Contenido scrolleable -->
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:hint="@string/descripci_n_del_problema"
-        android:inputType="textMultiLine"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/rounded_edittext" />
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-    <EditText
-        android:id="@+id/tipoInput"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:hint="@string/tipo_electrica_informatica_etc"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/rounded_edittext" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="15dp">
 
-    <Button
-        android:id="@+id/reportarButton"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="@string/reportar_incidencia"
-        android:textSize="14sp"
-        android:layout_marginBottom="20dp" />
+            <!-- Título -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/incidencias"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="20dp"
+                android:textColor="@color/primary" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/incidencias_registradas"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="10dp" />
+            <!-- Reportar nueva -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/reportar_nueva_incidencia"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp" />
 
-    <ListView
-        android:id="@+id/incidenciasListView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+            <EditText
+                android:id="@+id/descripcionInput"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:hint="@string/descripci_n_del_problema"
+                android:inputType="textMultiLine"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/rounded_edittext" />
+
+            <EditText
+                android:id="@+id/tipoInput"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="@string/tipo_electrica_informatica_etc"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/rounded_edittext" />
+
+            <Button
+                android:id="@+id/reportarButton"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="@string/reportar_incidencia"
+                android:textSize="14sp"
+                android:layout_marginBottom="20dp"
+                android:backgroundTint="@color/primary" />
+
+            <!-- Incidencias registradas -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/incidencias_registradas"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/primary" />
+
+            <ListView
+                android:id="@+id/incidenciasListView"
+                android:layout_width="match_parent"
+                android:layout_height="300dp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Bottom Navigation -->
+    <include layout="@layout/layout_bottom_nav" />
 
 </LinearLayout>

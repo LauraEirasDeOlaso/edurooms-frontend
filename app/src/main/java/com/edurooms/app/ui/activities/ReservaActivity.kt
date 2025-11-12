@@ -12,7 +12,7 @@ import com.google.gson.JsonParser
 import kotlinx.coroutines.launch
 
 
-class ReservaActivity : AppCompatActivity() {
+class ReservaActivity : BaseActivity() {
 
     private lateinit var fechaInput: EditText
     private lateinit var horaInicioInput: EditText
@@ -25,6 +25,10 @@ class ReservaActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reserva)
+
+        // Configurar Bottom Navigation
+        setupBottomNavigation()
+        seleccionarItemBottomNav(R.id.nav_reservas)
 
         // Obtener aula_id del Intent
         aulaId = intent.getIntExtra("aula_id", 0)

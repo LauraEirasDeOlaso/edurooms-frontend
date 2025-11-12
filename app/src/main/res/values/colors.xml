@@ -8,4 +8,40 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="red_500">#F44336</color>
+
+    <!-- Paleta - Indigo + Esmeralda -->
+    <color name="primary">#4F46E5</color>
+    <color name="primary_light">#818CF8</color>
+    <color name="primary_dark">#3730A3</color>
+
+    <color name="secondary">#059669</color>
+    <color name="secondary_light">#6EE7B7</color>
+    <color name="secondary_dark">#047857</color>
+
+    <color name="accent">#DC2626</color>
+    <color name="accent_light">#FCA5A5</color>
+
+    <color name="success">#059669</color>
+    <color name="warning">#F59E0B</color>
+    <color name="error">#DC2626</color>
+    <color name="error_light">#FEE2E2</color>
+
+    <!-- Neutrales -->
+    <color name="background">#F8FAFC</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="light_gray">#F1F5F9</color>
+    <color name="medium_gray">#CBD5E1</color>
+    <color name="dark_gray">#64748B</color>
+    <color name="text_dark">#1E293B</color>
+    <color name="text_light">#475569</color>
+
+    <!-- Calendario -->
+    <color name="calendar_available">#059669</color>
+    <color name="calendar_full">#DC2626</color>
+    <color name="calendar_disabled_bg">#F1F5F9</color>
+
+    <!-- Horarios -->
+    <color name="horario_libre">#ECFDF5</color>
+    <color name="horario_ocupado">#FEF2F2</color>
+    <color name="horario_ocupado_text">#7F1D1D</color>
 </resources>

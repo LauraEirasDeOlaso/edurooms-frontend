@@ -15,7 +15,7 @@ import com.edurooms.app.data.utils.TokenManager
 import com.edurooms.app.ui.adapters.IncidenciasAdapter
 import kotlinx.coroutines.launch
 
-class IncidenciasActivity : AppCompatActivity() {
+class IncidenciasActivity : BaseActivity() {
 
     private lateinit var incidenciasListView: ListView
     private lateinit var descripcionInput: EditText
@@ -28,6 +28,10 @@ class IncidenciasActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_incidencias)
+
+        // Configurar Bottom Navigation
+        setupBottomNavigation()
+        seleccionarItemBottomNav(R.id.nav_incidencias)
 
         aulaIdRecibido = intent.getIntExtra("aula_id", 0)
 

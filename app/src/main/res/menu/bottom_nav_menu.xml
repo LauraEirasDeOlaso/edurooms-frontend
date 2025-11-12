@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/baseline_home_24"
+        android:title="Inicio" />
+
+    <item
+        android:id="@+id/nav_aulas"
+        android:icon="@drawable/baseline_school_24"
+        android:title="Aulas" />
+
+    <item
+        android:id="@+id/nav_reservas"
+        android:icon="@drawable/outline_calendar_month_24"
+        android:title="Reservas" />
+
+    <item
+        android:id="@+id/nav_incidencias"
+        android:icon="@drawable/baseline_warning_amber_24"
+        android:title="Incidencias" />
+
+    <item
+        android:id="@+id/nav_perfil"
+        android:icon="@drawable/baseline_person_24"
+        android:title="Perfil" />
+</menu>

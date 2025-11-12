@@ -18,7 +18,7 @@
         <activity
             android:name=".ui.activities.LoginActivity"
             android:exported="true"
-            android:label="Login"
+            android:label="@string/app_name"
             android:theme="@style/Theme.EduRooms"
             tools:ignore="Instantiatable">
             <intent-filter>

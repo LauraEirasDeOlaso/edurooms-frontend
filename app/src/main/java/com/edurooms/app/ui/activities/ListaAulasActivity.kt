@@ -13,7 +13,8 @@ import com.edurooms.app.data.network.RetrofitClient
 import com.edurooms.app.ui.adapters.AulasAdapter
 import kotlinx.coroutines.launch
 
-class ListaAulasActivity : AppCompatActivity() {
+// ListaAulasActivity hereda de BaseActivity para tener Bottom Navigation
+class ListaAulasActivity : BaseActivity() {
 
     private lateinit var aulasListView: RecyclerView
     private var aulasOriginales: List<Aula> = emptyList()
@@ -21,6 +22,10 @@ class ListaAulasActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista_aulas)
+
+        // Configurar Bottom Navigation desde BaseActivity
+        setupBottomNavigation()
+        seleccionarItemBottomNav(R.id.nav_aulas)
 
         // Vincular vista
         aulasListView = findViewById(R.id.aulasListView)
