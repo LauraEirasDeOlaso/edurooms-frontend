@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.EduRooms" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="Theme.EduRooms" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
-        <item name="colorAccent">@color/secondary</item>
+        <item name="colorAccent">@color/primary</item>
         <item name="android:windowBackground">@color/background</item>
+
+        <!-- Barra de estado con color gris oscuro por defecto del sistema -->
+        <item name="android:statusBarColor">@color/primary</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:fitsSystemWindows">true</item>
     </style>
 </resources>

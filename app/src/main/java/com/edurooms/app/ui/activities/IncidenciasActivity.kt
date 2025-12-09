@@ -5,7 +5,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ListView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.edurooms.app.R
 import com.edurooms.app.data.models.CrearIncidenciaRequest
@@ -28,6 +27,13 @@ class IncidenciasActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_incidencias)
+
+        setupToolbar(title = "Reportar Incidencia", showBackButton = true)
+        mostrarIconosToolbar(notificaciones = true, perfil = true)
+        configurarIconosToolbar(
+            onNotificacionesClick = { Toast.makeText(this, "Notificaciones", Toast.LENGTH_SHORT).show() },
+            onPerfilClick = { startActivity(android.content.Intent(this, PerfilActivity::class.java)) }
+        )
 
         // Configurar Bottom Navigation
         setupBottomNavigation()

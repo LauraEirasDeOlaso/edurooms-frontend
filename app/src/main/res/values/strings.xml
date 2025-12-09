@@ -35,6 +35,13 @@
     <string name="inicio">Inicio</string>
     <string name="aulas">Aulas</string>
     <string name="perfil">Perfil</string>
+    <string name="olvidaste_tu_contrase_a">¿Olvidaste tu contraseña?</string>
+    <string name="recuperar_contraseña">Recuperar contraseña</string>
+    <string name="recuperar_contraseña_instrucciones">Ingresa tu email para recuperar tu contraseña. Te enviaremos instrucciones a tu correo.</string>
+    <string name="enviar_instrucciones">ENVIAR INSTRUCCIONES</string>
+    <string name="volver_al_login">← Volver al login</string>
+    <string name="recuerdame">Recuérdame</string>
+    <string name="requisitos_minimo_8_caracteres_al_menos_1_mayuscula_al_menos_1_minuscula_al_menos_1_numero_al_menos_1_caracter_especial"><![CDATA[Requisitos:\n• Minimo 8 caracteres\n• Al menos 1 mayuscula\n• Al menos 1 minuscula\n• Al menos 1 numero\n• Al menos 1 caracter especial (@, #, $, %, !,  &amp;, *)]]></string>
 
     <string-array name="roles_array">
         <item>profesor</item>

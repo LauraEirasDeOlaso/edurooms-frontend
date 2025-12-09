@@ -32,6 +32,23 @@ interface ApiService {
         @Body request: CrearReservaRequest
     ): Response<CrearReservaResponse>
 
+    @GET("reservas/{id}")
+    suspend fun obtenerReservaPorId(
+        @Path("id") id: Int
+    ): Response<Reserva>
+
+    @DELETE("reservas/{id}")
+    suspend fun cancelarReserva(
+        @Header("Authorization") token: String,
+        @Path("id") id: Int
+    ): Response<Map<String, String>>
+
+    @GET("reservas/disponibilidad")
+    suspend fun obtenerHorariosDisponibles(
+        @Query("aula_id") aulaId: Int,
+        @Query("fecha") fecha: String
+    ): Response<DisponibilidadResponse>
+
     @GET(Constants.ENDPOINT_INCIDENCIAS)
     suspend fun obtenerIncidencias(): Response<List<Incidencia>>
 

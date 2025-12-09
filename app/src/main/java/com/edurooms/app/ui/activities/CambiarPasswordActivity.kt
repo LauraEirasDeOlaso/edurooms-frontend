@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.text.TextWatcher
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -14,6 +15,7 @@ import com.edurooms.app.R
 import com.edurooms.app.data.utils.TokenManager
 import com.edurooms.app.data.network.RetrofitClient
 import kotlinx.coroutines.launch
+
 
 class CambiarPasswordActivity : BaseActivity() {
 
@@ -55,12 +57,23 @@ class CambiarPasswordActivity : BaseActivity() {
         passwordConfirmarInput = findViewById(R.id.passwordConfirmarInput)
         guardarPasswordButton = findViewById(R.id.guardarPasswordButton)
 
+
         // Vincular TextViews de requisitos
         req_minimo8 = findViewById(R.id.req_minimo8)
         req_mayuscula = findViewById(R.id.req_mayuscula)
         req_minuscula = findViewById(R.id.req_minuscula)
         req_numero = findViewById(R.id.req_numero)
         req_especial = findViewById(R.id.req_especial)
+
+        // Vincular ImageView toggles
+        val passwordActualToggle = findViewById<ImageView>(R.id.passwordActualToggle)
+        val passwordNuevaToggle = findViewById<ImageView>(R.id.passwordNuevaToggle)
+        val passwordConfirmarToggle = findViewById<ImageView>(R.id.passwordConfirmarToggle)
+
+        // Configurar toggles
+        configurarPasswordToggle(passwordActualToggle, passwordActualInput)
+        configurarPasswordToggle(passwordNuevaToggle, passwordNuevaInput)
+        configurarPasswordToggle(passwordConfirmarToggle, passwordConfirmarInput)
 
         // Detectar si es primera vez o cambio normal
         esPrimeraVez = intent.getBooleanExtra("es_primera_vez", false)

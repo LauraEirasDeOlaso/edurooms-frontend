@@ -12,7 +12,7 @@ import com.edurooms.app.R
 import com.edurooms.app.data.network.RetrofitClient
 import kotlinx.coroutines.launch
 
-class RecuperarContraseñaActivity : AppCompatActivity() {
+class RecuperarPasswordActivity : AppCompatActivity() {
 
     private lateinit var emailInput: EditText
     private lateinit var sendButton: Button
@@ -20,12 +20,18 @@ class RecuperarContraseñaActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_recuperar_contraseña)
+        setContentView(R.layout.activity_recuperar_password)
 
         // Vincular vistas
         emailInput = findViewById(R.id.emailInput)
         sendButton = findViewById(R.id.sendButton)
         backButton = findViewById(R.id.backButton)
+
+        // Obtener email del Intent (si viene del login)
+        val emailDelLogin = intent.getStringExtra("email") ?: ""
+        if (emailDelLogin.isNotEmpty()) {
+            emailInput.setText(emailDelLogin)
+        }
 
         // Click listeners
         sendButton.setOnClickListener { validarEmail() }
@@ -35,49 +41,39 @@ class RecuperarContraseñaActivity : AppCompatActivity() {
     private fun validarEmail() {
         val email = emailInput.text.toString().trim()
 
-        // Validar que el email no esté vacío
         if (email.isEmpty()) {
             Toast.makeText(this, "❌ Ingresa tu email", Toast.LENGTH_SHORT).show()
             return
         }
 
-        // Validar formato de email
-        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            Toast.makeText(this, "❌ Formato de email inválido", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        // Verificar que el email exista en el sistema
         lifecycleScope.launch {
             try {
-                // Usamos obtenerUsuarios para verificar si el email existe
-                val response = RetrofitClient.apiService.obtenerUsuarios()
+                android.util.Log.d("RECUPERAR_PASSWORD", "Validando email: $email")
+                val response = RetrofitClient.apiService.validarEmailExiste(email)
+
+                android.util.Log.d("RECUPERAR_PASSWORD", "Response code: ${response.code()}")
 
                 if (response.isSuccessful && response.body() != null) {
-                    val usuarios = response.body()!!
-                    val usuarioExiste = usuarios.any { it.email == email }
-
-                    if (usuarioExiste) {
-                        // Email existe, mostrar mensaje
+                    if (response.body()!!.existe == true) {
                         mostrarMensajeExito(email)
                     } else {
                         Toast.makeText(
-                            this@RecuperarContraseñaActivity,
+                            this@RecuperarPasswordActivity,
                             "❌ Este email no está registrado",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
                 } else {
                     Toast.makeText(
-                        this@RecuperarContraseñaActivity,
-                        "❌ Error al verificar el email",
+                        this@RecuperarPasswordActivity,
+                        "❌ Error al verificar email",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
             } catch (e: Exception) {
-                android.util.Log.e("RECUPERAR_CONTRASEÑA", "Exception: ${e.message}", e)
+                android.util.Log.e("RECUPERAR_PASSWORD", "Exception: ${e.message}", e)
                 Toast.makeText(
-                    this@RecuperarContraseñaActivity,
+                    this@RecuperarPasswordActivity,
                     "❌ Error: ${e.message}",
                     Toast.LENGTH_SHORT
                 ).show()
