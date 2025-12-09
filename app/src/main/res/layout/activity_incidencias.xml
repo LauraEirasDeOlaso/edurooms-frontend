@@ -4,6 +4,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <!-- AppBar/Toolbar -->
+    <include layout="@layout/toolbar" />
+
     <!-- Contenido scrolleable -->
     <ScrollView
         android:layout_width="match_parent"

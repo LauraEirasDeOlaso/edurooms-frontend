@@ -4,18 +4,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import com.edurooms.app.R
 import com.edurooms.app.data.utils.TokenManager
-import com.google.android.material.bottomnavigation.BottomNavigationView
+
 
 // MainActivity hereda de BaseActivity para tener Bottom Navigation centralizado
 class MainActivity : BaseActivity() {
 
     private lateinit var tokenManager: TokenManager
-    private lateinit var welcomeText: TextView
     private lateinit var verAulasButton: Button
     private lateinit var misReservasButton: Button
     private lateinit var incidenciasButton: Button
@@ -33,10 +30,6 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Configurar Bottom Navigation desde BaseActivity
-        setupBottomNavigation()
-        seleccionarItemBottomNav(R.id.nav_home)
-
         tokenManager = TokenManager(this)
 
         // Verificar que hay sesión
@@ -45,8 +38,17 @@ class MainActivity : BaseActivity() {
             return
         }
 
+        val nombre = tokenManager.obtenerNombre() ?: "Usuario"
+        // Configurar Toolbar (sin botón atrás)
+        setupToolbar(title = "Hola $nombre", showBackButton = false)
+        mostrarIconosToolbar(perfil = true, notificaciones = true)
+
+        configurarIconosToolbar(
+            onNotificacionesClick = { Toast.makeText(this, "Notificaciones", Toast.LENGTH_SHORT).show() },
+            onPerfilClick = { startActivity(Intent(this, PerfilActivity::class.java)) }
+        )
+
         // Vincular vistas
-        welcomeText = findViewById(R.id.welcomeText)
         verAulasButton = findViewById(R.id.verAulasButton)
         misReservasButton = findViewById(R.id.misReservasButton)
         incidenciasButton = findViewById(R.id.incidenciasButton)
@@ -56,12 +58,13 @@ class MainActivity : BaseActivity() {
         cerrarSesionButton = findViewById(R.id.cerrarSesionButton)
         bottomNavigation = findViewById(R.id.bottom_navigation)
 
+
+        // Configurar Bottom Navigation desde BaseActivity
+        setupBottomNavigation()
+        seleccionarItemBottomNav(R.id.nav_home)
+
         // Mostrar menú según rol
         mostrarMenuSegunRol()
-
-        // Mostrar bienvenida
-        welcomeText.text = "Bienvenido a EduRooms"
-
 
         // Click listeners
         verAulasButton.setOnClickListener {
@@ -69,7 +72,7 @@ class MainActivity : BaseActivity() {
             //Toast.makeText(this, "Ver Aulas - Próximamente", Toast.LENGTH_SHORT).show()
         }
         misReservasButton.setOnClickListener {
-            Toast.makeText(this, "Mis reservas - Próximamente", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, MisReservasActivity::class.java))
         }
         incidenciasButton.setOnClickListener {
            // Toast.makeText(this, "Incidencias - Próximamente", Toast.LENGTH_SHORT).show()
@@ -84,7 +87,7 @@ class MainActivity : BaseActivity() {
             Toast.makeText(this, "Eliminar Aula - Próximamente", Toast.LENGTH_SHORT).show()
         }
         gestionarUsuariosButton.setOnClickListener {
-            Toast.makeText(this, "Gestionar Usuarios - Próximamente", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, GestionarUsuariosActivity::class.java))
         }
 
         cerrarSesionButton.setOnClickListener {
@@ -117,5 +120,6 @@ class MainActivity : BaseActivity() {
             gestionarUsuariosButton.visibility = View.GONE
         }
     }
+
 
 }

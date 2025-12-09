@@ -3,7 +3,6 @@ package com.edurooms.app.ui.activities
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,6 +21,13 @@ class ListaAulasActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista_aulas)
+
+        setupToolbar(title = "Aulas Disponibles", showBackButton = true)
+        mostrarIconosToolbar(notificaciones = true, perfil = true)
+        configurarIconosToolbar(
+            onNotificacionesClick = { Toast.makeText(this, "Notificaciones", Toast.LENGTH_SHORT).show() },
+            onPerfilClick = { startActivity(Intent(this, PerfilActivity::class.java)) }
+        )
 
         // Configurar Bottom Navigation desde BaseActivity
         setupBottomNavigation()
@@ -64,4 +70,6 @@ class ListaAulasActivity : BaseActivity() {
         intent.putExtra("aula_id", aulaId)
         startActivity(intent)
     }
+
+
 }

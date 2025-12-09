@@ -6,7 +6,6 @@ import android.widget.Button
 import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.edurooms.app.R
 import com.edurooms.app.data.network.RetrofitClient
@@ -29,11 +28,21 @@ class DetalleAulaActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         android.util.Log.d("DETALLE", "onCreate iniciado")
 
+
+
         setContentView(R.layout.activity_detalle_aula)
         android.util.Log.d("DETALLE", "Layout seteado")
 
+        setupToolbar(title = "Detalle del Aula", showBackButton = true)
+        mostrarIconosToolbar(notificaciones = true, perfil = true)
+        configurarIconosToolbar(
+            onNotificacionesClick = { Toast.makeText(this, "Notificaciones", Toast.LENGTH_SHORT).show() },
+            onPerfilClick = { startActivity(Intent(this, PerfilActivity::class.java)) }
+        )
+
         setupBottomNavigation()
-        seleccionarItemBottomNav(R.id.nav_aulas)
+        // NO llamar a :
+        //seleccionarItemBottomNav(R.id.nav_aulas)
 
         // Obtener aula_id del Intent
         aulaId = intent.getIntExtra("aula_id", 0)

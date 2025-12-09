@@ -1,9 +1,12 @@
 package com.edurooms.app.ui.activities
 
+
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -11,7 +14,9 @@ import com.edurooms.app.R
 import com.edurooms.app.data.models.LoginRequest
 import com.edurooms.app.data.network.RetrofitClient
 import com.edurooms.app.data.utils.TokenManager
+import com.edurooms.app.ui.activities.BaseActivity.Companion.configurarPasswordToggle
 import kotlinx.coroutines.launch
+
 
 
 class LoginActivity : AppCompatActivity() {
@@ -19,8 +24,11 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var emailInput: EditText
     private lateinit var passwordInput: EditText
     private lateinit var loginButton: Button
-    private lateinit var registerButton: Button
     private lateinit var tokenManager: TokenManager
+    private lateinit var recuperarPasswordButton: TextView
+    private lateinit var passwordToggle: ImageView
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +47,10 @@ class LoginActivity : AppCompatActivity() {
         emailInput = findViewById(R.id.emailInput)
         passwordInput = findViewById(R.id.passwordInput)
         loginButton = findViewById(R.id.loginButton)
-        registerButton = findViewById(R.id.registerButton)
+        recuperarPasswordButton = findViewById(R.id.recuperarPasswordButton)
+        passwordToggle = findViewById(R.id.passwordToggle)
+
+        configurarPasswordToggle(passwordToggle, passwordInput)
 
         // Ir al login con los datos precargados:
         // Obtener datos del Intent (si vienen del registro)
@@ -48,10 +59,14 @@ class LoginActivity : AppCompatActivity() {
             emailInput.setText(emailDelRegistro)
         }
 
-            // Click listeners
+        // Click listeners
         loginButton.setOnClickListener { realizarLogin() }
-        registerButton.setOnClickListener { irARegistro() }
+        recuperarPasswordButton.setOnClickListener { irARecuperarPassword() }
+
+        // ← CAMBIAR DE OnClickListener A OnTouchListener
+
     }
+
 
     private fun realizarLogin() {
         val email = emailInput.text.toString().trim()
@@ -78,21 +93,42 @@ class LoginActivity : AppCompatActivity() {
 
                     // Guardar token
                     tokenManager.guardarToken(loginResponse.token)
-
-                    // AGREGAR ESTO - Guardar rol
+                    tokenManager.guardarNombre(loginResponse.usuario.nombre)
+                    tokenManager.guardarEmail(loginResponse.usuario.email)
                     tokenManager.guardarRol(loginResponse.usuario.rol)
+                    tokenManager.guardarIdUsuario(loginResponse.usuario.id)
+                    tokenManager.guardarPrimeraVezLogin(loginResponse.usuario.primera_vez_login)
+
 
                     // Mensaje de éxito
                     Toast.makeText(this@LoginActivity, "✅ Login exitoso", Toast.LENGTH_SHORT).show()
 
-                    // Ir al menú principal
-                    irAlMenu()
+                    android.util.Log.d(
+                        "LOGIN",
+                        "Primera vez guardada: ${tokenManager.obtenerPrimeraVezLogin()}"
+                    )
+
+                    // Detectar si es primera vez con contraseña temporal
+                    if (loginResponse.usuario.primera_vez_login) {
+                        val intent = Intent(this@LoginActivity, CambiarPasswordActivity::class.java)
+                        intent.putExtra("es_primera_vez", true)
+                        startActivity(intent)
+                        finish()
+                    } else {
+                        // Ir al menú principal normalmente
+                        irAlMenu()
+                    }
                 } else {
-                    Toast.makeText(this@LoginActivity, "❌ Credenciales inválidas", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@LoginActivity,
+                        "❌ Credenciales inválidas",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             } catch (e: Exception) {
                 android.util.Log.e("LOGIN", "Exception: ${e.message}", e)
-                Toast.makeText(this@LoginActivity, "❌ Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@LoginActivity, "❌ Error: ${e.message}", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
     }
@@ -102,8 +138,13 @@ class LoginActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun irARegistro() {
-        startActivity(Intent(this, RegisterActivity::class.java))
-       // Toast.makeText(this, "Registro aún no disponible", Toast.LENGTH_SHORT).show()
+    private fun irARecuperarPassword() {
+        val email = emailInput.text.toString().trim()
+        val intent = Intent(this, RecuperarPasswordActivity::class.java)
+        intent.putExtra("email", email)
+        startActivity(intent)
     }
+
+
+
 }
