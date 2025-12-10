@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <EditText
+        android:id="@+id/nombreInput"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="Nombre"
+        android:layout_marginBottom="15dp"
+        android:padding="12dp"
+        android:background="@drawable/rounded_edittext" />
+
+    <EditText
+        android:id="@+id/capacidadInput"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="Capacidad"
+        android:inputType="number"
+        android:layout_marginBottom="15dp"
+        android:padding="12dp"
+        android:background="@drawable/rounded_edittext" />
+
+    <EditText
+        android:id="@+id/ubicacionInput"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="Ubicación"
+        android:padding="12dp"
+        android:background="@drawable/rounded_edittext" />
+
+    <Spinner
+        android:id="@+id/estadoSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="15dp"
+        android:entries="@array/estados_aula" />
+
+</LinearLayout>

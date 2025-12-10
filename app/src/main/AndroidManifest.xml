@@ -4,6 +4,8 @@
 
     <!-- Permiso de internet (IMPORTANTE para conectar al backend) -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+
 
     <application
         android:allowBackup="true"
@@ -88,6 +90,22 @@
             android:name=".ui.activities.DetalleReservaActivity"
             android:exported="false"
             android:label="Detalle Reserva"/>
+
+        <activity
+            android:name=".ui.activities.GestionarReservasActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.activities.GestionarAulasActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.activities.CrearAulaActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.activities.DetalleAulaAdminActivity"
+            android:exported="false" />
 
     </application>
 </manifest>

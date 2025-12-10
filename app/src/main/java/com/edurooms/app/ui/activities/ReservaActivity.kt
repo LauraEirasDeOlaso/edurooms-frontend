@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.CalendarView
-import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
@@ -17,14 +16,12 @@ import com.google.gson.JsonParser
 import kotlinx.coroutines.launch
 import java.util.*
 import android.widget.ArrayAdapter
-import android.widget.AdapterView
-import com.edurooms.app.ui.activities.MisReservasActivity
+
 
 class ReservaActivity : BaseActivity() {
 
     private lateinit var calendarView: CalendarView
-    private lateinit var horaInicioInput: EditText
-    private lateinit var horaFinInput: EditText
+
     private lateinit var confirmarButton: Button
     private lateinit var cancelarButton: Button
     private var aulaId: Int = 0
@@ -127,7 +124,8 @@ class ReservaActivity : BaseActivity() {
                             android.R.layout.simple_spinner_item,
                             items
                         )
-                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                        adapter.setDropDownViewResource(R.layout.custom_spinner_item)
+
                         spinnerHorarios.adapter = adapter
                         spinnerHorarios.isEnabled = true
                     }

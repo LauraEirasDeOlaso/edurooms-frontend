@@ -42,9 +42,25 @@
     <string name="volver_al_login">← Volver al login</string>
     <string name="recuerdame">Recuérdame</string>
     <string name="requisitos_minimo_8_caracteres_al_menos_1_mayuscula_al_menos_1_minuscula_al_menos_1_numero_al_menos_1_caracter_especial"><![CDATA[Requisitos:\n• Minimo 8 caracteres\n• Al menos 1 mayuscula\n• Al menos 1 minuscula\n• Al menos 1 numero\n• Al menos 1 caracter especial (@, #, $, %, !,  &amp;, *)]]></string>
+    <string name="fecha_formato">Fecha: %s</string>
+    <string name="estado_formato">Estado: %s</string>
+    <string name="horario_formato">%s - %s</string>
+
 
     <string-array name="roles_array">
         <item>profesor</item>
         <item>administrador</item>
+    </string-array>
+    <string-array name="estados_aula">
+        <item>disponible</item>
+        <item>ocupada</item>
+        <item>mantenimiento</item>
+    </string-array>
+    <string-array name="tipos_incidencia">
+        <item>electrica</item>
+        <item>informatica</item>
+        <item>estructural</item>
+        <item>limpieza</item>
+        <item>otro</item>
     </string-array>
 </resources>

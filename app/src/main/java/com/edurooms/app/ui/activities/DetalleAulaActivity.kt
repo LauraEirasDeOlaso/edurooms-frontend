@@ -76,6 +76,8 @@ class DetalleAulaActivity : BaseActivity() {
         }
         incidenciaButton.setOnClickListener {
             startActivity(Intent(this, IncidenciasActivity::class.java))
+            intent.putExtra("aula_id", aulaId)
+            startActivity(intent)
         }
     }
 

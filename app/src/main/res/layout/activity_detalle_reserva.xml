@@ -89,24 +89,53 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/editarButton"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:text="Editar"
-                    android:layout_marginEnd="8dp"
-                    android:backgroundTint="@color/primary" />
+                <!-- Fila 1: Cancelar / Reactivar / Editar -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp">
 
+                    <Button
+                        android:id="@+id/cancelarButton"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:text="Cancelar"
+                        android:layout_marginEnd="8dp"
+                        android:backgroundTint="@color/error"
+                        android:visibility="gone" />
+
+                    <Button
+                        android:id="@+id/reactivarButton"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:text="Reactivar"
+                        android:layout_marginEnd="8dp"
+                        android:backgroundTint="@color/primary"
+                        android:visibility="gone" />
+
+                    <Button
+                        android:id="@+id/editarButton"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:text="Editar"
+                        android:backgroundTint="@color/primary" />
+
+                </LinearLayout>
+
+                <!-- Fila 2: Traspasar -->
                 <Button
-                    android:id="@+id/cancelarButton"
-                    android:layout_width="0dp"
+                    android:id="@+id/traspasoButton"
+                    android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:text="Cancelar"
-                    android:backgroundTint="@color/error" />
+                    android:text="Traspasar a otra Aula"
+                    android:backgroundTint="@color/primary"
+                    android:visibility="gone" />
 
             </LinearLayout>
 

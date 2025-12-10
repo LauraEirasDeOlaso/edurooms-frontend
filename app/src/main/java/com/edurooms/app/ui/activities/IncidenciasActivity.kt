@@ -1,9 +1,12 @@
 package com.edurooms.app.ui.activities
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ListView
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.edurooms.app.R
@@ -18,11 +21,15 @@ class IncidenciasActivity : BaseActivity() {
 
     private lateinit var incidenciasListView: ListView
     private lateinit var descripcionInput: EditText
-    private lateinit var tipoInput: EditText
+    private lateinit var tipoSpinner: Spinner
     private lateinit var reportarButton: Button
     private var incidenciasLista: MutableList<Incidencia> = mutableListOf()
 
     private var aulaIdRecibido: Int = 0
+
+    private lateinit var aulasSpinner: Spinner
+
+    private var aulasLista: List<com.edurooms.app.data.models.Aula> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,8 +51,11 @@ class IncidenciasActivity : BaseActivity() {
         // Vincular vistas
         incidenciasListView = findViewById(R.id.incidenciasListView)
         descripcionInput = findViewById(R.id.descripcionInput)
-        tipoInput = findViewById(R.id.tipoInput)
+        tipoSpinner = findViewById(R.id.tipoSpinner)
         reportarButton = findViewById(R.id.reportarButton)
+        aulasSpinner = findViewById(R.id.aulasSpinner)
+
+        cargarAulasEnSpinner()
 
         // Click listener
         reportarButton.setOnClickListener { reportarIncidencia() }
@@ -78,7 +88,7 @@ class IncidenciasActivity : BaseActivity() {
 
     private fun reportarIncidencia() {
         val descripcion = descripcionInput.text.toString().trim()
-        val tipo = tipoInput.text.toString().trim()
+        val tipo = tipoSpinner.selectedItem.toString()
 
         if (descripcion.isEmpty() || tipo.isEmpty()) {
             Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show()
@@ -88,13 +98,6 @@ class IncidenciasActivity : BaseActivity() {
         // como en back
         if (descripcion.length < 10) {
             Toast.makeText(this, "La descripción debe tener al menos 10 caracteres", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        // AGREGAR ESTA VALIDACIÓN
-        val tiposValidos = listOf("electrica", "informatica", "estructural", "limpieza", "otro")
-        if (!tiposValidos.contains(tipo.lowercase())) {
-            Toast.makeText(this, "Tipo debe ser: electrica, informatica, estructural, limpieza, otro", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -124,7 +127,7 @@ class IncidenciasActivity : BaseActivity() {
 
                     // Limpiar campos
                     descripcionInput.setText("")
-                    tipoInput.setText("")
+                    tipoSpinner.setSelection(0)
 
                     // Recargar lista
                     cargarIncidencias()
@@ -137,4 +140,54 @@ class IncidenciasActivity : BaseActivity() {
             }
         }
     }
+
+    override fun onSupportNavigateUp(): Boolean {
+        if (aulaIdRecibido != 0) {
+            // Vino de DetalleAulaActivity
+            finish()
+        } else {
+            // Vino de Bottom Nav
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
+        return true
+    }
+
+    private fun cargarAulasEnSpinner() {
+        lifecycleScope.launch {
+            try {
+                val response = RetrofitClient.apiService.obtenerAulas()
+                if (response.isSuccessful && response.body() != null) {
+                    aulasLista = response.body()!!
+                    val aulasNames = aulasLista.map { it.nombre }
+
+                    val adapter = ArrayAdapter(
+                        this@IncidenciasActivity,
+                        android.R.layout.simple_spinner_item,
+                        aulasNames
+                    )
+                    adapter.setDropDownViewResource(R.layout.custom_spinner_item)
+                    aulasSpinner.adapter = adapter
+
+                    // ← AGREGAR LISTENER AQUÍ
+                    aulasSpinner.onItemSelectedListener = object : android.widget.AdapterView.OnItemSelectedListener {
+                        override fun onItemSelected(parent: android.widget.AdapterView<*>, view: android.view.View?, position: Int, id: Long) {
+                            aulaIdRecibido = aulasLista[position].id
+                            cargarIncidencias() // Recargar cuando cambia aula
+                        }
+                        override fun onNothingSelected(parent: android.widget.AdapterView<*>) {}
+                    }
+
+                    // Si vino con aula_id, seleccionar esa aula
+                    if (aulaIdRecibido != 0) {
+                        val index = aulasLista.indexOfFirst { it.id == aulaIdRecibido }
+                        if (index >= 0) aulasSpinner.setSelection(index)
+                    }
+                }
+            } catch (_: Exception) {
+                Toast.makeText(this@IncidenciasActivity, "Error cargando aulas", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
 }

@@ -75,11 +75,11 @@ class DetalleUsuarioActivity : BaseActivity() {
         estadoSwitch = findViewById(R.id.estadoSwitch)
         guardarCambiosButton = findViewById(R.id.guardarCambiosButton)
         eliminarUsuarioButton = findViewById(R.id.eliminarUsuarioButton)
-        //reservasRecyclerView = findViewById(R.id.reservasRecyclerView)
-        //incidenciasRecyclerView = findViewById(R.id.incidenciasRecyclerView)
+        reservasRecyclerView = findViewById(R.id.reservasRecyclerView)
+        incidenciasRecyclerView = findViewById(R.id.incidenciasRecyclerView)
 
         // Configurar RecyclerViews
-       // reservasRecyclerView.layoutManager = LinearLayoutManager(this)
+        reservasRecyclerView.layoutManager = LinearLayoutManager(this)
         //incidenciasRecyclerView.layoutManager = LinearLayoutManager(this)
 
         // Mostrar datos del usuario
@@ -89,7 +89,7 @@ class DetalleUsuarioActivity : BaseActivity() {
         //cargarDatosUsuarioCompleto()
 
         // Cargar reservas e incidencias
-        //cargarReservasUsuario()
+        cargarReservasUsuario()
         //cargarIncidenciasUsuario()
 
         // Click listeners
@@ -117,10 +117,23 @@ class DetalleUsuarioActivity : BaseActivity() {
     private fun cargarReservasUsuario() {
         lifecycleScope.launch {
             try {
-                //val token = tokenManager.obtenerToken() ?: ""
-                // TODO: Crear endpoint en backend para obtener reservas de un usuario específico
-                // Por ahora, solo mostrar mensaje
-                Toast.makeText(this@DetalleUsuarioActivity, "Reservas del usuario", Toast.LENGTH_SHORT).show()
+                val tokenManager = TokenManager(this@DetalleUsuarioActivity)
+                val token = tokenManager.obtenerToken() ?: return@launch
+
+                val response = RetrofitClient.apiService.obtenerReservasPorUsuario("Bearer $token", usuarioId)
+
+                if (response.isSuccessful && response.body() != null) {
+                    val reservas = response.body()!!
+                    if (reservas.isNotEmpty()) {
+                        val adapter = ReservasAdapter(reservas) { reserva ->
+                            // Click en reserva - aquí podrías abrir DetalleReservaActivity
+                            val intent = Intent(this@DetalleUsuarioActivity, DetalleReservaActivity::class.java)
+                            intent.putExtra("reserva_id", reserva.id)
+                            this@DetalleUsuarioActivity.startActivity(intent)
+                        }
+                        reservasRecyclerView.adapter = adapter
+                    }
+                }
             } catch (e: Exception) {
                 Toast.makeText(this@DetalleUsuarioActivity, "Error cargando reservas: ${e.message}", Toast.LENGTH_SHORT).show()
             }

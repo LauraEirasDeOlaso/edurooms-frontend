@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background">
+
+    <!-- Toolbar -->
+    <include layout="@layout/toolbar" />
+
+    <!-- ScrollView con formulario -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nueva Aula"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="20dp" />
+
+            <EditText
+                android:id="@+id/nombreInput"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Nombre del aula"
+                android:layout_marginBottom="15dp"
+                android:padding="12dp"
+                android:background="@drawable/rounded_edittext" />
+
+            <EditText
+                android:id="@+id/capacidadInput"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Capacidad"
+                android:inputType="number"
+                android:layout_marginBottom="15dp"
+                android:padding="12dp"
+                android:background="@drawable/rounded_edittext" />
+
+            <EditText
+                android:id="@+id/ubicacionInput"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Ubicación"
+                android:layout_marginBottom="15dp"
+                android:padding="12dp"
+                android:background="@drawable/rounded_edittext" />
+
+            <EditText
+                android:id="@+id/codigoQRInput"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Código QR"
+                android:layout_marginBottom="20dp"
+                android:padding="12dp"
+                android:background="@drawable/rounded_edittext" />
+
+            <Button
+                android:id="@+id/crearButton"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Crear Aula"
+                android:backgroundTint="@color/primary" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Bottom Navigation -->
+    <include layout="@layout/layout_bottom_nav" />
+
+</LinearLayout>

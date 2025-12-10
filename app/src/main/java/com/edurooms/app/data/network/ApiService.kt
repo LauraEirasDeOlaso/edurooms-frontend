@@ -3,6 +3,7 @@ import com.edurooms.app.data.models.*
 import retrofit2.Response
 import retrofit2.http.*
 import com.edurooms.app.data.utils.Constants
+import okhttp3.MultipartBody
 
 
 interface ApiService {
@@ -21,6 +22,25 @@ interface ApiService {
 
     @GET(Constants.ENDPOINT_AULA_DETALLE)
     suspend fun obtenerAula(@Path("id") id: Int): Response<Aula>
+
+    @POST(Constants.ENDPOINT_AULAS)
+    suspend fun crearAula(
+        @Header("Authorization") token: String,
+        @Body aula: CrearAulaRequest
+    ): Response<Map<String, Any>>
+
+    @DELETE("aulas/{id}")
+    suspend fun eliminarAula(
+        @Header("Authorization") token: String,
+        @Path("id") id: Int
+    ): Response<Map<String, String>>
+
+    @PUT("aulas/{id}")
+    suspend fun actualizarAula(
+        @Header("Authorization") token: String,
+        @Path("id") id: Int,
+        @Body datos: ActualizarAulaRequest
+    ): Response<Map<String, Any>>
 
     @GET("reservas/usuario/mis-reservas")
     suspend fun obtenerMisReservas(@Header("Authorization") token: String
@@ -48,6 +68,17 @@ interface ApiService {
         @Query("aula_id") aulaId: Int,
         @Query("fecha") fecha: String
     ): Response<DisponibilidadResponse>
+
+    @GET("reservas/usuario/{usuario_id}")
+    suspend fun obtenerReservasPorUsuario(
+        @Header("Authorization") token: String,
+        @Path("usuario_id") usuarioId: Int
+    ): Response<List<Reserva>>
+
+    @GET("reservas/admin/todas")
+    suspend fun obtenerTodasReservas(
+        @Header("Authorization") token: String
+    ): Response<List<Reserva>>
 
     @GET(Constants.ENDPOINT_INCIDENCIAS)
     suspend fun obtenerIncidencias(): Response<List<Incidencia>>
@@ -100,6 +131,19 @@ interface ApiService {
     suspend fun cambiarPassword(
         @Header("Authorization") token: String,
         @Path("id") id: Int,
-        @Body datos: Map<String, String>
+        @Body datos: CambiarPasswordRequest
     ): Response<CambiarPasswordResponse>
+
+    @Multipart
+    @PUT("usuarios/{id}/foto-perfil")
+    suspend fun subirFotoPerfil(
+        @Header("Authorization") token: String,
+        @Path("id") id: Int,
+        @Part foto: MultipartBody.Part
+    ): Response<Map<String, String>>
+
+    @GET("usuarios/{id}/foto-perfil")
+    suspend fun obtenerFotoPerfil(
+        @Path("id") id: Int
+    ): Response<Map<String, String>>
 }

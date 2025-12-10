@@ -8,5 +8,6 @@ data class Reserva(
     val hora_inicio: String,
     val hora_fin: String,
     val estado: String,
-    val aula_nombre: String
+    val aula_nombre: String,
+    val usuario_nombre: String? = null
 )

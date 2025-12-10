@@ -17,11 +17,11 @@ class MainActivity : BaseActivity() {
     private lateinit var misReservasButton: Button
     private lateinit var incidenciasButton: Button
 
-    private lateinit var crearAulaButton: Button
-
-    private lateinit var eliminarAulaButton: Button
+    private lateinit var gestionarAulasButton: Button
 
     private lateinit var gestionarUsuariosButton: Button
+
+    private lateinit var gestionarReservasButton: Button
     private lateinit var cerrarSesionButton: Button
 
 
@@ -52,11 +52,11 @@ class MainActivity : BaseActivity() {
         verAulasButton = findViewById(R.id.verAulasButton)
         misReservasButton = findViewById(R.id.misReservasButton)
         incidenciasButton = findViewById(R.id.incidenciasButton)
-        crearAulaButton = findViewById(R.id.crearAulaButton)
-        eliminarAulaButton = findViewById(R.id.eliminarAulaButton)
+        gestionarAulasButton = findViewById(R.id.gestionarAulasButton)
         gestionarUsuariosButton = findViewById(R.id.gestionarUsuariosButton)
         cerrarSesionButton = findViewById(R.id.cerrarSesionButton)
         bottomNavigation = findViewById(R.id.bottom_navigation)
+        gestionarReservasButton = findViewById(R.id.gestionarReservasButton)
 
 
         // Configurar Bottom Navigation desde BaseActivity
@@ -80,14 +80,16 @@ class MainActivity : BaseActivity() {
         }
 
         // Click listeners - Botones solo admin
-        crearAulaButton.setOnClickListener {
-            Toast.makeText(this, "Crear Aula - Próximamente", Toast.LENGTH_SHORT).show()
+        gestionarAulasButton.setOnClickListener {
+            startActivity(Intent(this, GestionarAulasActivity::class.java))
         }
-        eliminarAulaButton.setOnClickListener {
-            Toast.makeText(this, "Eliminar Aula - Próximamente", Toast.LENGTH_SHORT).show()
-        }
+
         gestionarUsuariosButton.setOnClickListener {
             startActivity(Intent(this, GestionarUsuariosActivity::class.java))
+        }
+
+        gestionarReservasButton.setOnClickListener {
+            startActivity(Intent(this, GestionarReservasActivity::class.java))
         }
 
         cerrarSesionButton.setOnClickListener {
@@ -109,17 +111,15 @@ class MainActivity : BaseActivity() {
         if (rol == "administrador") {
             android.util.Log.d("MAIN_ACTIVITY", "Mostrando botones de ADMIN")
             // Admin ve TODOS los botones
-            crearAulaButton.visibility = View.VISIBLE
-            eliminarAulaButton.visibility = View.VISIBLE
+            gestionarAulasButton.visibility = View.VISIBLE
             gestionarUsuariosButton.visibility = View.VISIBLE
+            gestionarReservasButton.visibility = View.VISIBLE
         } else {
             android.util.Log.d("MAIN_ACTIVITY", "Mostrando botones de PROFESOR")
             // Profesor solo ve los botones comunes
-            crearAulaButton.visibility = View.GONE
-            eliminarAulaButton.visibility = View.GONE
+            gestionarAulasButton.visibility = View.GONE
             gestionarUsuariosButton.visibility = View.GONE
         }
     }
-
 
 }

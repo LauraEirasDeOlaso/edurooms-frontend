@@ -12,6 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.edurooms.app.R
+import com.edurooms.app.data.models.CambiarPasswordRequest
 import com.edurooms.app.data.utils.TokenManager
 import com.edurooms.app.data.network.RetrofitClient
 import kotlinx.coroutines.launch
@@ -168,11 +169,11 @@ class CambiarPasswordActivity : BaseActivity() {
                 val usuarioIdActual = tokenManager.obtenerIdUsuario()
 
                 // Crear request
-                val requestBody = mapOf(
-                    "passwordActual" to passwordActual,
-                    "passwordNueva" to passwordNueva,
-                    "passwordNuevaConfirmar" to passwordConfirmar,
-                    "esPrimeraVez" to esPrimeraVez.toString()
+                val requestBody = CambiarPasswordRequest(
+                    passwordActual = passwordActual,
+                    passwordNueva = passwordNueva,
+                    passwordNuevaConfirmar =  passwordConfirmar,
+                    esPrimeraVez = esPrimeraVez
                 )
 
                 val response = RetrofitClient.apiService.cambiarPassword(
@@ -229,5 +230,26 @@ class CambiarPasswordActivity : BaseActivity() {
         if (!password.any { it in caracteresEspeciales }) return false
 
         return true
+    }
+
+    private fun configurarPasswordToggle(toggleIcon: ImageView, passwordInput: EditText) {
+        var mostrandoPassword = false
+
+        toggleIcon.setOnClickListener {
+            mostrandoPassword = !mostrandoPassword
+
+            if (mostrandoPassword) {
+                // Mostrar contraseña
+                passwordInput.inputType = android.text.InputType.TYPE_CLASS_TEXT
+                toggleIcon.setImageResource(android.R.drawable.ic_menu_view) // Ojo abierto
+            } else {
+                // Ocultar contraseña
+                passwordInput.inputType = android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
+                toggleIcon.setImageResource(android.R.drawable.ic_secure) // Ojo cerrado
+            }
+
+            // Mantener el cursor al final
+            passwordInput.setSelection(passwordInput.text.length)
+        }
     }
 }

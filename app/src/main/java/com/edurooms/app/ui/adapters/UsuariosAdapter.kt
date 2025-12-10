@@ -25,6 +25,13 @@ class UsuariosAdapter(
             rolText.text = "Rol: ${usuario.rol}"
             estadoText.text = "Estado: ${usuario.estado ?: "habilitado"}"
 
+            // Color según estado
+            if (usuario.estado == "habilitado") {
+                estadoText.setTextColor(android.graphics.Color.GREEN)
+            } else {
+                estadoText.setTextColor(android.graphics.Color.RED)
+            }
+
             itemView.setOnClickListener {
                 onUsuarioClick(usuario)
             }

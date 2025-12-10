@@ -22,6 +22,15 @@ class AulasAdapter(
             capacidadText.text = "Capacidad: ${aula.capacidad}"
             estadoText.text = "Estado: ${aula.estado}"
 
+            // Color según estado
+            val color = when(aula.estado) {
+                "disponible" -> android.graphics.Color.GREEN
+                "ocupada" -> android.graphics.Color.YELLOW
+                "mantenimiento" -> android.graphics.Color.RED
+                else -> android.graphics.Color.GRAY
+            }
+            estadoText.setTextColor(color)
+
             itemView.setOnClickListener {
                 onAulaClick(aula)
             }

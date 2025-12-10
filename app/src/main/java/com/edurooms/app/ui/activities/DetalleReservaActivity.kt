@@ -12,6 +12,7 @@ import com.edurooms.app.data.utils.TokenManager
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Locale
+import android.view.View
 
 class DetalleReservaActivity : BaseActivity() {
 
@@ -21,7 +22,8 @@ class DetalleReservaActivity : BaseActivity() {
     private lateinit var estadoText: TextView
     private lateinit var cancelarButton: Button
     private lateinit var editarButton: Button
-
+    private lateinit var traspasoButton: Button
+    private lateinit var reactivarButton: Button
     private var reservaId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,11 +47,15 @@ class DetalleReservaActivity : BaseActivity() {
         estadoText = findViewById(R.id.estadoText)
         cancelarButton = findViewById(R.id.cancelarButton)
         editarButton = findViewById(R.id.editarButton)
+        reactivarButton = findViewById(R.id.reactivarButton)
+        traspasoButton = findViewById(R.id.traspasoButton)
 
         cargarDetalleReserva()
 
         cancelarButton.setOnClickListener { cancelarReserva() }
         editarButton.setOnClickListener { Toast.makeText(this, "Editar - Próximamente", Toast.LENGTH_SHORT).show() }
+        reactivarButton.setOnClickListener { reactivarReserva() }
+        traspasoButton.setOnClickListener { Toast.makeText(this, "Traspasar - Próximamente", Toast.LENGTH_SHORT).show() }
     }
 
     private fun cargarDetalleReserva() {
@@ -70,8 +76,39 @@ class DetalleReservaActivity : BaseActivity() {
 
                     horaText.text = "Horario: ${reserva.hora_inicio} - ${reserva.hora_fin}"
                     estadoText.text = "Estado: ${reserva.estado}"
-                } else {
-                    Toast.makeText(this@DetalleReservaActivity, "Error al cargar reserva", Toast.LENGTH_SHORT).show()
+                    //Color según estado
+                    if (reserva.estado == "confirmada") {
+                        estadoText.setTextColor(android.graphics.Color.GREEN)
+                    } else {
+                        estadoText.setTextColor(android.graphics.Color.RED)
+                    }
+                    // NUEVO: Mostrar botones según rol y estado
+                    val tokenManager = TokenManager(this@DetalleReservaActivity)
+                    val esAdmin = tokenManager.obtenerRol() == "administrador"
+                    val estaCancelada = reserva.estado == "cancelada"
+
+                    if (esAdmin) {
+                        // Admin ve todos los botones
+                        if (estaCancelada) {
+                            cancelarButton.visibility = View.GONE
+                            reactivarButton.visibility = View.VISIBLE
+                        } else {
+                            cancelarButton.visibility = View.VISIBLE
+                            reactivarButton.visibility = View.GONE
+                        }
+                        editarButton.visibility = View.VISIBLE
+                        traspasoButton.visibility = View.VISIBLE
+                    } else {
+                        // Profesor solo ve cancelar
+                        if (estaCancelada) {
+                            cancelarButton.visibility = View.GONE
+                        } else {
+                            cancelarButton.visibility = View.VISIBLE
+                        }
+                        reactivarButton.visibility = View.GONE
+                        editarButton.visibility = View.GONE
+                        traspasoButton.visibility = View.GONE
+                    }
                 }
             } catch (e: Exception) {
                 Toast.makeText(this@DetalleReservaActivity, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
@@ -98,6 +135,10 @@ class DetalleReservaActivity : BaseActivity() {
                 Toast.makeText(this@DetalleReservaActivity, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun reactivarReserva() {
+        Toast.makeText(this, "Reactivar - Próximamente", Toast.LENGTH_SHORT).show()
     }
 
     override fun onSupportNavigateUp(): Boolean {

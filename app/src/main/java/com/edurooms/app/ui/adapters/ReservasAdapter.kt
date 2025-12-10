@@ -6,10 +6,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.edurooms.app.R
 import com.edurooms.app.data.models.Reserva
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.text.SimpleDateFormat
 import java.util.Locale
+import java.util.TimeZone
 
 
 class ReservasAdapter(
@@ -26,16 +25,22 @@ class ReservasAdapter(
         fun bind(reserva: Reserva) {
             aulaNombreText.text = reserva.aula_nombre
 
-            // Convertir fecha de YYYY-MM-DD a dd/MM/yyyy
-            val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale("es", "ES"))
-            val outputFormat = SimpleDateFormat("dd/MM/yyyy", Locale("es", "ES"))
+            // Parsear fecha manualmente sin problemas de zona horaria
+            val partes = reserva.fecha.take(10).split("-")
+            val fechaFormateada = "${partes[2]}/${partes[1]}/${partes[0]}"
 
-            val fechaParsed = inputFormat.parse(reserva.fecha.substring(0, 10))
-            val fechaFormateada = outputFormat.format(fechaParsed)
-            fechaText.text = "Fecha: $fechaFormateada"
+            android.util.Log.d("RESERVA_DEBUG", "Partes: $partes -> $fechaFormateada")
 
-            horaText.text = "${reserva.hora_inicio} - ${reserva.hora_fin}"
-            estadoText.text = "Estado: ${reserva.estado}"
+            fechaText.text = itemView.context.getString(R.string.fecha_formato, fechaFormateada)
+            horaText.text = itemView.context.getString(R.string.fecha_formato, fechaFormateada)
+            estadoText.text = itemView.context.getString(R.string.estado_formato, reserva.estado)
+
+            // Color según estado
+            if (reserva.estado == "confirmada") {
+                estadoText.setTextColor(android.graphics.Color.GREEN)
+            } else {
+                estadoText.setTextColor(android.graphics.Color.RED)
+            }
 
             // Click listener
             itemView.setOnClickListener { onItemClick(reserva) }
@@ -53,4 +58,5 @@ class ReservasAdapter(
     }
 
     override fun getItemCount() = reservas.size
+
 }
