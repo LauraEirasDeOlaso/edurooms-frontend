@@ -40,7 +40,7 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Path("id") id: Int,
         @Body datos: ActualizarAulaRequest
-    ): Response<Map<String, Any>>
+    ): Response<ActualizarAulaResponse>
 
     @GET("reservas/usuario/mis-reservas")
     suspend fun obtenerMisReservas(@Header("Authorization") token: String

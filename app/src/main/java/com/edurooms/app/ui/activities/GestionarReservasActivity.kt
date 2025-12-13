@@ -73,7 +73,7 @@ class GestionarReservasActivity : BaseActivity() {
 
     private fun configurarFiltros() {
         // Extraer valores únicos
-        val estados = listOf("Todas") + todasLasReservas.map { it.estado }.distinct()
+        val estados = resources.getStringArray(R.array.estados_reservas).toList()
         aulasSet = todasLasReservas.map { it.aula_nombre }.toSet()
         usuariosSet = todasLasReservas.map { it.usuario_nombre ?: "Desconocido" }.toSet()
 

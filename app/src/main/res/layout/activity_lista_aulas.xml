@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    !-- AppBar/Toolbar -->
+    <!-- AppBar/Toolbar -->
     <include layout="@layout/toolbar" />
 
     <!-- Contenido principal (scrolleable) -->
@@ -21,10 +20,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/aulas_disponibles"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="20dp"
-            android:textColor="@color/primary" />
+            style="@style/TextHeading1"
+            android:layout_marginBottom="20dp" />
 
         <!-- Lista de aulas -->
         <androidx.recyclerview.widget.RecyclerView

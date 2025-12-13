@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -24,54 +23,55 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nueva Aula"
-                android:textSize="20sp"
-                android:textStyle="bold"
+                android:text="@string/nueva_aula"
+                style="@style/TextHeading1"
                 android:layout_marginBottom="20dp" />
 
             <EditText
                 android:id="@+id/nombreInput"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:hint="Nombre del aula"
-                android:layout_marginBottom="15dp"
-                android:padding="12dp"
-                android:background="@drawable/rounded_edittext" />
+                style="@style/CustomEditText"
+                android:hint="@string/nombre_del_aula"
+                android:inputType="text"
+                android:autofillHints="name"
+                android:layout_marginBottom="15dp" />
 
             <EditText
                 android:id="@+id/capacidadInput"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:hint="Capacidad"
+                style="@style/CustomEditText"
+                android:hint="@string/capacidad"
                 android:inputType="number"
-                android:layout_marginBottom="15dp"
-                android:padding="12dp"
-                android:background="@drawable/rounded_edittext" />
+                android:autofillHints="none"
+                android:layout_marginBottom="15dp" />
 
             <EditText
                 android:id="@+id/ubicacionInput"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:hint="Ubicación"
-                android:layout_marginBottom="15dp"
-                android:padding="12dp"
-                android:background="@drawable/rounded_edittext" />
+                style="@style/CustomEditText"
+                android:hint="@string/ubicaci_n"
+                android:inputType="text"
+                android:autofillHints="none"
+                android:layout_marginBottom="15dp" />
 
             <EditText
                 android:id="@+id/codigoQRInput"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:hint="Código QR"
-                android:layout_marginBottom="20dp"
-                android:padding="12dp"
-                android:background="@drawable/rounded_edittext" />
+                style="@style/CustomEditText"
+                android:hint="@string/c_digo_qr"
+                android:inputType="text"
+                android:autofillHints="none"
+                android:layout_marginBottom="20dp" />
 
             <Button
                 android:id="@+id/crearButton"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:text="Crear Aula"
-                android:backgroundTint="@color/primary" />
+                android:text="@string/crear_aula" />
 
         </LinearLayout>
     </ScrollView>

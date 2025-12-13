@@ -39,7 +39,7 @@ class IncidenciasActivity : BaseActivity() {
         mostrarIconosToolbar(notificaciones = true, perfil = true)
         configurarIconosToolbar(
             onNotificacionesClick = { Toast.makeText(this, "Notificaciones", Toast.LENGTH_SHORT).show() },
-            onPerfilClick = { startActivity(android.content.Intent(this, PerfilActivity::class.java)) }
+            onPerfilClick = { startActivity(Intent(this, PerfilActivity::class.java)) }
         )
 
         // Configurar Bottom Navigation

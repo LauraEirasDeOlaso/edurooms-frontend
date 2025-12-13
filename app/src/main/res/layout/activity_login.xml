@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -6,7 +7,8 @@
     android:orientation="vertical"
     android:gravity="center"
     android:padding="20dp"
-    android:background="@color/background">
+    android:background="@color/background"
+    android:fitsSystemWindows="true">
 
     <!-- CardView para sombra y bordes redondeados -->
     <androidx.cardview.widget.CardView
@@ -23,58 +25,49 @@
             android:orientation="vertical"
             android:padding="30dp">
 
-            <!-- Título -->
+            <!-- Título usa TextHeading1-->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Inicio de sesión"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:textColor="@color/text_primary"
+                android:text="@string/inicio_de_sesion"
+                style="@style/TextHeading1"
                 android:layout_marginBottom="8dp" />
 
-            <!-- Subtítulo -->
+            <!-- Subtítulo usa TextHeading2 -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Accede a tu cuenta para continuar"
+                android:text="@string/accede_a_tu_cuenta_para_continuar"
                 android:textSize="14sp"
-                android:textColor="@color/text_secondary"
+                style="@style/TextHeading2"
                 android:layout_marginBottom="25dp" />
 
-            <!-- Label: Correo electrónico -->
+            <!-- Label: Correo electrónico: usa TextCaption-->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Correo electrónico"
-                android:textSize="12sp"
+                android:text="@string/correo_electronico"
+                style="@style/TextCaption"
                 android:textStyle="bold"
-                android:textColor="@color/text_primary"
                 android:layout_marginBottom="6dp" />
 
-            <!-- Email Input -->
+            <!-- Email Input: hereda CustomEditText del tema global -->
             <EditText
                 android:id="@+id/emailInput"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:hint="Introduce tu correo"
+                android:hint="@string/introduce_tu_correo"
                 android:inputType="textEmailAddress"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:textColor="@color/text_primary"
-                android:textColorHint="@color/text_muted"
-                android:textSize="14sp"
-                android:background="@drawable/rounded_edittext"
+                android:autofillHints="emailAddress"
                 android:layout_marginBottom="18dp" />
 
-            <!-- Label: Contraseña -->
+            <!-- Label: Contraseña: usa TextCaption -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Contraseña"
-                android:textSize="12sp"
+                android:text="@string/contrasena"
+                style="@style/TextCaption"
                 android:textStyle="bold"
-                android:textColor="@color/text_primary"
                 android:layout_marginBottom="6dp" />
 
             <!-- Password Input (con layout relativo para el ojito) -->
@@ -87,14 +80,11 @@
                     android:id="@+id/passwordInput"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="Introduce tu contraseña"
+                    android:hint="@string/introduce_tu_contrasena"
                     android:inputType="textPassword"
+                    android:autofillHints="password"
                     android:paddingStart="12dp"
-                    android:paddingEnd="40dp"
-                    android:textColor="@color/text_primary"
-                    android:textColorHint="@color/text_muted"
-                    android:textSize="14sp"
-                    android:background="@drawable/rounded_edittext" />
+                    android:paddingEnd="40dp" />
 
                 <!-- Icono ojo para mostrar/ocultar contraseña -->
                 <ImageView
@@ -104,7 +94,7 @@
                     android:layout_gravity="center_vertical|end"
                     android:padding="8dp"
                     android:src="@drawable/ic_visibility_off"
-                    android:contentDescription="Mostrar/ocultar contraseña"
+                    android:contentDescription="@string/mostrar_ocultar_contrasena"
                     app:tint="@color/icon" />
 
             </FrameLayout>
@@ -121,26 +111,23 @@
                 android:layout_marginBottom="20dp"
                 android:gravity="center_vertical"/>
 
-            <!-- Botón Login -->
+            <!-- Botón Login: hereda CustomButton (texto blanco sobre beige) -->
             <Button
                 android:id="@+id/loginButton"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:text="Iniciar sesión"
-                android:textColor="@color/text_primary"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:background="@color/primary"
+                android:text="@string/iniciar_sesion"
+                style="@style/CustomButton"
                 android:layout_marginBottom="12dp" />
 
-            <!-- Link: Olvidaste contraseña -->
+            <!-- Link: Olvidaste contraseña: usa TextCaption -->
             <TextView
                 android:id="@+id/recuperarPasswordButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="¿Olvidaste tu contraseña?"
-                android:textSize="13sp"
-                android:textColor="@color/primary"
+                android:text="@string/olvidaste_tu_contrasena"
+                style="@style/TextCaption"
+                android:textColor="@color/primary_dark"
                 android:gravity="center"
                 android:padding="8dp" />
 

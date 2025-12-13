@@ -4,6 +4,7 @@ package com.edurooms.app.ui.activities
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
@@ -28,6 +29,8 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var recuperarPasswordButton: TextView
     private lateinit var passwordToggle: ImageView
 
+    private lateinit var rememberMeCheckbox: CheckBox
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,8 +52,21 @@ class LoginActivity : AppCompatActivity() {
         loginButton = findViewById(R.id.loginButton)
         recuperarPasswordButton = findViewById(R.id.recuperarPasswordButton)
         passwordToggle = findViewById(R.id.passwordToggle)
+        rememberMeCheckbox = findViewById(R.id.rememberMeCheckbox)
 
         configurarPasswordToggle(passwordToggle, passwordInput)
+
+
+
+        // Cargar credenciales si existen
+        val emailRecordado = tokenManager.obtenerEmailRecordado()
+        val passwordRecordada = tokenManager.obtenerPasswordRecordada()
+
+        if (!emailRecordado.isNullOrEmpty() && !passwordRecordada.isNullOrEmpty()) {
+            emailInput.setText(emailRecordado)
+            passwordInput.setText(passwordRecordada)
+            rememberMeCheckbox.isChecked = true
+        }
 
         // Ir al login con los datos precargados:
         // Obtener datos del Intent (si vienen del registro)
@@ -66,8 +82,6 @@ class LoginActivity : AppCompatActivity() {
         // ← CAMBIAR DE OnClickListener A OnTouchListener
 
     }
-
-
     private fun realizarLogin() {
         val email = emailInput.text.toString().trim()
         val password = passwordInput.text.toString().trim()
@@ -98,6 +112,13 @@ class LoginActivity : AppCompatActivity() {
                     tokenManager.guardarRol(loginResponse.usuario.rol)
                     tokenManager.guardarIdUsuario(loginResponse.usuario.id)
                     tokenManager.guardarPrimeraVezLogin(loginResponse.usuario.primera_vez_login)
+
+                    // Guardar o limpiar credenciales según checkbox
+                    if (rememberMeCheckbox.isChecked) {
+                        tokenManager.guardarCredencialesRecordadas(email, password)
+                    } else {
+                        tokenManager.limpiarCredencialesRecordadas()
+                    }
 
 
                     // Mensaje de éxito

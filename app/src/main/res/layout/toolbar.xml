@@ -18,7 +18,7 @@
         android:layout_gravity="end"
         android:layout_marginEnd="8dp"
         android:src="@drawable/baseline_person_24"
-        android:contentDescription="Perfil"
+        android:contentDescription="@string/perfil"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:visibility="gone" />
 
@@ -30,7 +30,7 @@
         android:layout_gravity="end"
         android:layout_marginEnd="8dp"
         android:src="@drawable/notifications_24"
-        android:contentDescription="Notificaciones"
+        android:contentDescription="@string/notificaciones"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:visibility="gone" />
 

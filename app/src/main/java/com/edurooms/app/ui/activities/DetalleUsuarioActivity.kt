@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.Spinner
-import android.widget.Switch
+import androidx.appcompat.widget.SwitchCompat
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -12,12 +12,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.edurooms.app.R
-import com.edurooms.app.data.models.Reserva
-import com.edurooms.app.data.models.Incidencia
 import com.edurooms.app.data.network.RetrofitClient
 import com.edurooms.app.data.utils.TokenManager
 import com.edurooms.app.ui.adapters.ReservasAdapter
-import com.edurooms.app.ui.adapters.IncidenciasAdapter
 import kotlinx.coroutines.launch
 
 
@@ -35,7 +32,7 @@ class DetalleUsuarioActivity : BaseActivity() {
     private lateinit var usuarioEmailDetail: TextView
     private lateinit var usuarioDepartamentoDetail: TextView
     private lateinit var rolSpinner: Spinner
-    private lateinit var estadoSwitch: Switch
+    private lateinit var estadoSwitch: SwitchCompat
     private lateinit var guardarCambiosButton: Button
     private lateinit var eliminarUsuarioButton: Button
     private lateinit var reservasRecyclerView: RecyclerView
@@ -98,9 +95,9 @@ class DetalleUsuarioActivity : BaseActivity() {
     }
 
     private fun mostrarDatosUsuario() {
-        usuarioNombreDetail.text = "Nombre: $usuarioNombre"
-        usuarioEmailDetail.text = "Email: $usuarioEmail"
-        usuarioDepartamentoDetail.text = "Departamento: $usuarioDepartamento"
+        usuarioNombreDetail.text = getString(R.string.nombre_formato, usuarioNombre)
+        usuarioEmailDetail.text = getString(R.string.email_label_formato, usuarioEmail)
+        usuarioDepartamentoDetail.text = getString(R.string.departamento_label_formato, usuarioDepartamento)
 
         // Configurar Spinner con rol actual
         val rolesArray = resources.getStringArray(R.array.roles_array)

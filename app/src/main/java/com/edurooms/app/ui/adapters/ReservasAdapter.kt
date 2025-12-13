@@ -6,9 +6,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.edurooms.app.R
 import com.edurooms.app.data.models.Reserva
-import java.text.SimpleDateFormat
-import java.util.Locale
-import java.util.TimeZone
+
 
 
 class ReservasAdapter(
@@ -22,6 +20,8 @@ class ReservasAdapter(
         private val horaText: TextView = itemView.findViewById(R.id.horaText)
         private val estadoText: TextView = itemView.findViewById(R.id.estadoText)
 
+        private val usuarioText: TextView = itemView.findViewById(R.id.usuarioText)
+
         fun bind(reserva: Reserva) {
             aulaNombreText.text = reserva.aula_nombre
 
@@ -32,14 +32,22 @@ class ReservasAdapter(
             android.util.Log.d("RESERVA_DEBUG", "Partes: $partes -> $fechaFormateada")
 
             fechaText.text = itemView.context.getString(R.string.fecha_formato, fechaFormateada)
-            horaText.text = itemView.context.getString(R.string.fecha_formato, fechaFormateada)
+            horaText.text = itemView.context.getString(R.string.hora_formato, reserva.hora_inicio, reserva.hora_fin)
             estadoText.text = itemView.context.getString(R.string.estado_formato, reserva.estado)
+            usuarioText.text = itemView.context.getString(R.string.profesor_formato, reserva.usuario_nombre ?: "Desconocido")
 
             // Color según estado
-            if (reserva.estado == "confirmada") {
-                estadoText.setTextColor(android.graphics.Color.GREEN)
-            } else {
-                estadoText.setTextColor(android.graphics.Color.RED)
+            when (reserva.estado) {
+                "confirmada" -> {
+                    estadoText.setTextColor(android.graphics.Color.GREEN)
+                }
+                "completada" -> {
+                    estadoText.setTextColor(android.graphics.Color.GRAY)
+                }
+                "cancelada" -> {
+                    estadoText.setTextColor(android.graphics.Color.RED)
+                } else ->
+                estadoText.setTextColor(android.graphics.Color.BLACK)
             }
 
             // Click listener

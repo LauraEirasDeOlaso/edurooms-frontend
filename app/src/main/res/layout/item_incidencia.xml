@@ -11,21 +11,21 @@
         android:id="@+id/aulaText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        style="@style/TextHeading2"
+        android:textColor="@color/primary" />
 
     <TextView
         android:id="@+id/descripcionText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="14sp"
+        style="@style/TextBody"
         android:layout_marginTop="5dp" />
 
     <TextView
         android:id="@+id/estadoText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="14sp"
+        style="@style/TextCaption"
         android:layout_marginTop="5dp" />
 
 </LinearLayout>

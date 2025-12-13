@@ -18,6 +18,7 @@ import java.util.*
 import android.widget.ArrayAdapter
 
 
+
 class ReservaActivity : BaseActivity() {
 
     private lateinit var calendarView: CalendarView
@@ -58,17 +59,17 @@ class ReservaActivity : BaseActivity() {
         // Fecha por defecto: hoy
         val cal = Calendar.getInstance()
         val year = cal.get(Calendar.YEAR)
-        val mes = String.format("%02d", cal.get(Calendar.MONTH) + 1)
-        val dia = String.format("%02d", cal.get(Calendar.DAY_OF_MONTH))
+        val mes = String.format(Locale.US,"%02d", cal.get(Calendar.MONTH) + 1)
+        val dia = String.format(Locale.US, "%02d", cal.get(Calendar.DAY_OF_MONTH))
         fechaSeleccionada = "$year-$mes-$dia"
 
         // Cargar horarios para hoy
         cargarHorariosDisponibles(fechaSeleccionada)
 
         calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
-            val mesFormato = String.format("%02d", month + 1)
-            val diaFormato = String.format("%02d", dayOfMonth)
-            fechaSeleccionada = "$year-$mesFormato-$diaFormato"
+            val mes = String.format(Locale.US, "%02d",month + 1)
+            val dia = String.format(Locale.US, "%02d",dayOfMonth)
+            fechaSeleccionada = "$year-$mes-$dia"
             //Toast.makeText(this, "Fecha seleccionada: $fechaSeleccionada", Toast.LENGTH_SHORT).show()
 
             // Cargar horarios para la nueva fecha
@@ -98,7 +99,7 @@ class ReservaActivity : BaseActivity() {
         lifecycleScope.launch {
             try {
                 // Mostrar loading
-                horariosDisponiblesText.text = "Cargando horarios..."
+                horariosDisponiblesText.text = getString(R.string.horarios_cargando)
                 spinnerHorarios.isEnabled = false
 
                 val response = RetrofitClient.apiService.obtenerHorariosDisponibles(aulaId, fecha)
@@ -110,14 +111,16 @@ class ReservaActivity : BaseActivity() {
                     }
 
                     if (horariosLibres.isEmpty()) {
-                        horariosDisponiblesText.text = "❌ No hay horarios disponibles para esta fecha"
+                        horariosDisponiblesText.text = getString(R.string.horarios_no_disponibles)
                         spinnerHorarios.isEnabled = false
                     } else {
-                        horariosDisponiblesText.text = "✅ ${horariosLibres.size} horarios disponibles"
+                        horariosDisponiblesText.text = getString(R.string.horarios_disponibles, horariosLibres.size)
 
                         // Crear lista para el spinner
-                        val items = mutableListOf("Selecciona un horario...")
-                        items.addAll(horariosLibres.map { (inicio, fin) -> "$inicio - $fin" })
+                        val items = mutableListOf(getString(R.string.selecciona_horario))
+                        items.addAll(horariosLibres.map { (inicio, fin) ->
+                            getString(R.string.horario_formato_item, inicio, fin)
+                        })
 
                         val adapter = ArrayAdapter(
                             this@ReservaActivity,
@@ -136,19 +139,19 @@ class ReservaActivity : BaseActivity() {
                         try {
                             val jsonObject = JsonParser.parseString(errorBody).asJsonObject
                             jsonObject.get("mensaje")?.asString ?: "Error desconocido"
-                        } catch (e: Exception) {
+                        } catch (_: Exception) {
                             "Error: ${response.code()}"
                         }
                     } else {
                         "Error: ${response.code()}"
                     }
 
-                    horariosDisponiblesText.text = "❌ $errorMsg"
+                    horariosDisponiblesText.text = getString(R.string.error_mensaje_formato, errorMsg)
                     spinnerHorarios.isEnabled = false
                     horariosLibres = emptyList()
                 }
             } catch (e: Exception) {
-                horariosDisponiblesText.text = "❌ Error: ${e.message}"
+                horariosDisponiblesText.text = getString(R.string.error_excepcion_formato, e.message ?: "Desconocido")
                 spinnerHorarios.isEnabled = false
                 android.util.Log.e("RESERVA", "Error cargando horarios", e)
             }
@@ -214,7 +217,7 @@ class ReservaActivity : BaseActivity() {
                             "Error ${response.code()}"
                         }
                         Toast.makeText(this@ReservaActivity, "❌ $errorMessage", Toast.LENGTH_SHORT).show()
-                    } catch (e: Exception) {
+                    } catch (_: Exception) {
                         Toast.makeText(this@ReservaActivity, "❌ Error: ${response.code()}", Toast.LENGTH_SHORT).show()
                     }
                 }

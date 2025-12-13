@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/background">
 
-    !-- AppBar/Toolbar -->
+    <!-- AppBar/Toolbar -->
     <include layout="@layout/toolbar" />
 
     <!-- Contenido principal (scrolleable) -->
@@ -25,8 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/detalle_del_aula"
-                android:textSize="24sp"
-                android:textStyle="bold"
+                style="@style/TextHeading1"
                 android:layout_marginBottom="20dp"
                 android:textColor="@color/primary" />
 
@@ -35,37 +34,32 @@
                 android:id="@+id/nombreText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="15dp"
-                android:textColor="@color/text_primary" />
+                style="@style/TextHeading2"
+                android:layout_marginBottom="15dp" />
 
             <!-- Capacidad -->
             <TextView
                 android:id="@+id/capacidadText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:layout_marginBottom="10dp"
-                android:textColor="@color/text_secondary" />
+                style="@style/TextBody"
+                android:layout_marginBottom="10dp" />
 
             <!-- Ubicación -->
             <TextView
                 android:id="@+id/ubicacionText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:layout_marginBottom="10dp"
-                android:textColor="@color/text_secondary" />
+                style="@style/TextBody"
+                android:layout_marginBottom="10dp"/>
 
             <!-- Estado -->
             <TextView
                 android:id="@+id/estadoText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:layout_marginBottom="30dp"
-                android:textColor="@color/text_secondary" />
+                style="@style/TextBody"
+                android:layout_marginBottom="30dp"/>
 
             <!-- Botón Reservar -->
             <Button
@@ -73,9 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:text="@string/reservar_aula"
-                android:textSize="16sp"
-                android:layout_marginBottom="15dp"
-                android:backgroundTint="@color/primary" />
+                android:layout_marginBottom="15dp" />
 
             <!-- Botón Reportar Incidencia -->
             <Button
@@ -83,19 +75,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:text="@string/reportar_incidencia"
-                android:textSize="16sp"
-                android:layout_marginBottom="30dp"
-                android:backgroundTint="@color/primary" />
+                android:layout_marginBottom="30dp"/>
 
             <!-- Título Incidencias -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/incidencias_activas"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="10dp"
-                android:textColor="@color/primary" />
+                style="@style/TextHeading2"
+                android:layout_marginBottom="10dp"/>
 
             <!-- Lista Incidencias -->
             <ListView

@@ -65,10 +65,13 @@ class DetalleAulaAdminActivity : BaseActivity() {
 
                 if (response.isSuccessful && response.body() != null) {
                     val aula = response.body()!!
-                    nombreText.text = "Nombre: ${aula.nombre}"
-                    capacidadText.text = "Capacidad: ${aula.capacidad}"
-                    ubicacionText.text = "Ubicación: ${aula.ubicacion ?: "N/A"}"
-                    estadoText.text = "Estado: ${aula.estado}"
+                    nombreText.text = getString(R.string.nombre_formato, aula.nombre)
+                    capacidadText.text = getString(R.string.capacidad_formato, aula.capacidad)
+
+                    val ubicacion = aula.ubicacion ?: getString(R.string.ubicacion_no_disponible)
+                    ubicacionText.text = getString(R.string.ubicacion_formato, ubicacion)
+
+                    estadoText.text = getString(R.string.estado_formato, aula.estado)
                 }
             } catch (e: Exception) {
                 Toast.makeText(this@DetalleAulaAdminActivity, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
@@ -78,7 +81,7 @@ class DetalleAulaAdminActivity : BaseActivity() {
 
     private fun mostrarDialogoEditar() {
         val nombre = nombreText.text.toString().replace("Nombre: ", "")
-        val capacidad = capacidadText.text.toString().replace("Capacidad: ", "")
+        val capacidad = capacidadText.text.toString().replace("Capacidad: ", "").replace(" personas", "")
         val ubicacion = ubicacionText.text.toString().replace("Ubicación: ", "")
         val estado = estadoText.text.toString().replace("Estado: ", "")
 
@@ -130,8 +133,9 @@ class DetalleAulaAdminActivity : BaseActivity() {
 
                 val response = RetrofitClient.apiService.actualizarAula("Bearer $token", aulaId, datos)
 
-                if (response.isSuccessful) {
-                    Toast.makeText(this@DetalleAulaAdminActivity, "✅ Aula actualizada", Toast.LENGTH_SHORT).show()
+                if (response.isSuccessful && response.body() != null) {
+                    val mensaje = response.body()?.mensaje ?: "✅ Aula actualizada"
+                    Toast.makeText(this@DetalleAulaAdminActivity, mensaje, Toast.LENGTH_SHORT).show()
                     cargarDetalleAula()
                 } else {
                     Toast.makeText(this@DetalleAulaAdminActivity, "❌ Error al actualizar", Toast.LENGTH_SHORT).show()

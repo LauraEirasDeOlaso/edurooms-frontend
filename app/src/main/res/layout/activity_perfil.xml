@@ -43,7 +43,6 @@
                         android:layout_height="80dp"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginBottom="16dp"
-                        android:background="@drawable/rounded_edittext"
                         android:clickable="true"
                         android:focusable="true">
 
@@ -51,9 +50,9 @@
                             android:id="@+id/profileImage"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
                             android:src="@drawable/baseline_person_24"
-                            android:scaleType="centerInside"
-                            app:tint="@color/icon" />
+                            android:contentDescription="@string/foto_de_perfil" />
 
                     </FrameLayout>
 
@@ -62,10 +61,8 @@
                         android:id="@+id/userNameText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Nombre Usuario"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/text_primary"
+                        android:text="@string/nombre_usuario"
+                        style="@style/TextHeading2"
                         android:gravity="center"
                         android:layout_marginBottom="8dp" />
 
@@ -74,9 +71,8 @@
                         android:id="@+id/userEmailText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="email@example.com"
-                        android:textSize="14sp"
-                        android:textColor="@color/text_secondary"
+                        android:text="@string/email_example_com"
+                        style="@style/TextBody"
                         android:gravity="center"
                         android:layout_marginBottom="16dp" />
 
@@ -97,10 +93,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Rol:"
-                            android:textSize="13sp"
+                            android:text="@string/rol"
+                            style="@style/TextCaption"
                             android:textStyle="bold"
-                            android:textColor="@color/text_primary"
                             android:layout_marginEnd="8dp" />
 
                         <TextView
@@ -108,9 +103,8 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Profesor"
-                            android:textSize="13sp"
-                            android:textColor="@color/text_secondary" />
+                            android:text="@string/profesor"
+                            style="@style/TextCaption" />
 
                     </LinearLayout>
 
@@ -123,10 +117,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Departamento:"
-                            android:textSize="13sp"
+                            android:text="@string/departamento"
+                            style="@style/TextCaption"
                             android:textStyle="bold"
-                            android:textColor="@color/text_primary"
                             android:layout_marginEnd="8dp" />
 
                         <TextView
@@ -134,9 +127,8 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Matemáticas"
-                            android:textSize="13sp"
-                            android:textColor="@color/text_secondary" />
+                            android:text="@string/matem_ticas"
+                            style="@style/TextCaption"/>
 
                     </LinearLayout>
 
@@ -173,18 +165,19 @@
                             android:layout_height="24dp"
                             android:src="@drawable/vpn_key_24"
                             app:tint="@color/icon"
-                            android:contentDescription="Contraseña" />
+                            android:contentDescription="@string/contrasena" />
 
                         <Button
                             android:id="@+id/changePasswordButton"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:text="Cambiar contraseña"
-                            android:textSize="15sp"
+                            android:text="@string/cambiar_password"
                             android:textColor="@color/text_primary"
                             android:gravity="center_vertical"
-                            android:paddingStart="16dp" />
+                            android:paddingStart="16dp"
+                            android:paddingEnd="16dp"
+                            android:background="@null"/>
 
                     </LinearLayout>
 
@@ -212,18 +205,19 @@
                             android:layout_height="24dp"
                             android:src="@drawable/notifications_24"
                             app:tint="@color/icon"
-                            android:contentDescription="Notificaciones" />
+                            android:contentDescription="@string/notificaciones" />
 
                         <Button
                             android:id="@+id/notificationsButton"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:text="Notificaciones"
-                            android:textSize="15sp"
+                            android:text="@string/notificaciones"
                             android:textColor="@color/text_primary"
                             android:gravity="center_vertical"
-                            android:paddingStart="16dp" />
+                            android:paddingStart="16dp"
+                            android:paddingEnd="16dp"
+                            android:background="@null"/>
 
                     </LinearLayout>
 
@@ -242,9 +236,8 @@
                     android:id="@+id/logoutButton"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Cerrar sesión"
+                    android:text="@string/cerrar_sesion"
                     android:textSize="16sp"
-                    android:textColor="@color/text_on_primary"
                     android:textStyle="bold"
                     android:background="@color/danger"
                     android:elevation="0dp" />

@@ -73,7 +73,7 @@ open class BaseActivity : AppCompatActivity() {
                     if (this !is MainActivity) {
                         // Si NO estoy en MainActivity, voy a MainActivity
                         startActivity(Intent(this, MainActivity::class.java))
-                        finish()
+                        //finish()
                     }
                     true
                 }
@@ -82,7 +82,7 @@ open class BaseActivity : AppCompatActivity() {
                     if (this !is ListaAulasActivity) {
                         // Si NO estoy en ListaAulasActivity, voy a ListaAulasActivity
                         startActivity(Intent(this, ListaAulasActivity::class.java))
-                        finish()
+                        //finish()
                     }
                     true
                 }
@@ -90,7 +90,7 @@ open class BaseActivity : AppCompatActivity() {
                 R.id.nav_reservas -> {
                     if (this !is MisReservasActivity) {
                         startActivity(Intent(this, MisReservasActivity::class.java))
-                        finish()
+                        //finish()
                     }
                     true
                 }
@@ -99,7 +99,7 @@ open class BaseActivity : AppCompatActivity() {
                     if (this !is IncidenciasActivity) {
                         // Si NO estoy en IncidenciasActivity, voy a IncidenciasActivity
                         startActivity(Intent(this, IncidenciasActivity::class.java))
-                        finish()
+                        //finish()
                     }
                     true
                 }
@@ -153,8 +153,8 @@ open class BaseActivity : AppCompatActivity() {
      *
      * Se reutiliza en múltiples Activities: LoginActivity, CambiarPasswordActivity, CrearUsuarioActivity
      *
-     * @param passwordToggle ImageView del icono de visibilidad
-     * @param passwordInput EditText donde está la contraseña
+     * @param 'passwordToggle' ImageView del icono de visibilidad
+     * @param 'passwordInput' EditText donde está la contraseña
      */
     companion object {
         @Suppress("ClickableViewAccessibility")

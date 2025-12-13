@@ -1,6 +1,8 @@
 [versions]
-agp = "8.13.1"
+agp = "8.13.2"
 appcompat = "1.7.1"
+compiler = "4.15.1"
+glide = "4.15.1"
 kotlin = "2.2.21"
 coreKtx = "1.17.0"
 junit = "4.13.2"
@@ -17,11 +19,14 @@ coroutines = "1.10.2"
 lifecycle = "2.9.4"
 security-crypto = "1.1.0"
 recyclerview = "1.4.0"
+filamentAndroid = "1.17.1"
 
 
 [libraries]
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+compiler-v4151 = { module = "com.github.bumptech.glide:compiler", version.ref = "compiler" }
+glide-v4151 = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -56,6 +61,10 @@ lifecycle-livedata = { group = "androidx.lifecycle", name = "lifecycle-livedata-
 # Security
 security-crypto = { group = "androidx.security", name = "security-crypto", version.ref = "security-crypto" }
 androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
+filament-android = { group = "com.google.ar.sceneform", name = "filament-android", version.ref = "filamentAndroid" }
+
+glide = "com.github.bumptech.glide:glide:5.0.5"
+glide-compiler = "com.github.bumptech.glide:compiler:5.0.5"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

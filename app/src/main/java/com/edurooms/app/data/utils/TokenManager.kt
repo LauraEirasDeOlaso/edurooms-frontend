@@ -80,4 +80,38 @@ class TokenManager(context: Context) {
     fun obtenerIdUsuario(): Int {
         return prefs.getInt("usuario_id", 0)
     }
+
+    // Recuérdame - Guardar email y contraseña
+    fun guardarCredencialesRecordadas(email: String, password: String) {
+        prefs.edit {
+            putString("remember_email", email)
+            putString("remember_password", password)
+        }
+    }
+
+    // Obtener email recordado
+    fun obtenerEmailRecordado(): String? {
+        return prefs.getString("remember_email", null)
+    }
+
+    // Obtener contraseña recordada
+    fun obtenerPasswordRecordada(): String? {
+        return prefs.getString("remember_password", null)
+    }
+
+    // Limpiar credenciales recordadas
+    fun limpiarCredencialesRecordadas() {
+        prefs.edit {
+            remove("remember_email")
+            remove("remember_password")
+        }
+    }
+
+    // Limpiar SOLO la contraseña recordada (mantener email)
+    fun limpiarSoloPassword() {
+        prefs.edit {
+            remove("remember_password")
+        }
+    }
+
 }

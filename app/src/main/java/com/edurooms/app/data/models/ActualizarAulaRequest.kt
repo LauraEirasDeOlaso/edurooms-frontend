@@ -6,3 +6,4 @@ data class ActualizarAulaRequest(
     val ubicacion: String?,
     val estado: String
 )
+

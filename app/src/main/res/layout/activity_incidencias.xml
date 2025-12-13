@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/background">
 
     <!-- AppBar/Toolbar -->
     <include layout="@layout/toolbar" />
@@ -24,18 +25,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/incidencias"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="20dp"
-                android:textColor="@color/primary" />
+                style="@style/TextHeading1"
+                android:layout_marginBottom="20dp" />
 
             <!-- Reportar nueva -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/reportar_nueva_incidencia"
-                android:textSize="16sp"
-                android:textStyle="bold"
+                style="@style/TextHeading2"
                 android:layout_marginBottom="10dp" />
 
             <!-- Selector de Aula -->
@@ -49,12 +47,11 @@
                 android:id="@+id/descripcionInput"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
+                style="@style/CustomEditText"
                 android:hint="@string/descripci_n_del_problema"
                 android:inputType="textMultiLine"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/rounded_edittext" />
+                android:autofillHints="none"
+                android:layout_marginBottom="10dp" />
 
             <Spinner
                 android:id="@+id/tipoSpinner"
@@ -68,19 +65,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:text="@string/reportar_incidencia"
-                android:textSize="14sp"
-                android:layout_marginBottom="20dp"
-                android:backgroundTint="@color/primary" />
+                android:layout_marginBottom="20dp" />
 
             <!-- Incidencias registradas -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/incidencias_registradas"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="10dp"
-                android:textColor="@color/primary" />
+                style="@style/TextHeading2"
+                android:layout_marginBottom="10dp" />
 
             <ListView
                 android:id="@+id/incidenciasListView"

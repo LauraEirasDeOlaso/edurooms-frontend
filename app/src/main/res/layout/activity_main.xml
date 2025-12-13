@@ -29,24 +29,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginBottom="15dp"
-                android:text="@string/ver_aulas_disponibles"
-                android:textSize="16sp" />
+                android:text="@string/ver_aulas_disponibles" />
 
             <Button
                 android:id="@+id/misReservasButton"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginBottom="15dp"
-                android:text="@string/mis_reservas"
-                android:textSize="16sp" />
+                android:text="@string/mis_reservas" />
 
             <Button
                 android:id="@+id/incidenciasButton"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginBottom="30dp"
-                android:text="@string/reportar_incidencia"
-                android:textSize="16sp" />
+                android:text="@string/reportar_incidencia"/>
 
             <!-- BOTONES SOLO PARA ADMIN (ocultos por defecto) -->
             <Button
@@ -54,8 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginBottom="15dp"
-                android:text="🏫 Gestionar Aulas"
-                android:textSize="16sp"
+                android:text="@string/gestionar_aulas"
                 android:visibility="gone" />
 
             <Button
@@ -64,7 +60,6 @@
                 android:layout_height="60dp"
                 android:layout_marginBottom="30dp"
                 android:text="@string/gestionar_usuarios"
-                android:textSize="16sp"
                 android:visibility="gone" />
 
             <Button
@@ -72,8 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginBottom="30dp"
-                android:text="📅 Gestionar Reservas"
-                android:textSize="16sp"
+                android:text="@string/gestionar_reservas"
                 android:visibility="gone" />
 
             <!-- BOTÓN CERRAR SESIÓN (para todos) -->
@@ -81,9 +75,9 @@
                 android:id="@+id/cerrarSesionButton"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:backgroundTint="#FF6B6B"
                 android:text="@string/cerrar_sesi_n"
-                android:textSize="16sp" />
+                android:backgroundTint="@color/error"
+                android:textColor="@color/white" />
 
         </LinearLayout>
     </ScrollView>

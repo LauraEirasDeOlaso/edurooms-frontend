@@ -25,7 +25,7 @@ class GestionarUsuariosActivity : BaseActivity() {
         setContentView(R.layout.activity_gestionar_usuarios)
 
         // Configurar Toolbar
-        setupToolbar(title = "Gestionar Usuarios", showBackButton = true)
+        setupToolbar(title = "", showBackButton = true)
         mostrarIconosToolbar(notificaciones = true, perfil = true)
         configurarIconosToolbar(
             onNotificacionesClick = { Toast.makeText(this, "Notificaciones", Toast.LENGTH_SHORT).show() },
@@ -97,7 +97,7 @@ class GestionarUsuariosActivity : BaseActivity() {
         intent.putExtra("usuario_nombre", usuario.nombre)
         intent.putExtra("usuario_email", usuario.email)
         intent.putExtra("usuario_rol", usuario.rol)
-        intent.putExtra("usuario_estado", usuario.estado ?: "habilitado")
+        intent.putExtra("usuario_estado", usuario.estado)
         //intent.putExtra("usuario_departamento", usuario.departamento ?: "")
         startActivity(intent)
     }

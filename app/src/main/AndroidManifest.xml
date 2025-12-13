@@ -4,7 +4,7 @@
 
     <!-- Permiso de internet (IMPORTANTE para conectar al backend) -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
 
 
     <application
@@ -20,7 +20,7 @@
         <activity
             android:name=".ui.activities.LoginActivity"
             android:exported="true"
-            android:label="@string/app_name"
+            android:windowSoftInputMode="adjustResize"
             tools:ignore="Instantiatable"
             >
             <intent-filter>
@@ -33,33 +33,33 @@
         <!-- MainActivity (menú principal) -->
         <activity
             android:name=".ui.activities.MainActivity"
-            android:exported="true"
+            android:exported="false"
             android:label="Menu"
              />
 
         <activity
             android:name=".ui.activities.ListaAulasActivity"
-            android:exported="true"
+            android:exported="false"
             android:label="Aulas" />
 
         <activity
             android:name=".ui.activities.DetalleAulaActivity"
-            android:exported="true"
+            android:exported="false"
             android:label="Detalle Aula" />
 
         <activity
             android:name=".ui.activities.ReservaActivity"
-            android:exported="true"
+            android:exported="false"
             android:label="Nueva Reserva" />
 
         <activity
             android:name=".ui.activities.MisReservasActivity"
-            android:exported="true"
+            android:exported="false"
             android:label="Mis Reservas"/>
 
         <activity
             android:name=".ui.activities.IncidenciasActivity"
-            android:exported="true"
+            android:exported="false"
             android:label="Incidencias"/>
 
         <activity

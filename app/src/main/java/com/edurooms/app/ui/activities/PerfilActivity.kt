@@ -11,11 +11,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.lifecycleScope
 import com.edurooms.app.R
 import com.edurooms.app.data.network.RetrofitClient
+import com.edurooms.app.data.utils.Constants
 import com.edurooms.app.data.utils.TokenManager
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.asRequestBody
 
+@Suppress("DEPRECATION", "DEPRECATION")
 class PerfilActivity : BaseActivity() {
 
     private lateinit var tokenManager: TokenManager
@@ -26,6 +28,8 @@ class PerfilActivity : BaseActivity() {
     private lateinit var changePasswordButton: Button
     private lateinit var notificationsButton: Button
     private lateinit var logoutButton: Button
+
+
 
     private lateinit var profileImageContainer: FrameLayout
 
@@ -112,21 +116,33 @@ class PerfilActivity : BaseActivity() {
         finish()
     }
 
-    private fun abrirGaleria() {
-        val intent = Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        intent.type = "image/*"
-        startActivityForResult(intent, 100)
+
+
+    private val pickImageLauncher = registerForActivityResult(
+        androidx.activity.result.contract.ActivityResultContracts.GetContent()
+    ) { uri ->
+        if (uri != null) {
+            subirFoto(uri)
+        }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == 100 && resultCode == android.app.Activity.RESULT_OK && data != null) {
-            val uri = data.data
-            if (uri != null) {
-                subirFoto(uri)
+    private fun abrirGaleria() {
+        val opciones = arrayOf( "🖼️ Galería", "❌ Cancelar")
+        AlertDialog.Builder(this)
+            .setTitle("Selecciona una opción")
+            .setItems(opciones) { _, which ->
+                when (which) {
+                    0 -> abrirGaleriaFotos()  // Si toca Galería
+                    1 -> {}                   // Si toca Cancelar (no hace nada)
+                }
             }
-        }
+            .show()
+    }
+
+
+    private fun abrirGaleriaFotos() {
+        pickImageLauncher.launch("image/*")
+        // Automáticamente ejecuta subirFoto() cuando seleccionas una foto
     }
 
     private fun subirFoto(uri: android.net.Uri) {
@@ -135,13 +151,11 @@ class PerfilActivity : BaseActivity() {
                 val token = tokenManager.obtenerToken() ?: return@launch
                 val usuarioId = tokenManager.obtenerIdUsuario()
 
-                // Convertir URI a File
                 val inputStream = contentResolver.openInputStream(uri) ?: return@launch
                 val file = java.io.File(cacheDir, "foto_perfil.jpg")
                 file.outputStream().use { inputStream.copyTo(it) }
                 inputStream.close()
 
-                // Crear MultipartBody.Part
                 val requestBody = file.asRequestBody("image/jpeg".toMediaType())
                 val fotoPart = okhttp3.MultipartBody.Part.createFormData("foto", file.name, requestBody)
 
@@ -149,12 +163,18 @@ class PerfilActivity : BaseActivity() {
 
                 if (response.isSuccessful) {
                     Toast.makeText(this@PerfilActivity, "✅ Foto actualizada", Toast.LENGTH_SHORT).show()
+
+                    // LIMPIAR TODO
+                    com.bumptech.glide.Glide.get(this@PerfilActivity).clearMemory()
+
+                    // Recargar sin delay
                     cargarFotoPerfil()
                 } else {
                     Toast.makeText(this@PerfilActivity, "❌ Error al subir foto", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 Toast.makeText(this@PerfilActivity, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                android.util.Log.e("FOTO_UPLOAD", "Error subiendo:", e)
             }
         }
     }
@@ -166,27 +186,26 @@ class PerfilActivity : BaseActivity() {
                 val response = RetrofitClient.apiService.obtenerFotoPerfil(usuarioId)
 
                 if (response.isSuccessful) {
-                    val fotoRuta = response.body()?.get("foto_ruta") as? String
-                    if (fotoRuta != null) {
-                        val baseUrl = "http://192.168.1.32:3000/" // ← CAMBIAR IP
-                        val urlFoto = baseUrl + fotoRuta
+                    val fotoRuta = response.body()?.get("foto_ruta")
 
-                        // ← AGREGAR LOG
-                        android.util.Log.d("FOTO_DEBUG", "URL: $urlFoto")
-                        android.util.Log.d("FOTO_DEBUG", "fotoRuta: $fotoRuta")
+                    if (!fotoRuta.isNullOrEmpty()) {
+                        val baseUrl = Constants.BASE_URL.replace("/api/", "")
+                        val urlFoto = baseUrl + "/" + fotoRuta + "?t=" + System.currentTimeMillis()
 
-                        // Cargar con Glide
+                        android.util.Log.d("FOTO_DEBUG", "URL FINAL: $urlFoto")
+
                         val profileImage = findViewById<ImageView>(R.id.profileImage)
                         com.bumptech.glide.Glide.with(this@PerfilActivity)
                             .load(urlFoto)
+                            .centerCrop()
                             .circleCrop()
                             .listener(object : com.bumptech.glide.request.RequestListener<android.graphics.drawable.Drawable> {
                                 override fun onLoadFailed(e: com.bumptech.glide.load.engine.GlideException?, model: Any?, target: com.bumptech.glide.request.target.Target<android.graphics.drawable.Drawable>?, isFirstResource: Boolean): Boolean {
-                                    android.util.Log.e("GLIDE_ERROR", "Error cargando: ${e?.message}")
+                                    android.util.Log.e("GLIDE_ERROR", "Error: ${e?.message}")
                                     return false
                                 }
                                 override fun onResourceReady(resource: android.graphics.drawable.Drawable?, model: Any?, target: com.bumptech.glide.request.target.Target<android.graphics.drawable.Drawable>?, dataSource: com.bumptech.glide.load.DataSource?, isFirstResource: Boolean): Boolean {
-                                    android.util.Log.d("GLIDE_SUCCESS", "Imagen cargada")
+                                    android.util.Log.d("GLIDE_SUCCESS", "✅ Imagen cargada correctamente")
                                     return false
                                 }
                             })
@@ -194,7 +213,7 @@ class PerfilActivity : BaseActivity() {
                     }
                 }
             } catch (e: Exception) {
-                android.util.Log.e("PERFIL", "Error cargando foto", e)
+                android.util.Log.e("PERFIL", "Error:", e)
             }
         }
     }

@@ -11,21 +11,21 @@
         android:id="@+id/nombreText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        style="@style/TextHeading2"
+        android:textColor="@color/primary" />
 
     <TextView
         android:id="@+id/capacidadText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="14sp"
+        style="@style/TextBody"
         android:layout_marginTop="5dp" />
 
     <TextView
         android:id="@+id/estadoText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="14sp"
+        style="@style/TextCaption"
         android:layout_marginTop="5dp" />
 
 </LinearLayout>

@@ -68,14 +68,22 @@ class DetalleReservaActivity : BaseActivity() {
 
                     aulaNombreText.text = reserva.aula_nombre
 
-                    val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale("es", "ES"))
-                    val outputFormat = SimpleDateFormat("dd/MM/yyyy", Locale("es", "ES"))
-                    val fechaParsed = inputFormat.parse(reserva.fecha.substring(0, 10))
-                    val fechaFormateada = outputFormat.format(fechaParsed)
-                    fechaText.text = "Fecha: $fechaFormateada"
+                    val esLocale = Locale.Builder()
+                        .setLanguage("es")
+                        .setRegion("ES")
+                        .build()
 
-                    horaText.text = "Horario: ${reserva.hora_inicio} - ${reserva.hora_fin}"
-                    estadoText.text = "Estado: ${reserva.estado}"
+                    val inputFormat = SimpleDateFormat("yyyy-MM-dd", esLocale)
+                    val outputFormat = SimpleDateFormat("dd/MM/yyyy", esLocale)
+                    val fechaParsed = inputFormat.parse(reserva.fecha.take(10))
+                    val fechaFormateada = if (fechaParsed != null) {
+                        outputFormat.format(fechaParsed)  // ✅ Ahora es Date (no-nullable)
+                    } else {
+                        "Fecha inválida"
+                    }
+                    fechaText.text = getString(R.string.fecha_formato, fechaFormateada)
+                    horaText.text = getString(R.string.horario_formato, reserva.hora_inicio, reserva.hora_fin)
+                    estadoText.text = getString(R.string.estado_formato, reserva.estado)
                     //Color según estado
                     if (reserva.estado == "confirmada") {
                         estadoText.setTextColor(android.graphics.Color.GREEN)

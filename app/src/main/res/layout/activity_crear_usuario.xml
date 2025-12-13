@@ -25,10 +25,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Crear Nuevo Usuario"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                android:textColor="@color/text_primary"
+                android:text="@string/crear_nuevo_usuario"
+                style="@style/TextHeading1"
                 android:layout_marginBottom="25dp" />
 
             <!-- CardView con formulario -->
@@ -50,10 +48,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Nombre Completo"
-                        android:textSize="12sp"
+                        android:text="@string/nombre_completo"
+                        style="@style/TextCaption"
                         android:textStyle="bold"
-                        android:textColor="@color/text_primary"
                         android:layout_marginBottom="6dp" />
 
                     <!-- Nombre Input -->
@@ -61,24 +58,19 @@
                         android:id="@+id/nombreInput"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
-                        android:hint="Ej: Juan García"
+                        android:hint="@string/ej_juan_garcia"
+                        style="@style/CustomEditText"
                         android:inputType="text"
-                        android:paddingStart="12dp"
-                        android:paddingEnd="12dp"
-                        android:textColor="@color/text_primary"
-                        android:textColorHint="@color/text_muted"
-                        android:textSize="14sp"
-                        android:background="@drawable/rounded_edittext"
+                        android:autofillHints="name"
                         android:layout_marginBottom="18dp" />
 
                     <!-- Label: Email -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Email"
-                        android:textSize="12sp"
+                        android:text="@string/email"
+                        style="@style/TextCaption"
                         android:textStyle="bold"
-                        android:textColor="@color/text_primary"
                         android:layout_marginBottom="6dp" />
 
                     <!-- Email Input -->
@@ -86,24 +78,18 @@
                         android:id="@+id/emailInput"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
-                        android:hint="correo@instituto.com"
+                        style="@style/CustomEditText"
+                        android:hint="@string/correo_instituto_com"
                         android:inputType="textEmailAddress"
-                        android:paddingStart="12dp"
-                        android:paddingEnd="12dp"
-                        android:textColor="@color/text_primary"
-                        android:textColorHint="@color/text_muted"
-                        android:textSize="14sp"
-                        android:background="@drawable/rounded_edittext"
+                        android:autofillHints="emailAddress"
                         android:layout_marginBottom="18dp" />
 
                     <!-- Label: Departamento -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Departamento"
-                        android:textSize="12sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/text_primary"
+                        android:text="@string/departamento"
+                        style="@style/TextCaption"
                         android:layout_marginBottom="6dp" />
 
                     <!-- Departamento Input -->
@@ -111,14 +97,10 @@
                         android:id="@+id/departamentoInput"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
-                        android:hint="Ej: Matemáticas, Inglés, etc."
+                        style="@style/CustomEditText"
+                        android:hint="@string/ej_matem_ticas_ingl_s_etc"
                         android:inputType="text"
-                        android:paddingStart="12dp"
-                        android:paddingEnd="12dp"
-                        android:textColor="@color/text_primary"
-                        android:textColorHint="@color/text_muted"
-                        android:textSize="14sp"
-                        android:background="@drawable/rounded_edittext"
+                        android:autofillHints="none"
                         android:layout_marginBottom="20dp" />
 
                     <!-- Botón Crear Usuario -->
@@ -126,11 +108,7 @@
                         android:id="@+id/crearUsuarioButton"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:text="Crear Usuario"
-                        android:textColor="@color/text_on_primary"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:background="@color/primary" />
+                        android:text="@string/crear_usuario" />
 
                 </LinearLayout>
 
@@ -155,19 +133,17 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="✅ Usuario Creado Exitosamente"
+                        android:text="@string/usuario_creado_exitosamente"
+                        style="@style/TextHeading2"
                         android:textSize="14sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/text_primary"
                         android:layout_marginBottom="12dp" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Contraseña Temporal:"
-                        android:textSize="12sp"
+                        android:text="@string/contrase_a_temporal"
+                        style="@style/TextCaption"
                         android:textStyle="bold"
-                        android:textColor="@color/text_primary"
                         android:layout_marginBottom="4dp" />
 
                     <LinearLayout
@@ -181,26 +157,23 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="••••••••"
-                            android:textSize="14sp"
-                            android:textColor="@color/text_primary"
+                            android:text="@string/password_oculto"
+                            style="@style/TextBody"
                             android:textStyle="bold" />
 
                         <Button
                             android:id="@+id/copiarPasswordButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Copiar"
-                            android:textSize="12sp"
-                            android:backgroundTint="@color/primary" />
+                            android:text="@string/copiar" />
 
                     </LinearLayout>
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="⚠️ Comunica esta contraseña al usuario de forma segura"
-                        android:textSize="11sp"
+                        android:text="@string/comunica_esta_contrase_a_al_usuario_de_forma_segura"
+                        style="@style/TextCaption"
                         android:textColor="@color/warning"
                         android:layout_marginTop="12dp" />
 

@@ -39,37 +39,36 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Datos del Aula"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
+                        android:text="@string/datos_del_aula"
+                        style="@style/TextHeading2"
                         android:layout_marginBottom="12dp" />
 
                     <TextView
                         android:id="@+id/nombreText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
+                        style="@style/TextBody"
                         android:layout_marginBottom="8dp" />
 
                     <TextView
                         android:id="@+id/capacidadText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
+                        style="@style/TextBody"
                         android:layout_marginBottom="8dp" />
 
                     <TextView
                         android:id="@+id/ubicacionText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
+                        style="@style/TextBody"
                         android:layout_marginBottom="8dp" />
 
                     <TextView
                         android:id="@+id/estadoText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp" />
+                        style="@style/TextBody" />
 
                 </LinearLayout>
 
@@ -86,17 +85,17 @@
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:text="Editar"
-                    android:layout_marginEnd="8dp"
-                    android:backgroundTint="@color/primary" />
+                    android:text="@string/editar"
+                    android:layout_marginEnd="8dp"/>
 
                 <Button
                     android:id="@+id/eliminarButton"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:text="Eliminar"
-                    android:backgroundTint="@color/error" />
+                    android:text="@string/eliminar"
+                    android:backgroundTint="@color/error"
+                    android:textColor="@color/white"/>
 
             </LinearLayout>
 

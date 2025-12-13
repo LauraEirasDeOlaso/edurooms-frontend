@@ -1,7 +1,6 @@
 package com.edurooms.app.ui.activities
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.text.TextWatcher
 import android.widget.Button
@@ -16,6 +15,7 @@ import com.edurooms.app.data.models.CambiarPasswordRequest
 import com.edurooms.app.data.utils.TokenManager
 import com.edurooms.app.data.network.RetrofitClient
 import kotlinx.coroutines.launch
+import androidx.core.graphics.toColorInt
 
 
 class CambiarPasswordActivity : BaseActivity() {
@@ -28,11 +28,11 @@ class CambiarPasswordActivity : BaseActivity() {
     private lateinit var guardarPasswordButton: Button
 
     // TextViews de requisitos
-    private lateinit var req_minimo8: TextView
-    private lateinit var req_mayuscula: TextView
-    private lateinit var req_minuscula: TextView
-    private lateinit var req_numero: TextView
-    private lateinit var req_especial: TextView
+    private lateinit var reqMinimo8: TextView
+    private lateinit var reqMayuscula: TextView
+    private lateinit var reqMinuscula: TextView
+    private lateinit var reqNumero: TextView
+    private lateinit var reqEspecial: TextView
 
     private var esPrimeraVez: Boolean = false
 
@@ -40,16 +40,24 @@ class CambiarPasswordActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cambiar_password)
 
-        // Configurar Toolbar
-        setupToolbar(title = "Cambiar Contraseña", showBackButton = true)
-        mostrarIconosToolbar(notificaciones = true, perfil = true)
-        configurarIconosToolbar(
-            onNotificacionesClick = { Toast.makeText(this, "Notificaciones", Toast.LENGTH_SHORT).show() },
-            onPerfilClick = { startActivity(Intent(this, PerfilActivity::class.java)) }
-        )
-
         // Inicializar TokenManager
         tokenManager = TokenManager(this)
+
+        // Detectar si es primera vez PRIMERO
+        esPrimeraVez = intent.getBooleanExtra("es_primera_vez", false)
+        android.util.Log.d("CAMBIAR_PWD", "esPrimeraVez = $esPrimeraVez")
+
+        // Configurar Toolbar
+        setupToolbar(title = "Cambiar Contraseña", showBackButton = true)
+        mostrarIconosToolbar(notificaciones = !esPrimeraVez, perfil = !esPrimeraVez)
+
+        // Solo configurar iconos si NO es primera vez
+        if (!esPrimeraVez) {
+            configurarIconosToolbar(
+                onNotificacionesClick = { Toast.makeText(this, "Notificaciones", Toast.LENGTH_SHORT).show() },
+                onPerfilClick = { startActivity(Intent(this, PerfilActivity::class.java)) }
+            )
+        }
 
         // Vincular vistas
         passwordActualContainer = findViewById(R.id.passwordActualContainer)
@@ -58,13 +66,12 @@ class CambiarPasswordActivity : BaseActivity() {
         passwordConfirmarInput = findViewById(R.id.passwordConfirmarInput)
         guardarPasswordButton = findViewById(R.id.guardarPasswordButton)
 
-
         // Vincular TextViews de requisitos
-        req_minimo8 = findViewById(R.id.req_minimo8)
-        req_mayuscula = findViewById(R.id.req_mayuscula)
-        req_minuscula = findViewById(R.id.req_minuscula)
-        req_numero = findViewById(R.id.req_numero)
-        req_especial = findViewById(R.id.req_especial)
+        reqMinimo8 = findViewById(R.id.req_minimo8)
+        reqMayuscula = findViewById(R.id.req_mayuscula)
+        reqMinuscula = findViewById(R.id.req_minuscula)
+        reqNumero = findViewById(R.id.req_numero)
+        reqEspecial = findViewById(R.id.req_especial)
 
         // Vincular ImageView toggles
         val passwordActualToggle = findViewById<ImageView>(R.id.passwordActualToggle)
@@ -76,20 +83,27 @@ class CambiarPasswordActivity : BaseActivity() {
         configurarPasswordToggle(passwordNuevaToggle, passwordNuevaInput)
         configurarPasswordToggle(passwordConfirmarToggle, passwordConfirmarInput)
 
-        // Detectar si es primera vez o cambio normal
-        esPrimeraVez = intent.getBooleanExtra("es_primera_vez", false)
-
-        // Si es primera vez, ocultar campo de contraseña actual
+        // Si es primera vez, desactivar botón atrás
         if (esPrimeraVez) {
-            passwordActualContainer.visibility = android.view.View.GONE
-        } else {
-            passwordActualContainer.visibility = android.view.View.VISIBLE
+            supportActionBar?.setDisplayHomeAsUpEnabled(false)
+
+            onBackPressedDispatcher.addCallback(this, object : androidx.activity.OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    tokenManager.eliminarToken()
+                    tokenManager.limpiarCredencialesRecordadas()
+                    startActivity(Intent(this@CambiarPasswordActivity, LoginActivity::class.java))
+                    finish()
+                }
+            })
         }
 
-        // Click listener
-        guardarPasswordButton.setOnClickListener { cambiarContraseña() }
+        // SIEMPRE mostrar el campo de contraseña actual
+        passwordActualContainer.visibility = android.view.View.VISIBLE
 
-        // ← AGREGAR ESTO: Validación en tiempo real
+        // Click listener
+        guardarPasswordButton.setOnClickListener { cambiarContrasena() }
+
+        // Validación en tiempo real
         passwordNuevaInput.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
@@ -100,35 +114,31 @@ class CambiarPasswordActivity : BaseActivity() {
     }
 
     private fun validarRequisitosEnTiempoReal(password: String) {
-        val colorValido = Color.parseColor("#4CAF50")  // Verde
-        val colorInvalido = Color.parseColor("#F44336")  // Rojo
+        val colorValido = ("#4CAF50").toColorInt()  // Verde
+        val colorInvalido = ("#F44336").toColorInt()  // Rojo
 
         // Validar cada requisito
         val tiene8 = password.length >= 8
-        req_minimo8.setTextColor(if (tiene8) colorValido else colorInvalido)
+        reqMinimo8.setTextColor(if (tiene8) colorValido else colorInvalido)
 
         val tieneMay = password.any { it.isUpperCase() }
-        req_mayuscula.setTextColor(if (tieneMay) colorValido else colorInvalido)
+        reqMayuscula.setTextColor(if (tieneMay) colorValido else colorInvalido)
 
         val tieneMin = password.any { it.isLowerCase() }
-        req_minuscula.setTextColor(if (tieneMin) colorValido else colorInvalido)
+        reqMinuscula.setTextColor(if (tieneMin) colorValido else colorInvalido)
 
         val tieneNum = password.any { it.isDigit() }
-        req_numero.setTextColor(if (tieneNum) colorValido else colorInvalido)
+        reqNumero.setTextColor(if (tieneNum) colorValido else colorInvalido)
 
-        val caracteresEspeciales = "@#\$%!&*"
+        val caracteresEspeciales = "@#$%!&*"
         val tieneEsp = password.any { it in caracteresEspeciales }
-        req_especial.setTextColor(if (tieneEsp) colorValido else colorInvalido)
+        reqEspecial.setTextColor(if (tieneEsp) colorValido else colorInvalido)
     }
 
-    private fun cambiarContraseña() {
+    private fun cambiarContrasena() {
         val passwordNueva = passwordNuevaInput.text.toString().trim()
         val passwordConfirmar = passwordConfirmarInput.text.toString().trim()
-        val passwordActual = if (!esPrimeraVez) {
-            passwordActualInput.text.toString().trim()
-        } else {
-            "" // No se necesita para primera vez
-        }
+        val passwordActual = passwordActualInput.text.toString().trim()
 
         // Validar que no estén vacías
         if (passwordNueva.isEmpty() || passwordConfirmar.isEmpty()) {
@@ -148,7 +158,7 @@ class CambiarPasswordActivity : BaseActivity() {
         }
 
         // Validar requisitos
-        if (!validarRequisitosContraseña(passwordNueva)) {
+        if (!validarRequisitosContrasena(passwordNueva)) {
             Toast.makeText(
                 this,
                 "La contraseña debe tener:\n" +
@@ -183,17 +193,20 @@ class CambiarPasswordActivity : BaseActivity() {
                 )
 
                 if (response.isSuccessful) {
-                    Toast.makeText(this@CambiarPasswordActivity, "✅ Contraseña cambiada exitosamente", Toast.LENGTH_SHORT).show()
-
-                    // Actualizar flag de primera vez
-                    tokenManager.guardarPrimeraVezLogin(false)
-
-                    // Si era primera vez, ir a MainActivity
-                    // Si no, solo cerrar esta activity
                     if (esPrimeraVez) {
+                        // PRIMERA VEZ: Limpiar todo y volver a MainActivity
+                        tokenManager.limpiarCredencialesRecordadas()
                         startActivity(Intent(this@CambiarPasswordActivity, MainActivity::class.java))
                         finish()
                     } else {
+                        // DESDE PERFIL: Eliminar token, limpiar SOLO password y volver a LoginActivity
+                        android.util.Log.d("CAMBIAR_PWD", "DESDE PERFIL - Limpiando solo password")
+                        tokenManager.eliminarToken()
+                        tokenManager.limpiarSoloPassword()
+                        //Comienza de nuevo
+                        val intent = Intent(this@CambiarPasswordActivity, LoginActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intent)
                         finish()
                     }
                 } else {
@@ -212,7 +225,7 @@ class CambiarPasswordActivity : BaseActivity() {
         }
     }
 
-    private fun validarRequisitosContraseña(password: String): Boolean {
+    private fun validarRequisitosContrasena(password: String): Boolean {
         // Mínimo 8 caracteres
         if (password.length < 8) return false
 
@@ -226,10 +239,8 @@ class CambiarPasswordActivity : BaseActivity() {
         if (!password.any { it.isDigit() }) return false
 
         // Al menos 1 carácter especial
-        val caracteresEspeciales = "@#\$%!&*"
-        if (!password.any { it in caracteresEspeciales }) return false
-
-        return true
+        val caracteresEspeciales = "@#$%!&*"
+        return password.any { it in caracteresEspeciales }
     }
 
     private fun configurarPasswordToggle(toggleIcon: ImageView, passwordInput: EditText) {
@@ -252,4 +263,5 @@ class CambiarPasswordActivity : BaseActivity() {
             passwordInput.setSelection(passwordInput.text.length)
         }
     }
+
 }

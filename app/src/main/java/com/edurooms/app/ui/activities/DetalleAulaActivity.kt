@@ -94,9 +94,9 @@ class DetalleAulaActivity : BaseActivity() {
                     android.util.Log.d("DETALLE", "Aula: ${aula.nombre}")
 
                     nombreText.text = aula.nombre
-                    capacidadText.text = "Capacidad: ${aula.capacidad} personas"
-                    ubicacionText.text = "Ubicación: ${aula.ubicacion}"
-                    estadoText.text = "Estado: ${aula.estado}"
+                    capacidadText.text = getString(R.string.capacidad_formato, aula.capacidad)
+                    ubicacionText.text = getString(R.string.ubicacion_formato, aula.ubicacion)
+                    estadoText.text = getString(R.string.estado_formato, aula.estado)
 
                     cargarIncidenciasAula()
                 } else {

@@ -39,37 +39,32 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Datos del Usuario"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/text_primary"
+                        android:text="@string/datos_del_usuario"
+                        style="@style/TextHeading2"
                         android:layout_marginBottom="12dp" />
 
                     <TextView
                         android:id="@+id/usuarioNombreDetail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Nombre: "
-                        android:textSize="14sp"
-                        android:textColor="@color/text_primary"
+                        android:text="@string/nombre"
+                        style="@style/TextBody"
                         android:layout_marginBottom="8dp" />
 
                     <TextView
                         android:id="@+id/usuarioEmailDetail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Email: "
-                        android:textSize="14sp"
-                        android:textColor="@color/text_primary"
+                        android:text="@string/nombre"
+                        style="@style/TextBody"
                         android:layout_marginBottom="8dp" />
 
                     <TextView
                         android:id="@+id/usuarioDepartamentoDetail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Departamento: "
-                        android:textSize="14sp"
-                        android:textColor="@color/text_primary"
+                        android:text="@string/departamento"
+                        style="@style/TextBody"
                         android:layout_marginBottom="8dp" />
 
                     <LinearLayout
@@ -81,10 +76,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Rol: "
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/text_primary" />
+                            android:text="@string/rol"
+                            style="@style/TextCaption"
+                            android:textStyle="bold"/>
 
                         <Spinner
                             android:id="@+id/rolSpinner"
@@ -104,19 +98,19 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Estado: "
-                            android:textSize="14sp"
+                            android:text="@string/estado"
+                            style="@style/TextCaption"
                             android:textStyle="bold"
                             android:textColor="@color/text_primary"
                             android:layout_gravity="center_vertical" />
 
-                        <Switch
+                        <androidx.appcompat.widget.SwitchCompat
                             android:id="@+id/estadoSwitch"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_marginStart="8dp"
-                            android:text="Habilitado" />
+                            android:text="@string/habilitado" />
 
                     </LinearLayout>
 
@@ -136,17 +130,17 @@
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:text="Guardar"
-                    android:layout_marginEnd="8dp"
-                    android:background="@color/primary" />
+                    android:text="@string/guardar"
+                    android:layout_marginEnd="8dp" />
 
                 <Button
                     android:id="@+id/eliminarUsuarioButton"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:text="Eliminar"
-                    android:background="@color/danger" />
+                    android:text="@string/eliminar"
+                    android:background="@color/danger"
+                    android:textColor="@color/white"/>
 
             </LinearLayout>
 
@@ -154,10 +148,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Reservas"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="@color/text_primary"
+                android:text="@string/reservas"
+                style="@style/TextHeading2"
                 android:layout_marginBottom="12dp" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -170,10 +162,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Incidencias"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="@color/text_primary"
+                android:text="@string/incidencias"
+                style="@style/TextHeading2"
                 android:layout_marginBottom="12dp" />
 
             <androidx.recyclerview.widget.RecyclerView

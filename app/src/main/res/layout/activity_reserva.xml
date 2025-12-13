@@ -10,20 +10,17 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Crear Reserva"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:textColor="@color/text_primary"
+        android:text="@string/crear_reserva"
+        style="@style/TextHeading1"
         android:layout_marginBottom="20dp" />
 
     <!-- Calendario -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Selecciona una fecha"
-        android:textSize="14sp"
+        android:text="@string/selecciona_una_fecha"
+        style="@style/TextBody"
         android:textStyle="bold"
-        android:textColor="@color/text_secondary"
         android:layout_marginBottom="10dp" />
 
     <CalendarView
@@ -37,9 +34,8 @@
         android:id="@+id/horariosDisponiblesText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Cargando horarios..."
-        android:textSize="12sp"
-        android:textColor="@color/text_secondary"
+        android:text="@string/cargando_horarios"
+        style="@style/TextCaption"
         android:gravity="center"
         android:layout_marginBottom="15dp" />
 
@@ -52,19 +48,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Horario:"
-            android:textSize="16sp"
-            android:layout_gravity="center_vertical"
-            android:textColor="@color/text_primary" />
+            android:text="@string/horario"
+            style="@style/TextBody"
+            android:textStyle="bold"
+            android:layout_gravity="center_vertical" />
 
         <Button
             android:id="@+id/actualizarButton"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_marginStart="10dp"
-            android:text="🔄 Actualizar"
-            android:textSize="12sp"
-            android:padding="5dp" />
+            android:text="@string/actualizar" />
 
     </LinearLayout>
 
@@ -81,21 +75,15 @@
         android:id="@+id/confirmarButton"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="CONFIRMAR RESERVA"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="@color/text_on_primary"
-        android:background="@color/primary"
+        android:text="@string/confirmar_reserva"
         android:layout_marginBottom="12dp" />
 
     <Button
         android:id="@+id/cancelarButton"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="CANCELAR"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="@color/text_on_primary"
-        android:background="@color/text_muted"/>
+        android:text="@string/cancelar"
+        android:textColor="@color/text_primary"
+        android:backgroundTint="@color/primary_soft"/>
 
 </LinearLayout>

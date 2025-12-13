@@ -18,13 +18,14 @@ class GestionarAulasActivity : BaseActivity() {
 
     private lateinit var tokenManager: TokenManager
     private lateinit var aulasRecyclerView: RecyclerView
-    private lateinit var crearAulaButton: Button
+
+    private lateinit var crearAulaFab: com.google.android.material.floatingactionbutton.FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_gestionar_aulas)
 
-        setupToolbar(title = "Gestionar Aulas", showBackButton = true)
+        setupToolbar(title = "", showBackButton = true)
         mostrarIconosToolbar(notificaciones = true, perfil = true)
         configurarIconosToolbar(
             onNotificacionesClick = { Toast.makeText(this, "Notificaciones", Toast.LENGTH_SHORT).show() },
@@ -35,13 +36,14 @@ class GestionarAulasActivity : BaseActivity() {
         tokenManager = TokenManager(this)
 
         aulasRecyclerView = findViewById(R.id.aulasRecyclerView)
-        crearAulaButton = findViewById(R.id.crearAulaButton)
+        crearAulaFab = findViewById(R.id.crearAulaFab)
+
+        crearAulaFab.setOnClickListener {
+            startActivity(Intent(this, CrearAulaActivity::class.java))
+        }
 
         aulasRecyclerView.layoutManager = LinearLayoutManager(this)
 
-        crearAulaButton.setOnClickListener {
-            startActivity(Intent(this, CrearAulaActivity::class.java))
-        }
 
         cargarAulas()
     }

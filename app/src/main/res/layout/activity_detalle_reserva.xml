@@ -39,47 +39,40 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Datos de la Reserva"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/text_primary"
+                        android:text="@string/datos_de_la_reserva"
+                        style="@style/TextHeading2"
                         android:layout_marginBottom="12dp" />
 
                     <TextView
                         android:id="@+id/aulaNombreText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Aula: "
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/primary"
+                        android:text="@string/aula"
+                        style="@style/TextHeading2"
                         android:layout_marginBottom="12dp" />
 
                     <TextView
                         android:id="@+id/fechaText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Fecha: "
-                        android:textSize="14sp"
-                        android:textColor="@color/text_primary"
+                        android:text="@string/fecha"
+                        style="@style/TextBody"
                         android:layout_marginBottom="8dp" />
 
                     <TextView
                         android:id="@+id/horaText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Horario: "
-                        android:textSize="14sp"
-                        android:textColor="@color/text_primary"
+                        android:text="@string/horario"
+                        style="@style/TextBody"
                         android:layout_marginBottom="8dp" />
 
                     <TextView
                         android:id="@+id/estadoText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Estado: "
-                        android:textSize="14sp"
-                        android:textColor="@color/text_primary" />
+                        android:text="@string/estado"
+                        style="@style/TextBody"/>
 
                 </LinearLayout>
 
@@ -103,9 +96,10 @@
                         android:layout_width="0dp"
                         android:layout_height="50dp"
                         android:layout_weight="1"
-                        android:text="Cancelar"
+                        android:text="@string/cancelar"
                         android:layout_marginEnd="8dp"
                         android:backgroundTint="@color/error"
+                        android:textColor="@color/white"
                         android:visibility="gone" />
 
                     <Button
@@ -113,9 +107,8 @@
                         android:layout_width="0dp"
                         android:layout_height="50dp"
                         android:layout_weight="1"
-                        android:text="Reactivar"
+                        android:text="@string/reactivar"
                         android:layout_marginEnd="8dp"
-                        android:backgroundTint="@color/primary"
                         android:visibility="gone" />
 
                     <Button
@@ -123,8 +116,7 @@
                         android:layout_width="0dp"
                         android:layout_height="50dp"
                         android:layout_weight="1"
-                        android:text="Editar"
-                        android:backgroundTint="@color/primary" />
+                        android:text="@string/editar" />
 
                 </LinearLayout>
 
@@ -133,8 +125,7 @@
                     android:id="@+id/traspasoButton"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:text="Traspasar a otra Aula"
-                    android:backgroundTint="@color/primary"
+                    android:text="@string/traspasar_a_otra_aula"
                     android:visibility="gone" />
 
             </LinearLayout>

@@ -1,15 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Tema principal -->
     <style name="Theme.EduRooms" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/primary</item>
         <item name="android:windowBackground">@color/background</item>
 
-        <!-- Barra de estado con color gris oscuro por defecto del sistema -->
+
+        <!-- Barra de estado -->
         <item name="android:statusBarColor">@color/primary</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:fitsSystemWindows">true</item>
+
+
+
+        <!-- Estilos globales para componentes -->
+        <item name="editTextStyle">@style/CustomEditText</item>
+
+
+        <!-- AGREGAR ESTO -->
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
     </style>
+
+    <!-- EditText personalizado (se aplica globalmente) -->
+    <style name="CustomEditText" parent="Widget.AppCompat.EditText">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textColorHint">@color/text_muted</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:background">@drawable/rounded_edittext</item>
+    </style>
+
+    <!-- Button personalizado (se aplica globalmente) -->
+    <style name="CustomButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:textColor">@color/text_on_primary</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">12dp</item>
+        <item name="backgroundTint">@color/primary</item>
+    </style>
+
+
+
+    <!-- Texto Heading 1: títulos principales -->
+    <style name="TextHeading1" parent="TextAppearance.AppCompat.Headline">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Texto Heading 2: subtítulos -->
+    <style name="TextHeading2" parent="TextAppearance.AppCompat.Headline">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Texto Body: contenido normal -->
+    <style name="TextBody" parent="TextAppearance.AppCompat.Body1">
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <!-- Texto Caption: pequeño, secundario -->
+    <style name="TextCaption" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:textColor">@color/text_muted</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <!-- Button Primary: botones principales -->
+    <style name="ButtonPrimary" parent="CustomButton">
+        <item name="android:textColor">@color/text_on_primary</item>
+        <item name="backgroundTint">@color/primary</item>
+    </style>
+
+    <!-- Button Secondary: botones secundarios -->
+    <style name="ButtonSecondary" parent="CustomButton">
+        <item name="android:textColor">@color/primary</item>
+        <item name="android:background">@drawable/rounded_edittext</item>
+    </style>
+
+
+
+
+
 </resources>

@@ -1,11 +1,9 @@
 package com.edurooms.app.ui.activities
 
 import android.content.ClipboardManager
-import android.content.Context
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
-import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
@@ -109,7 +107,7 @@ class CrearUsuarioActivity : BaseActivity() {
                         val errorJson = org.json.JSONObject(errorBody ?: "{}")
                         val errorMsg = errorJson.optString("mensaje", "Error desconocido")
                         Toast.makeText(this@CrearUsuarioActivity, "❌ $errorMsg", Toast.LENGTH_SHORT).show()
-                    } catch (e: Exception) {
+                    } catch (_: Exception) {
                         Toast.makeText(
                             this@CrearUsuarioActivity,
                             "❌ Error ${response.code()}",
@@ -128,14 +126,14 @@ class CrearUsuarioActivity : BaseActivity() {
         }
     }
 
-    private fun mostrarResultado(passwordTemporal: String) {
+    private fun mostrarResultado(passwordTemporal: String, aviso: String="") {
         passwordTemporalText.text = passwordTemporal
         resultadoCard.visibility = android.view.View.VISIBLE
     }
 
     private fun copiarAlPortapapeles() {
         val password = passwordTemporalText.text.toString()
-        val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clipboard = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
         val clip = android.content.ClipData.newPlainText("password", password)
         clipboard.setPrimaryClip(clip)
 

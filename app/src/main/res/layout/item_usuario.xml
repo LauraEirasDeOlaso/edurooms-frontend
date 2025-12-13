@@ -19,9 +19,7 @@
             android:id="@+id/usuarioNombre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nombre Usuario"
-            android:textSize="16sp"
-            android:textStyle="bold"
+            style="@style/TextHeading2"
             android:textColor="@color/text_primary"
             android:layout_marginBottom="8dp" />
 
@@ -30,9 +28,7 @@
             android:id="@+id/usuarioEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="email@example.com"
-            android:textSize="14sp"
-            android:textColor="@color/text_secondary"
+            style="@style/TextBody"
             android:layout_marginBottom="8dp" />
 
         <!-- Rol y Estado en fila -->
@@ -47,18 +43,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Rol: Profesor"
-                android:textSize="12sp"
-                android:textColor="@color/text_muted" />
+                style="@style/TextCaption" />
 
             <TextView
                 android:id="@+id/usuarioEstado"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Estado: Habilitado"
-                android:textSize="12sp"
-                android:textColor="@color/text_muted"
+                style="@style/TextCaption"
                 android:textAlignment="textEnd" />
 
         </LinearLayout>

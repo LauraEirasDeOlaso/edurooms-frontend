@@ -2,14 +2,11 @@ package com.edurooms.app.ui.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log.e
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.edurooms.app.R
-import com.edurooms.app.data.models.Reserva
-import com.edurooms.app.data.models.UsuarioData
 import com.edurooms.app.data.network.RetrofitClient
 import com.edurooms.app.data.utils.TokenManager
 import com.edurooms.app.ui.adapters.ReservasAdapter
@@ -24,7 +21,7 @@ class MisReservasActivity : BaseActivity() {
         setContentView(R.layout.activity_mis_reservas)
 
         // ← AGREGAR ESTO:
-        setupToolbar(title = "Mis Reservas", showBackButton = true)
+        setupToolbar(title = "", showBackButton = true)
         mostrarIconosToolbar(perfil = true, notificaciones = true)
 
         configurarIconosToolbar(
@@ -36,6 +33,12 @@ class MisReservasActivity : BaseActivity() {
 
         setupBottomNavigation()
         seleccionarItemBottomNav(R.id.nav_reservas)
+
+        // Crear Reserva
+        val fabCrearReserva = findViewById<com.google.android.material.floatingactionbutton.FloatingActionButton>(R.id.fabCrearReserva)
+        fabCrearReserva.setOnClickListener {
+            startActivity(Intent(this, ListaAulasActivity::class.java))
+        }
 
         reservasRecyclerView = findViewById(R.id.reservasRecyclerView)
         reservasRecyclerView.layoutManager = LinearLayoutManager(this)
