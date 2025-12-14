@@ -1,151 +1,135 @@
 # 📱 EduRooms Frontend
 
-Aplicación móvil nativa en **Kotlin** con **Android Studio** para el sistema de gestión de aulas **EduRooms**.
-
-## 🎯 Funcionalidades
-
-- **Autenticación:** Login y registro con roles (profesor/administrador)
-- **Gestión de aulas:** Visualizar aulas disponibles, filtrado y búsqueda
-- **Reservas:** Crear, modificar y cancelar reservas de aulas
-- **Incidencias:** Reportar y consultar incidencias técnicas
-- **Escaneo QR:** Acceso rápido a información de aulas
-- **Sugerencias inteligentes:** Horarios óptimos recomendados
-- **Sincronización:** Conexión en tiempo real con backend Node.js
-
----
+Aplicación Android para gestión de reservas de aulas y reportes de incidencias.
 
 ## 📋 Requisitos
 
-| Herramienta | Versión                     |
-|-------------|-----------------------------|
-| Android Studio | Otter (2025.2.1) o superior |
-| Kotlin | 1.9+                        |
-| Gradle | 8.0+                        |
-| Android SDK | API 24+ (mínimo)            |
-| Java | 21+                         |
+- Android Studio 2022.1+
+- Android SDK 31+
+- JDK 11+
+- Kotlin 1.8+
 
----
-
-## 🛠️ Instalación y Configuración
-
-### 1. Clonar repositorio
+## 🔧 Instalación
 ```bash
+# Clonar repositorio
 git clone https://github.com/LauraEirasDeOlaso/edurooms-frontend.git
 cd edurooms-frontend
+
+# Abrir en Android Studio
+# File → Open → Seleccionar carpeta
 ```
 
-### 2. Abrir en Android Studio
+## ✨ Features
 
-- Abre Android Studio
-- Selecciona "Open an Existing Project"
-- Navega a la carpeta `edurooms-frontend`
-- Espera a que sincronice Gradle
+### Autenticación
+- ✅ Login/Logout
+- ✅ Remember Me (sesiones persistentes)
+- ✅ Cambio de contraseña
 
-### 3. Configurar conexión al backend
+### Profesor
+- ✅ Ver aulas disponibles
+- ✅ Crear y cancelar reservas
+- ✅ Ver mis reservas
+- ✅ Reportar incidencias
+- ✅ Badges de notificaciones (próximas reservas)
 
-Edita `app/src/main/java/com/edurooms/app/utils/Constants.kt`:
+### Administrador
+- ✅ Gestionar usuarios (CRUD)
+- ✅ Gestionar aulas (CRUD)
+- ✅ Gestionar reservas
+- ✅ Reactivar/traspasar reservas
+- ✅ Gestionar incidencias
+- ✅ Filtros avanzados
+- ✅ Badges de notificaciones (incidencias pendientes)
+
+### UI/UX
+- ✅ Diseño material
+- ✅ Navegación inferior
+- ✅ Calendario con date picker
+- ✅ RecyclerView con horarios
+- ✅ Color-coded status indicators
+
+## 🏗️ Arquitectura
+```
+src/main/java/com/edurooms/app/
+├── data/
+│   ├── models/           - Data classes
+│   ├── network/          - Retrofit API
+│   └── utils/            - Utilities
+├── ui/
+│   ├── activities/       - Pantallas
+│   ├── adapters/         - RecyclerView adapters
+│   └── theme/            - Estilos y colores
+└── res/
+    ├── layout/           - XML layouts
+    ├── values/           - Strings, colors, styles
+    └── drawable/         - Iconos y drawables
+```
+
+## 🔌 Configuración API
+
+En `Constants.kt`, actualiza `BASE_URL` con tu servidor:
 ```kotlin
-object Constants {
-    const val BASE_URL = "http://192.168.X.X:3000/api/"  // Cambiar IP según tu red
-    // o para emulador:
-    // const val BASE_URL = "http://10.0.2.2:3000/api/"
-}
+const val BASE_URL = "https://tu-backend-url.com/api/"
+
+Actualmente apunta a: Railway (producción)
 ```
 
-### 4. Ejecutar la app
+## 📦 Build & Release
 
-- Conecta un dispositivo Android o inicia el emulador
-- Presiona "Run" (Shift + F10) o el botón verde en Android Studio
-
----
-
-## 📁 Estructura del Proyecto
+### Debug (Desarrollo)
 ```
-app/
-├── src/main/
-│   ├── java/com/edurooms/app/
-│   │   ├── ui/
-│   │   │   ├── activities/      # Pantallas principales
-│   │   │   ├── fragments/       # Fragmentos reutilizables
-│   │   │   └── adapters/        # Adaptadores para listas
-│   │   ├── data/
-│   │   │   ├── models/          # Clases de datos
-│   │   │   ├── api/             # Retrofit service
-│   │   │   └── repository/      # Gestión de datos
-│   │   ├── network/
-│   │   │   └── RetrofitClient.kt # Configuración Retrofit
-│   │   ├── utils/
-│   │   │   ├── Constants.kt     # URLs, constantes
-│   │   │   └── TokenManager.kt  # Gestión de JWT
-│   │   └── MainActivity.kt
-│   ├── res/
-│   │   ├── layout/              # Archivos XML de UI
-│   │   ├── drawable/            # Imágenes e iconos
-│   │   └── values/              # Colores, strings, estilos
-│   └── AndroidManifest.xml
-├── build.gradle                 # Dependencias y configuración
-└── proguard-rules.pro
+Build → Build Bundles/APKs → Build APK
 ```
 
----
-
-## 🔗 Conexión al Backend
-
-El frontend se conecta al backend Node.js usando **Retrofit**:
-```kotlin
-// Ejemplo de petición
-val api = RetrofitClient.apiService
-api.login(email, password).enqueue(object : Callback<LoginResponse> {
-    override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
-        // Manejar respuesta
-    }
-    override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-        // Manejar error
-    }
-})
+### Release (Distribución)
+```
+Build → Generate Signed Bundle/APK
+→ APK
+→ Selecciona keystore
+→ Release
 ```
 
----
-
-## 🧪 Testing
-
-- Usar **Logcat** en Android Studio para ver logs
-- Probar endpoints con **Postman** primero (antes de Android)
-- Usar emulador con API 24+
-
----
-
-## 📦 Dependencias principales
-
-- **Retrofit**: Cliente HTTP
-- **OkHttp**: Interceptor para JWT
-- **Gson**: Serialización JSON
-- **Material Design 3**: Componentes UI
-- **ZXing**: Escaneo QR
-
----
-
-## 🚀 Build y Release
-
-### Debug
-```bash
-./gradlew assembleDebug
+El APK se genera en:
+```
+app/release/app-release.apk
 ```
 
-### Release
-```bash
-./gradlew assembleRelease
-```
+## 🎨 Paleta de Colores
 
----
+- **Primary**: Beige topo (`#C8B6A6`)
+- **Success**: Verde (`#4CAF50`)
+- **Error**: Rojo (`#E53935`)
+- **Warning**: Naranja (`#F5A623`)
+- **Background**: Blanco roto (`#F9F9F7`)
 
-## 📝 Notas Importantes
+## 📱 Requisitos de Android
 
-- ⚠️ Cambia la URL del backend según tu entorno (local, servidor, etc.)
-- ⚠️ El token JWT se almacena en SharedPreferences (mejorar en futuros sprints)
-- ⚠️ La app requiere permisos de INTERNET en AndroidManifest.xml
+- Mínimo: Android 9 (API 28)
+- Target: Android 15 (API 35)
 
----
+## 🔐 Seguridad
+
+- ✅ JWT tokens en SharedPreferences
+- ✅ HTTPS en producción
+- ✅ Validación de roles
+- ✅ Protección de endpoints
+
+## 📝 Dependencias Principales
+
+- Retrofit 2.9.0
+- Gson 2.10.1
+- Glide 4.15.1
+- Material Components
+- AndroidX
+
+## 👨‍💻 Autor
+
+Laura Eiras de Olaso
+
+## 📄 Licencia
+
+MIT
 
 ## 🔗 Enlaces útiles
 
