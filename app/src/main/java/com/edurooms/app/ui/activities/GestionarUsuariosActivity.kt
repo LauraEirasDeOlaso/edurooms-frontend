@@ -28,7 +28,9 @@ class GestionarUsuariosActivity : BaseActivity() {
         setupToolbar(title = "", showBackButton = true)
         mostrarIconosToolbar(notificaciones = true, perfil = true)
         configurarIconosToolbar(
-            onNotificacionesClick = { Toast.makeText(this, "Notificaciones", Toast.LENGTH_SHORT).show() },
+            onNotificacionesClick = {
+                Toast.makeText(this, "Notificaciones", Toast.LENGTH_SHORT).show()
+            },
             onPerfilClick = { startActivity(Intent(this, PerfilActivity::class.java)) }
         )
 
@@ -98,7 +100,7 @@ class GestionarUsuariosActivity : BaseActivity() {
         intent.putExtra("usuario_email", usuario.email)
         intent.putExtra("usuario_rol", usuario.rol)
         intent.putExtra("usuario_estado", usuario.estado)
-        //intent.putExtra("usuario_departamento", usuario.departamento ?: "")
+        intent.putExtra("usuario_departamento", usuario.departamento)
         startActivity(intent)
     }
 

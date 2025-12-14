@@ -35,7 +35,8 @@ class MisReservasActivity : BaseActivity() {
         seleccionarItemBottomNav(R.id.nav_reservas)
 
         // Crear Reserva
-        val fabCrearReserva = findViewById<com.google.android.material.floatingactionbutton.FloatingActionButton>(R.id.fabCrearReserva)
+        val fabCrearReserva =
+            findViewById<com.google.android.material.floatingactionbutton.FloatingActionButton>(R.id.fabCrearReserva)
         fabCrearReserva.setOnClickListener {
             startActivity(Intent(this, ListaAulasActivity::class.java))
         }

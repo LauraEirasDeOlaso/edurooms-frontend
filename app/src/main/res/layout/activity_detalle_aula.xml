@@ -8,91 +8,85 @@
     <!-- AppBar/Toolbar -->
     <include layout="@layout/toolbar" />
 
-    <!-- Contenido principal (scrolleable) -->
-    <ScrollView
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- Título -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/detalle_del_aula"
+            style="@style/TextHeading1"
+            android:layout_marginBottom="20dp"
+            android:textColor="@color/primary" />
+
+        <!-- Nombre aula -->
+        <TextView
+            android:id="@+id/nombreText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextHeading2"
+            android:layout_marginBottom="15dp" />
+
+        <!-- Capacidad -->
+        <TextView
+            android:id="@+id/capacidadText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextBody"
+            android:layout_marginBottom="10dp" />
+
+        <!-- Ubicación -->
+        <TextView
+            android:id="@+id/ubicacionText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextBody"
+            android:layout_marginBottom="10dp" />
+
+        <!-- Estado -->
+        <TextView
+            android:id="@+id/estadoText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextBody"
+            android:layout_marginBottom="30dp" />
+
+        <!-- Botón Reservar -->
+        <Button
+            android:id="@+id/reservarButton"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="@string/reservar_aula"
+            android:layout_marginBottom="15dp" />
+
+        <!-- Botón Reportar Incidencia -->
+        <Button
+            android:id="@+id/incidenciaButton"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="@string/reportar_incidencia"
+            android:layout_marginBottom="30dp" />
+
+        <!-- Título Incidencias -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/incidencias_activas"
+            style="@style/TextHeading2"
+            android:layout_marginBottom="10dp" />
+
+    </LinearLayout>
+    <!-- RECYCLERVIEW (EL SCROLL) -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/incidenciasRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="20dp">
-
-            <!-- Título -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/detalle_del_aula"
-                style="@style/TextHeading1"
-                android:layout_marginBottom="20dp"
-                android:textColor="@color/primary" />
-
-            <!-- Nombre aula -->
-            <TextView
-                android:id="@+id/nombreText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/TextHeading2"
-                android:layout_marginBottom="15dp" />
-
-            <!-- Capacidad -->
-            <TextView
-                android:id="@+id/capacidadText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/TextBody"
-                android:layout_marginBottom="10dp" />
-
-            <!-- Ubicación -->
-            <TextView
-                android:id="@+id/ubicacionText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/TextBody"
-                android:layout_marginBottom="10dp"/>
-
-            <!-- Estado -->
-            <TextView
-                android:id="@+id/estadoText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/TextBody"
-                android:layout_marginBottom="30dp"/>
-
-            <!-- Botón Reservar -->
-            <Button
-                android:id="@+id/reservarButton"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:text="@string/reservar_aula"
-                android:layout_marginBottom="15dp" />
-
-            <!-- Botón Reportar Incidencia -->
-            <Button
-                android:id="@+id/incidenciaButton"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:text="@string/reportar_incidencia"
-                android:layout_marginBottom="30dp"/>
-
-            <!-- Título Incidencias -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/incidencias_activas"
-                style="@style/TextHeading2"
-                android:layout_marginBottom="10dp"/>
-
-            <!-- Lista Incidencias -->
-            <ListView
-                android:id="@+id/incidenciasListView"
-                android:layout_width="match_parent"
-                android:layout_height="200dp" />
-
-        </LinearLayout>
-    </ScrollView>
+        android:layout_weight="1"
+        android:paddingHorizontal="20dp" />
 
     <include layout="@layout/layout_bottom_nav" />
 

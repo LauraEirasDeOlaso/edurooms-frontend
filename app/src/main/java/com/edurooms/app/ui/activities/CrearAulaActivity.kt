@@ -29,7 +29,9 @@ class CrearAulaActivity : BaseActivity() {
         setupToolbar(title = "Crear Aula", showBackButton = true)
         mostrarIconosToolbar(notificaciones = true, perfil = true)
         configurarIconosToolbar(
-            onNotificacionesClick = { Toast.makeText(this, "Notificaciones", Toast.LENGTH_SHORT).show() },
+            onNotificacionesClick = {
+                Toast.makeText(this, "Notificaciones", Toast.LENGTH_SHORT).show()
+            },
             onPerfilClick = { startActivity(Intent(this, PerfilActivity::class.java)) }
         )
 
@@ -69,8 +71,14 @@ class CrearAulaActivity : BaseActivity() {
                 val response = RetrofitClient.apiService.crearAula("Bearer $token", aula)
 
                 if (response.isSuccessful) {
-                    Toast.makeText(this@CrearAulaActivity, "✅ Aula creada", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this@CrearAulaActivity, GestionarAulasActivity::class.java))
+                    Toast.makeText(this@CrearAulaActivity, "✅ Aula creada", Toast.LENGTH_SHORT)
+                        .show()
+                    startActivity(
+                        Intent(
+                            this@CrearAulaActivity,
+                            GestionarAulasActivity::class.java
+                        )
+                    )
                     finish()
                 } else {
                     // ← NUEVO: Parsear error del backend
@@ -84,7 +92,8 @@ class CrearAulaActivity : BaseActivity() {
                     Toast.makeText(this@CrearAulaActivity, "❌ $errorMsg", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
-                Toast.makeText(this@CrearAulaActivity, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@CrearAulaActivity, "Error: ${e.message}", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
     }

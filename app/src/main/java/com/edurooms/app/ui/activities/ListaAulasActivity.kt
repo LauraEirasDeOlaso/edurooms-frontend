@@ -25,7 +25,9 @@ class ListaAulasActivity : BaseActivity() {
         setupToolbar(title = "", showBackButton = true)
         mostrarIconosToolbar(notificaciones = true, perfil = true)
         configurarIconosToolbar(
-            onNotificacionesClick = { Toast.makeText(this, "Notificaciones", Toast.LENGTH_SHORT).show() },
+            onNotificacionesClick = {
+                Toast.makeText(this, "Notificaciones", Toast.LENGTH_SHORT).show()
+            },
             onPerfilClick = { startActivity(Intent(this, PerfilActivity::class.java)) }
         )
 
@@ -50,10 +52,15 @@ class ListaAulasActivity : BaseActivity() {
                     aulasOriginales = response.body()!!
                     mostrarAulas(aulasOriginales)
                 } else {
-                    Toast.makeText(this@ListaAulasActivity, "Error al cargar aulas", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@ListaAulasActivity,
+                        "Error al cargar aulas",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             } catch (e: Exception) {
-                Toast.makeText(this@ListaAulasActivity, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@ListaAulasActivity, "Error: ${e.message}", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
     }

@@ -20,7 +20,6 @@ import com.edurooms.app.ui.adapters.HorariosAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 
 
-
 class ReservaActivity : BaseActivity() {
 
     private lateinit var calendarView: CalendarView
@@ -63,7 +62,7 @@ class ReservaActivity : BaseActivity() {
         // Fecha por defecto: hoy
         val cal = Calendar.getInstance()
         val year = cal.get(Calendar.YEAR)
-        val mes = String.format(Locale.US,"%02d", cal.get(Calendar.MONTH) + 1)
+        val mes = String.format(Locale.US, "%02d", cal.get(Calendar.MONTH) + 1)
         val dia = String.format(Locale.US, "%02d", cal.get(Calendar.DAY_OF_MONTH))
         fechaSeleccionada = "$year-$mes-$dia"
 
@@ -71,8 +70,8 @@ class ReservaActivity : BaseActivity() {
         cargarHorariosDisponibles(fechaSeleccionada)
 
         calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
-            val mes = String.format(Locale.US, "%02d",month + 1)
-            val dia = String.format(Locale.US, "%02d",dayOfMonth)
+            val mes = String.format(Locale.US, "%02d", month + 1)
+            val dia = String.format(Locale.US, "%02d", dayOfMonth)
             fechaSeleccionada = "$year-$mes-$dia"
             //Toast.makeText(this, "Fecha seleccionada: $fechaSeleccionada", Toast.LENGTH_SHORT).show()
 
@@ -87,6 +86,7 @@ class ReservaActivity : BaseActivity() {
         actualizarButton.setOnClickListener { cargarHorariosDisponibles(fechaSeleccionada) }
 
     }
+
     override fun onResume() {
         super.onResume()
         cargarHorariosDisponibles(fechaSeleccionada)
@@ -127,7 +127,8 @@ class ReservaActivity : BaseActivity() {
                         horariosDisponiblesText.text = getString(R.string.horarios_no_disponibles)
                     } else {
                         val libres = disponibilidad.horariosLibres.size
-                        horariosDisponiblesText.text = getString(R.string.horarios_disponibles, libres)
+                        horariosDisponiblesText.text =
+                            getString(R.string.horarios_disponibles, libres)
 
                         // Crear adapter
                         horariosAdapter = HorariosAdapter(todosHorarios) { horario ->
@@ -150,10 +151,12 @@ class ReservaActivity : BaseActivity() {
                     } else {
                         "Error: ${response.code()}"
                     }
-                    horariosDisponiblesText.text = getString(R.string.error_mensaje_formato, errorMsg)
+                    horariosDisponiblesText.text =
+                        getString(R.string.error_mensaje_formato, errorMsg)
                 }
             } catch (e: Exception) {
-                horariosDisponiblesText.text = getString(R.string.error_excepcion_formato, e.message ?: "Desconocido")
+                horariosDisponiblesText.text =
+                    getString(R.string.error_excepcion_formato, e.message ?: "Desconocido")
                 android.util.Log.e("RESERVA", "Error cargando horarios", e)
             }
         }
@@ -171,20 +174,29 @@ class ReservaActivity : BaseActivity() {
                 val token = tokenManager.obtenerToken()
 
                 if (token == null) {
-                    Toast.makeText(this@ReservaActivity, "❌ No hay sesión", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@ReservaActivity, "❌ No hay sesión", Toast.LENGTH_SHORT)
+                        .show()
                     return@launch
                 }
 
                 val perfilResponse = RetrofitClient.apiService.obtenerPerfil("Bearer $token")
                 if (!perfilResponse.isSuccessful || perfilResponse.body() == null) {
-                    Toast.makeText(this@ReservaActivity, "❌ Error al obtener usuario", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@ReservaActivity,
+                        "❌ Error al obtener usuario",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     return@launch
                 }
 
                 val usuarioId = perfilResponse.body()?.usuario?.id ?: 0
 
                 if (usuarioId == 0) {
-                    Toast.makeText(this@ReservaActivity, "❌ No se pudo obtener usuario", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@ReservaActivity,
+                        "❌ No se pudo obtener usuario",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     return@launch
                 }
 
@@ -199,7 +211,11 @@ class ReservaActivity : BaseActivity() {
                 val response = RetrofitClient.apiService.crearReserva("Bearer $token", requestBody)
 
                 if (response.isSuccessful) {
-                    Toast.makeText(this@ReservaActivity, "✅ Reserva creada correctamente", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@ReservaActivity,
+                        "✅ Reserva creada correctamente",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     startActivity(Intent(this@ReservaActivity, MisReservasActivity::class.java))
                     finish()
                 } else {
@@ -211,13 +227,19 @@ class ReservaActivity : BaseActivity() {
                         } else {
                             "Error ${response.code()}"
                         }
-                        Toast.makeText(this@ReservaActivity, "❌ $errorMessage", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@ReservaActivity, "❌ $errorMessage", Toast.LENGTH_SHORT)
+                            .show()
                     } catch (_: Exception) {
-                        Toast.makeText(this@ReservaActivity, "❌ Error: ${response.code()}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this@ReservaActivity,
+                            "❌ Error: ${response.code()}",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             } catch (e: Exception) {
-                Toast.makeText(this@ReservaActivity, "❌ Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@ReservaActivity, "❌ Error: ${e.message}", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
     }

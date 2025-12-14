@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Locale
 import android.view.View
+import com.google.gson.JsonParser
 
 class DetalleReservaActivity : BaseActivity() {
 
@@ -25,6 +26,7 @@ class DetalleReservaActivity : BaseActivity() {
     private lateinit var traspasoButton: Button
     private lateinit var reactivarButton: Button
     private var reservaId: Int = 0
+    private var esDesdeGestionarReservas: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,13 +35,16 @@ class DetalleReservaActivity : BaseActivity() {
         setupToolbar(title = "Detalle Reserva", showBackButton = true)
         mostrarIconosToolbar(perfil = true, notificaciones = true)
         configurarIconosToolbar(
-            onNotificacionesClick = { Toast.makeText(this, "Notificaciones", Toast.LENGTH_SHORT).show() },
+            onNotificacionesClick = {
+                Toast.makeText(this, "Notificaciones", Toast.LENGTH_SHORT).show()
+            },
             onPerfilClick = { startActivity(Intent(this, PerfilActivity::class.java)) }
         )
 
         setupBottomNavigation()
 
         reservaId = intent.getIntExtra("reserva_id", 0)
+        esDesdeGestionarReservas = intent.getBooleanExtra("es_desde_gestionar", false)
 
         aulaNombreText = findViewById(R.id.aulaNombreText)
         fechaText = findViewById(R.id.fechaText)
@@ -53,9 +58,21 @@ class DetalleReservaActivity : BaseActivity() {
         cargarDetalleReserva()
 
         cancelarButton.setOnClickListener { cancelarReserva() }
-        editarButton.setOnClickListener { Toast.makeText(this, "Editar - Próximamente", Toast.LENGTH_SHORT).show() }
+        editarButton.setOnClickListener {
+            Toast.makeText(
+                this,
+                "Editar - Próximamente",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
         reactivarButton.setOnClickListener { reactivarReserva() }
-        traspasoButton.setOnClickListener { Toast.makeText(this, "Traspasar - Próximamente", Toast.LENGTH_SHORT).show() }
+        traspasoButton.setOnClickListener {
+            Toast.makeText(
+                this,
+                "Traspasar - Próximamente",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 
     private fun cargarDetalleReserva() {
@@ -82,7 +99,8 @@ class DetalleReservaActivity : BaseActivity() {
                         "Fecha inválida"
                     }
                     fechaText.text = getString(R.string.fecha_formato, fechaFormateada)
-                    horaText.text = getString(R.string.horario_formato, reserva.hora_inicio, reserva.hora_fin)
+                    horaText.text =
+                        getString(R.string.horario_formato, reserva.hora_inicio, reserva.hora_fin)
                     estadoText.text = getString(R.string.estado_formato, reserva.estado)
                     //Color según estado
                     when (reserva.estado) {
@@ -119,7 +137,11 @@ class DetalleReservaActivity : BaseActivity() {
                     }
                 }
             } catch (e: Exception) {
-                Toast.makeText(this@DetalleReservaActivity, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@DetalleReservaActivity,
+                    "Error: ${e.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -133,25 +155,92 @@ class DetalleReservaActivity : BaseActivity() {
                 val response = RetrofitClient.apiService.cancelarReserva("Bearer $token", reservaId)
 
                 if (response.isSuccessful) {
-                    Toast.makeText(this@DetalleReservaActivity, "✅ Reserva cancelada", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this@DetalleReservaActivity, MisReservasActivity::class.java))
+                    Toast.makeText(
+                        this@DetalleReservaActivity,
+                        "✅ Reserva cancelada",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    val destinoIntent = if (esDesdeGestionarReservas) {
+                        Intent(this@DetalleReservaActivity, GestionarReservasActivity::class.java)
+                    } else {
+                        Intent(this@DetalleReservaActivity, MisReservasActivity::class.java)
+                    }
+                    startActivity(destinoIntent)
                     finish()
                 } else {
-                    Toast.makeText(this@DetalleReservaActivity, "Error al cancelar", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@DetalleReservaActivity,
+                        "Error al cancelar",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             } catch (e: Exception) {
-                Toast.makeText(this@DetalleReservaActivity, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@DetalleReservaActivity,
+                    "Error: ${e.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
 
     private fun reactivarReserva() {
-        Toast.makeText(this, "Reactivar - Próximamente", Toast.LENGTH_SHORT).show()
+        lifecycleScope.launch {
+            try {
+                val tokenManager = TokenManager(this@DetalleReservaActivity)
+                val token = tokenManager.obtenerToken() ?: return@launch
+
+                val response =
+                    RetrofitClient.apiService.reactivarReserva("Bearer $token", reservaId)
+
+                if (response.isSuccessful) {
+                    Toast.makeText(
+                        this@DetalleReservaActivity,
+                        "✅ Reserva reactivada",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    cargarDetalleReserva()  // Recargar para actualizar estado
+                } else {
+                    try {
+                        val errorBody = response.errorBody()?.string()
+                        android.util.Log.e("REACTIVAR", "Error body: $errorBody")
+                        val errorJson = JsonParser.parseString(errorBody ?: "{}").asJsonObject
+                        val errorMsg = errorJson.get("mensaje")?.asString ?: "Error desconocido"
+                        Toast.makeText(
+                            this@DetalleReservaActivity,
+                            "❌ $errorMsg",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } catch (e: Exception) {
+                        android.util.Log.e("REACTIVAR", "Parse error: ${e.message}")
+                        Toast.makeText(
+                            this@DetalleReservaActivity,
+                            "❌ Error al reactivar",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            } catch (e: Exception) {
+                Toast.makeText(
+                    this@DetalleReservaActivity,
+                    "❌ Error: ${e.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        startActivity(Intent(this, MisReservasActivity::class.java))
+        val destinoIntent = if (esDesdeGestionarReservas) {
+            Intent(this, GestionarReservasActivity::class.java)
+        } else {
+            Intent(this, MisReservasActivity::class.java)
+        }
+        startActivity(destinoIntent)
         finish()
         return true
     }
 }
+
+

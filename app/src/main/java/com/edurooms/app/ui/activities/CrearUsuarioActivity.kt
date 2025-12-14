@@ -106,7 +106,8 @@ class CrearUsuarioActivity : BaseActivity() {
                         val errorBody = response.errorBody()?.string()
                         val errorJson = org.json.JSONObject(errorBody ?: "{}")
                         val errorMsg = errorJson.optString("mensaje", "Error desconocido")
-                        Toast.makeText(this@CrearUsuarioActivity, "❌ $errorMsg", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@CrearUsuarioActivity, "❌ $errorMsg", Toast.LENGTH_SHORT)
+                            .show()
                     } catch (_: Exception) {
                         Toast.makeText(
                             this@CrearUsuarioActivity,
@@ -126,7 +127,7 @@ class CrearUsuarioActivity : BaseActivity() {
         }
     }
 
-    private fun mostrarResultado(passwordTemporal: String, aviso: String="") {
+    private fun mostrarResultado(passwordTemporal: String, aviso: String = "") {
         passwordTemporalText.text = passwordTemporal
         resultadoCard.visibility = android.view.View.VISIBLE
     }

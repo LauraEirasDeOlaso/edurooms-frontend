@@ -40,7 +40,9 @@ class IncidenciasActivity : BaseActivity() {
         setupToolbar(title = "Reportar Incidencia", showBackButton = true)
         mostrarIconosToolbar(notificaciones = true, perfil = true)
         configurarIconosToolbar(
-            onNotificacionesClick = { Toast.makeText(this, "Notificaciones", Toast.LENGTH_SHORT).show() },
+            onNotificacionesClick = {
+                Toast.makeText(this, "Notificaciones", Toast.LENGTH_SHORT).show()
+            },
             onPerfilClick = { startActivity(Intent(this, PerfilActivity::class.java)) }
         )
 
@@ -76,20 +78,36 @@ class IncidenciasActivity : BaseActivity() {
                     if (response.body() != null) {
                         incidenciasLista = response.body()!!.toMutableList()
 
-                        incidenciasAdapter = IncidenciasRecyclerAdapter(incidenciasLista) { incidencia ->
-                            val intent = Intent(this@IncidenciasActivity, DetalleIncidenciaActivity::class.java)
-                            intent.putExtra("incidencia_id", incidencia.id)
-                            startActivity(intent)
-                        }
+                        incidenciasAdapter =
+                            IncidenciasRecyclerAdapter(incidenciasLista) { incidencia ->
+                                val intent = Intent(
+                                    this@IncidenciasActivity,
+                                    DetalleIncidenciaActivity::class.java
+                                )
+                                intent.putExtra("incidencia_id", incidencia.id)
+                                startActivity(intent)
+                            }
                         incidenciasRecyclerView.adapter = incidenciasAdapter
                     } else {
-                        Toast.makeText(this@IncidenciasActivity, "Sin incidencias", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this@IncidenciasActivity,
+                            "Sin incidencias",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 } else {
-                    Toast.makeText(this@IncidenciasActivity, "Error: ${response.code()}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@IncidenciasActivity,
+                        "Error: ${response.code()}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             } catch (e: Exception) {
-                Toast.makeText(this@IncidenciasActivity, "Exception: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@IncidenciasActivity,
+                    "Exception: ${e.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -110,7 +128,11 @@ class IncidenciasActivity : BaseActivity() {
 
         // como en back
         if (descripcion.length < 10) {
-            Toast.makeText(this, "La descripción debe tener al menos 10 caracteres", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                "La descripción debe tener al menos 10 caracteres",
+                Toast.LENGTH_SHORT
+            ).show()
             return
         }
 
@@ -121,7 +143,11 @@ class IncidenciasActivity : BaseActivity() {
                 val token = tokenManager.obtenerToken()
 
                 if (token == null) {
-                    Toast.makeText(this@IncidenciasActivity, "❌ No hay sesión activa", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@IncidenciasActivity,
+                        "❌ No hay sesión activa",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     return@launch
                 }
 
@@ -133,10 +159,15 @@ class IncidenciasActivity : BaseActivity() {
                 )
 
                 // REALMENTE ENVIAR al backend
-                val response = RetrofitClient.apiService.crearIncidencia("Bearer $token", requestBody)
+                val response =
+                    RetrofitClient.apiService.crearIncidencia("Bearer $token", requestBody)
 
                 if (response.isSuccessful) {
-                    Toast.makeText(this@IncidenciasActivity, "✅ Incidencia reportada", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@IncidenciasActivity,
+                        "✅ Incidencia reportada",
+                        Toast.LENGTH_SHORT
+                    ).show()
 
                     // Limpiar campos
                     descripcionInput.setText("")
@@ -145,11 +176,19 @@ class IncidenciasActivity : BaseActivity() {
                     // Recargar lista
                     cargarIncidencias()
                 } else {
-                    Toast.makeText(this@IncidenciasActivity, "❌ Error: ${response.code()}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@IncidenciasActivity,
+                        "❌ Error: ${response.code()}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
 
             } catch (e: Exception) {
-                Toast.makeText(this@IncidenciasActivity, "❌ Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@IncidenciasActivity,
+                    "❌ Error: ${e.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -183,13 +222,20 @@ class IncidenciasActivity : BaseActivity() {
                     aulasSpinner.adapter = adapter
 
                     // ← AGREGAR LISTENER AQUÍ
-                    aulasSpinner.onItemSelectedListener = object : android.widget.AdapterView.OnItemSelectedListener {
-                        override fun onItemSelected(parent: android.widget.AdapterView<*>, view: android.view.View?, position: Int, id: Long) {
-                            aulaIdRecibido = aulasLista[position].id
-                            cargarIncidencias() // Recargar cuando cambia aula
+                    aulasSpinner.onItemSelectedListener =
+                        object : android.widget.AdapterView.OnItemSelectedListener {
+                            override fun onItemSelected(
+                                parent: android.widget.AdapterView<*>,
+                                view: android.view.View?,
+                                position: Int,
+                                id: Long
+                            ) {
+                                aulaIdRecibido = aulasLista[position].id
+                                cargarIncidencias() // Recargar cuando cambia aula
+                            }
+
+                            override fun onNothingSelected(parent: android.widget.AdapterView<*>) {}
                         }
-                        override fun onNothingSelected(parent: android.widget.AdapterView<*>) {}
-                    }
 
                     // Si vino con aula_id, seleccionar esa aula
                     if (aulaIdRecibido != 0) {
@@ -198,7 +244,8 @@ class IncidenciasActivity : BaseActivity() {
                     }
                 }
             } catch (_: Exception) {
-                Toast.makeText(this@IncidenciasActivity, "Error cargando aulas", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@IncidenciasActivity, "Error cargando aulas", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
     }

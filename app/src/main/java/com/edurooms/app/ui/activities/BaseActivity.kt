@@ -39,7 +39,7 @@ open class BaseActivity : AppCompatActivity() {
             // Mostrar flecha atrás si es necesario
             if (showBackButton) {
                 supportActionBar?.setDisplayHomeAsUpEnabled(true)
-            }else {
+            } else {
                 // Esconder la flecha si es false
                 toolbar.navigationIcon = null
             }
@@ -49,7 +49,7 @@ open class BaseActivity : AppCompatActivity() {
         }
     }
 
-        // Método que las Activities hijas llaman DESPUÉS de setContentView
+    // Método que las Activities hijas llaman DESPUÉS de setContentView
     // Esto configura el Bottom Navigation
     protected fun setupBottomNavigation() {
         try {
@@ -110,10 +110,12 @@ open class BaseActivity : AppCompatActivity() {
                     }
                     true
                 }
+
                 else -> false
             }
         }
     }
+
     // Método para marcar cuál icono está activo según la Activity
     protected fun seleccionarItemBottomNav(itemId: Int) {
         bottomNavigation.selectedItemId = itemId
@@ -169,11 +171,14 @@ open class BaseActivity : AppCompatActivity() {
                         passwordToggle.setImageResource(R.drawable.ic_visibility)
                         passwordInput.setSelection(passwordInput.text.length)
                     }
+
                     MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
-                        passwordInput.inputType = android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
+                        passwordInput.inputType =
+                            android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
                         passwordToggle.setImageResource(R.drawable.ic_visibility_off)
                         passwordInput.setSelection(passwordInput.text.length)
                     }
+
                     else -> {}
                 }
                 true

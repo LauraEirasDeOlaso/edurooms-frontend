@@ -34,7 +34,9 @@ class DetalleIncidenciaAdminActivity : BaseActivity() {
         setupToolbar(title = "Detalle Incidencia", showBackButton = true)
         mostrarIconosToolbar(notificaciones = true, perfil = true)
         configurarIconosToolbar(
-            onNotificacionesClick = { Toast.makeText(this, "Notificaciones", Toast.LENGTH_SHORT).show() },
+            onNotificacionesClick = {
+                Toast.makeText(this, "Notificaciones", Toast.LENGTH_SHORT).show()
+            },
             onPerfilClick = { startActivity(Intent(this, PerfilActivity::class.java)) }
         )
 
@@ -68,10 +70,18 @@ class DetalleIncidenciaAdminActivity : BaseActivity() {
 
                     configurarSpinner()
                 } else {
-                    Toast.makeText(this@DetalleIncidenciaAdminActivity, "Error al cargar incidencia", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@DetalleIncidenciaAdminActivity,
+                        "Error al cargar incidencia",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             } catch (e: Exception) {
-                Toast.makeText(this@DetalleIncidenciaAdminActivity, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@DetalleIncidenciaAdminActivity,
+                    "Error: ${e.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -86,12 +96,18 @@ class DetalleIncidenciaAdminActivity : BaseActivity() {
         estadoSpinner.setSelection(index)
 
         estadoSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 val nuevoEstado = estados[position]
                 if (nuevoEstado != estadoActual) {
                     actualizarEstado(nuevoEstado)
                 }
             }
+
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
     }
@@ -109,19 +125,35 @@ class DetalleIncidenciaAdminActivity : BaseActivity() {
 
                 android.util.Log.d("UPDATE_ESTADO", "Incidencia ID: $incidenciaId")
 
-                val response = RetrofitClient.apiService.actualizarIncidencia("Bearer $token", incidenciaId, request)
+                val response = RetrofitClient.apiService.actualizarIncidencia(
+                    "Bearer $token",
+                    incidenciaId,
+                    request
+                )
                 android.util.Log.d("UPDATE_ESTADO", "Response code: ${response.code()}")
 
                 if (response.isSuccessful) {
-                    Toast.makeText(this@DetalleIncidenciaAdminActivity, "✅ Estado actualizado", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@DetalleIncidenciaAdminActivity,
+                        "✅ Estado actualizado",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     estadoActual = nuevoEstado
                     finish()
                 } else {
-                    Toast.makeText(this@DetalleIncidenciaAdminActivity, "❌ Error al actualizar", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@DetalleIncidenciaAdminActivity,
+                        "❌ Error al actualizar",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             } catch (e: Exception) {
                 android.util.Log.e("UPDATE_ESTADO", "Exception: ${e.message}")
-                Toast.makeText(this@DetalleIncidenciaAdminActivity, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@DetalleIncidenciaAdminActivity,
+                    "Error: ${e.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }

@@ -86,7 +86,7 @@
                     android:layout_height="50dp"
                     android:layout_weight="1"
                     android:text="@string/editar"
-                    android:layout_marginEnd="8dp"/>
+                    android:layout_marginEnd="8dp" />
 
                 <Button
                     android:id="@+id/eliminarButton"
@@ -94,7 +94,7 @@
                     android:layout_height="50dp"
                     android:layout_weight="1"
                     android:text="@string/eliminar"
-                    style="@style/ButtonDanger"/>
+                    style="@style/ButtonDanger" />
 
             </LinearLayout>
 

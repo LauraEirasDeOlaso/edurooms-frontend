@@ -6,12 +6,18 @@
 bin/
 gen/
 build/
+app/release/  
+app/build/    
 .gradle/
 .idea/
 *.iml
 *.iws
 *.ipr
 local.properties
+
+# Keystore
+*.jks         
+*.keystore    
 
 # VSCode/Editor
 .vscode/

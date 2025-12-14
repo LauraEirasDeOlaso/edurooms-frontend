@@ -3,9 +3,8 @@ package com.edurooms.app.data.utils
 object Constants {
 
 
-    // const val BASE_URL = "https://edurooms-backend-production.up.railway.app/api/"
-    const val BASE_URL = "http://192.168.1.32:3000/api/"  // ← CAMBIO AQUÍ (LOCAL)
-
+    const val BASE_URL = "https://edurooms-backend-production.up.railway.app/api/"
+    //const val BASE_URL = "http://192.168.1.32:3000/api/"  // ← CAMBIO AQUÍ (LOCAL)
 
 
     // Endpoints

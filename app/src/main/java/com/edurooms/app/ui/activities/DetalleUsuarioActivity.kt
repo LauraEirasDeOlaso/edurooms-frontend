@@ -48,7 +48,7 @@ class DetalleUsuarioActivity : BaseActivity() {
         usuarioEmail = intent.getStringExtra("usuario_email") ?: ""
         usuarioRol = intent.getStringExtra("usuario_rol") ?: ""
         usuarioEstado = intent.getStringExtra("usuario_estado") ?: "habilitado"
-        // usuarioDepartamento = intent.getStringExtra("usuario_departamento") ?: ""
+        usuarioDepartamento = intent.getStringExtra("usuario_departamento") ?: ""
 
         // Configurar Toolbar
         setupToolbar(title = "Detalle: $usuarioNombre", showBackButton = true)
@@ -203,6 +203,7 @@ class DetalleUsuarioActivity : BaseActivity() {
 
                 if (response.isSuccessful) {
                     Toast.makeText(this@DetalleUsuarioActivity, "✅ Usuario eliminado", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this@DetalleUsuarioActivity, GestionarUsuariosActivity::class.java))
                     finish()
                 } else {
                     // Intentar parsear error del backend

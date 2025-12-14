@@ -33,7 +33,9 @@ class GestionarIncidenciasActivity : BaseActivity() {
         setupToolbar(title = "Gestionar Incidencias", showBackButton = true)
         mostrarIconosToolbar(notificaciones = true, perfil = true)
         configurarIconosToolbar(
-            onNotificacionesClick = { Toast.makeText(this, "Notificaciones", Toast.LENGTH_SHORT).show() },
+            onNotificacionesClick = {
+                Toast.makeText(this, "Notificaciones", Toast.LENGTH_SHORT).show()
+            },
             onPerfilClick = { startActivity(Intent(this, PerfilActivity::class.java)) }
         )
 
@@ -52,7 +54,7 @@ class GestionarIncidenciasActivity : BaseActivity() {
     private fun cargarTodasIncidencias() {
         lifecycleScope.launch {
             try {
-                val token = tokenManager.obtenerToken() ?: return@launch
+                tokenManager.obtenerToken() ?: return@launch
                 val response = RetrofitClient.apiService.obtenerIncidencias()
 
                 if (response.isSuccessful && response.body() != null) {
@@ -61,11 +63,19 @@ class GestionarIncidenciasActivity : BaseActivity() {
                         configurarFiltros()
                         mostrarIncidencias(todasLasIncidencias)
                     } else {
-                        Toast.makeText(this@GestionarIncidenciasActivity, "No hay incidencias", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this@GestionarIncidenciasActivity,
+                            "No hay incidencias",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             } catch (e: Exception) {
-                Toast.makeText(this@GestionarIncidenciasActivity, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@GestionarIncidenciasActivity,
+                    "Error: ${e.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -92,26 +102,47 @@ class GestionarIncidenciasActivity : BaseActivity() {
         usuarioSpinner.adapter = usuarioAdapter
 
         // Listeners para filtrar
-        estadoSpinner.onItemSelectedListener = object : android.widget.AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: android.widget.AdapterView<*>, view: android.view.View?, position: Int, id: Long) {
-                aplicarFiltros()
-            }
-            override fun onNothingSelected(parent: android.widget.AdapterView<*>?) {}
-        }
+        estadoSpinner.onItemSelectedListener =
+            object : android.widget.AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: android.widget.AdapterView<*>,
+                    view: android.view.View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    aplicarFiltros()
+                }
 
-        aulaSpinner.onItemSelectedListener = object : android.widget.AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: android.widget.AdapterView<*>, view: android.view.View?, position: Int, id: Long) {
-                aplicarFiltros()
+                override fun onNothingSelected(parent: android.widget.AdapterView<*>?) {}
             }
-            override fun onNothingSelected(parent: android.widget.AdapterView<*>?) {}
-        }
 
-        usuarioSpinner.onItemSelectedListener = object : android.widget.AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: android.widget.AdapterView<*>, view: android.view.View?, position: Int, id: Long) {
-                aplicarFiltros()
+        aulaSpinner.onItemSelectedListener =
+            object : android.widget.AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: android.widget.AdapterView<*>,
+                    view: android.view.View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    aplicarFiltros()
+                }
+
+                override fun onNothingSelected(parent: android.widget.AdapterView<*>?) {}
             }
-            override fun onNothingSelected(parent: android.widget.AdapterView<*>?) {}
-        }
+
+        usuarioSpinner.onItemSelectedListener =
+            object : android.widget.AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: android.widget.AdapterView<*>,
+                    view: android.view.View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    aplicarFiltros()
+                }
+
+                override fun onNothingSelected(parent: android.widget.AdapterView<*>?) {}
+            }
     }
 
     private fun aplicarFiltros() {
@@ -120,9 +151,12 @@ class GestionarIncidenciasActivity : BaseActivity() {
         val usuarioSeleccionado = usuarioSpinner.selectedItem.toString()
 
         val filtradas = todasLasIncidencias.filter { incidencia ->
-            val cumpleEstado = estadoSeleccionado == "Todas" || incidencia.estado == estadoSeleccionado
-            val cumpleAula = aulaSeleccionada == "Todas las aulas" || incidencia.aula_nombre == aulaSeleccionada
-            val cumpleUsuario = usuarioSeleccionado == "Todos los usuarios" || incidencia.usuario_nombre == usuarioSeleccionado
+            val cumpleEstado =
+                estadoSeleccionado == "Todas" || incidencia.estado == estadoSeleccionado
+            val cumpleAula =
+                aulaSeleccionada == "Todas las aulas" || incidencia.aula_nombre == aulaSeleccionada
+            val cumpleUsuario =
+                usuarioSeleccionado == "Todos los usuarios" || incidencia.usuario_nombre == usuarioSeleccionado
 
             cumpleEstado && cumpleAula && cumpleUsuario
         }
@@ -132,7 +166,10 @@ class GestionarIncidenciasActivity : BaseActivity() {
 
     private fun mostrarIncidencias(incidencias: List<Incidencia>) {
         val adapter = IncidenciasRecyclerAdapter(incidencias) { incidencia ->
-            val intent = Intent(this@GestionarIncidenciasActivity, DetalleIncidenciaAdminActivity::class.java)
+            val intent = Intent(
+                this@GestionarIncidenciasActivity,
+                DetalleIncidenciaAdminActivity::class.java
+            )
             intent.putExtra("incidencia_id", incidencia.id)
             startActivity(intent)
         }
@@ -144,6 +181,7 @@ class GestionarIncidenciasActivity : BaseActivity() {
         finish()
         return true
     }
+
     override fun onResume() {
         super.onResume()
         cargarTodasIncidencias()  // Recargar cuando vuelves

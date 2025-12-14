@@ -36,7 +36,9 @@ class DetalleAulaAdminActivity : BaseActivity() {
         setupToolbar(title = "", showBackButton = true)
         mostrarIconosToolbar(notificaciones = true, perfil = true)
         configurarIconosToolbar(
-            onNotificacionesClick = { Toast.makeText(this, "Notificaciones", Toast.LENGTH_SHORT).show() },
+            onNotificacionesClick = {
+                Toast.makeText(this, "Notificaciones", Toast.LENGTH_SHORT).show()
+            },
             onPerfilClick = { startActivity(Intent(this, PerfilActivity::class.java)) }
         )
 
@@ -74,14 +76,19 @@ class DetalleAulaAdminActivity : BaseActivity() {
                     estadoText.text = getString(R.string.estado_formato, aula.estado)
                 }
             } catch (e: Exception) {
-                Toast.makeText(this@DetalleAulaAdminActivity, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@DetalleAulaAdminActivity,
+                    "Error: ${e.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
 
     private fun mostrarDialogoEditar() {
         val nombre = nombreText.text.toString().replace("Nombre: ", "")
-        val capacidad = capacidadText.text.toString().replace("Capacidad: ", "").replace(" personas", "")
+        val capacidad =
+            capacidadText.text.toString().replace("Capacidad: ", "").replace(" personas", "")
         val ubicacion = ubicacionText.text.toString().replace("Ubicación: ", "")
         val estado = estadoText.text.toString().replace("Estado: ", "")
 
@@ -131,17 +138,27 @@ class DetalleAulaAdminActivity : BaseActivity() {
                     estado = estado
                 )
 
-                val response = RetrofitClient.apiService.actualizarAula("Bearer $token", aulaId, datos)
+                val response =
+                    RetrofitClient.apiService.actualizarAula("Bearer $token", aulaId, datos)
 
                 if (response.isSuccessful && response.body() != null) {
                     val mensaje = response.body()?.mensaje ?: "✅ Aula actualizada"
-                    Toast.makeText(this@DetalleAulaAdminActivity, mensaje, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@DetalleAulaAdminActivity, mensaje, Toast.LENGTH_SHORT)
+                        .show()
                     cargarDetalleAula()
                 } else {
-                    Toast.makeText(this@DetalleAulaAdminActivity, "❌ Error al actualizar", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@DetalleAulaAdminActivity,
+                        "❌ Error al actualizar",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             } catch (e: Exception) {
-                Toast.makeText(this@DetalleAulaAdminActivity, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@DetalleAulaAdminActivity,
+                    "Error: ${e.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -162,15 +179,29 @@ class DetalleAulaAdminActivity : BaseActivity() {
                 val response = RetrofitClient.apiService.eliminarAula("Bearer $token", aulaId)
 
                 if (response.isSuccessful) {
-                    Toast.makeText(this@DetalleAulaAdminActivity, "✅ Aula eliminada", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this@DetalleAulaAdminActivity, GestionarAulasActivity::class.java))
+                    Toast.makeText(
+                        this@DetalleAulaAdminActivity,
+                        "✅ Aula eliminada",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    startActivity(
+                        Intent(
+                            this@DetalleAulaAdminActivity,
+                            GestionarAulasActivity::class.java
+                        )
+                    )
                     finish()
                 } else {
                     val errorMsg = response.errorBody()?.string() ?: "Error desconocido"
-                    Toast.makeText(this@DetalleAulaAdminActivity, "❌ $errorMsg", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@DetalleAulaAdminActivity, "❌ $errorMsg", Toast.LENGTH_SHORT)
+                        .show()
                 }
             } catch (e: Exception) {
-                Toast.makeText(this@DetalleAulaAdminActivity, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@DetalleAulaAdminActivity,
+                    "Error: ${e.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }

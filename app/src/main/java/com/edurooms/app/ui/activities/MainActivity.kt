@@ -27,7 +27,6 @@ class MainActivity : BaseActivity() {
     private lateinit var gestionarIncidenciasButton: Button
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -40,13 +39,16 @@ class MainActivity : BaseActivity() {
             return
         }
 
+
         val nombre = tokenManager.obtenerNombre() ?: "Usuario"
         // Configurar Toolbar (sin botón atrás)
         setupToolbar(title = "Hola $nombre", showBackButton = false)
         mostrarIconosToolbar(perfil = true, notificaciones = true)
 
         configurarIconosToolbar(
-            onNotificacionesClick = { Toast.makeText(this, "Notificaciones", Toast.LENGTH_SHORT).show() },
+            onNotificacionesClick = {
+                Toast.makeText(this, "Notificaciones", Toast.LENGTH_SHORT).show()
+            },
             onPerfilClick = { startActivity(Intent(this, PerfilActivity::class.java)) }
         )
 
@@ -69,6 +71,7 @@ class MainActivity : BaseActivity() {
         // Mostrar menú según rol
         mostrarMenuSegunRol()
 
+
         // Click listeners
         verAulasButton.setOnClickListener {
             startActivity(Intent(this, ListaAulasActivity::class.java))
@@ -78,7 +81,7 @@ class MainActivity : BaseActivity() {
             startActivity(Intent(this, MisReservasActivity::class.java))
         }
         incidenciasButton.setOnClickListener {
-           // Toast.makeText(this, "Incidencias - Próximamente", Toast.LENGTH_SHORT).show()
+            // Toast.makeText(this, "Incidencias - Próximamente", Toast.LENGTH_SHORT).show()
             startActivity(Intent(this, IncidenciasActivity::class.java))
         }
 
@@ -106,7 +109,9 @@ class MainActivity : BaseActivity() {
     }
 
     private fun irAlLogin() {
-        startActivity(Intent(this, LoginActivity::class.java))
+        startActivity(Intent(this, LoginActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        })
         finish()
     }
 
@@ -131,4 +136,9 @@ class MainActivity : BaseActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+
+
+    }
 }

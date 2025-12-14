@@ -26,7 +26,9 @@ class DetalleIncidenciaActivity : BaseActivity() {
         setupToolbar(title = "Detalle Incidencia", showBackButton = true)
         mostrarIconosToolbar(notificaciones = true, perfil = true)
         configurarIconosToolbar(
-            onNotificacionesClick = { Toast.makeText(this, "Notificaciones", Toast.LENGTH_SHORT).show() },
+            onNotificacionesClick = {
+                Toast.makeText(this, "Notificaciones", Toast.LENGTH_SHORT).show()
+            },
             onPerfilClick = { startActivity(Intent(this, PerfilActivity::class.java)) }
         )
 
@@ -64,10 +66,18 @@ class DetalleIncidenciaActivity : BaseActivity() {
                         "resuelta" -> estadoText.setTextColor(getColor(R.color.success))
                     }
                 } else {
-                    Toast.makeText(this@DetalleIncidenciaActivity, "Error al cargar incidencia", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@DetalleIncidenciaActivity,
+                        "Error al cargar incidencia",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             } catch (e: Exception) {
-                Toast.makeText(this@DetalleIncidenciaActivity, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@DetalleIncidenciaActivity,
+                    "Error: ${e.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }

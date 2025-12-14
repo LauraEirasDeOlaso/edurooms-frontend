@@ -16,8 +16,8 @@ import com.edurooms.app.data.models.LoginRequest
 import com.edurooms.app.data.network.RetrofitClient
 import com.edurooms.app.data.utils.TokenManager
 import com.edurooms.app.ui.activities.BaseActivity.Companion.configurarPasswordToggle
+import com.google.gson.JsonParser
 import kotlinx.coroutines.launch
-
 
 
 class LoginActivity : AppCompatActivity() {
@@ -32,13 +32,17 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var rememberMeCheckbox: CheckBox
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
         // Inicializar TokenManager
         tokenManager = TokenManager(this)
+
+        // Si NO tiene "Recuérdame", limpiar token
+        if (!tokenManager.obtenerRememberMe()) {
+            tokenManager.eliminarToken()
+        }
 
         // Verificar si ya hay sesión activa
         if (tokenManager.tokenValido()) {
@@ -55,7 +59,6 @@ class LoginActivity : AppCompatActivity() {
         rememberMeCheckbox = findViewById(R.id.rememberMeCheckbox)
 
         configurarPasswordToggle(passwordToggle, passwordInput)
-
 
 
         // Cargar credenciales si existen
@@ -82,6 +85,7 @@ class LoginActivity : AppCompatActivity() {
         // ← CAMBIAR DE OnClickListener A OnTouchListener
 
     }
+
     private fun realizarLogin() {
         val email = emailInput.text.toString().trim()
         val password = passwordInput.text.toString().trim()
@@ -115,8 +119,10 @@ class LoginActivity : AppCompatActivity() {
 
                     // Guardar o limpiar credenciales según checkbox
                     if (rememberMeCheckbox.isChecked) {
+                        tokenManager.guardarRememberMe(true)
                         tokenManager.guardarCredencialesRecordadas(email, password)
                     } else {
+                        tokenManager.guardarRememberMe(false)
                         tokenManager.limpiarCredencialesRecordadas()
                     }
 
@@ -140,11 +146,22 @@ class LoginActivity : AppCompatActivity() {
                         irAlMenu()
                     }
                 } else {
-                    Toast.makeText(
-                        this@LoginActivity,
-                        "❌ Credenciales inválidas",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    try {
+                        val errorBody = response.errorBody()?.string()
+                        val errorMsg = if (errorBody != null) {
+                            val jsonObject = JsonParser.parseString(errorBody).asJsonObject
+                            jsonObject.get("mensaje")?.asString ?: "❌ Credenciales inválidas"
+                        } else {
+                            "❌ Credenciales inválidas"
+                        }
+                        Toast.makeText(this@LoginActivity, errorMsg, Toast.LENGTH_SHORT).show()
+                    } catch (_: Exception) {
+                        Toast.makeText(
+                            this@LoginActivity,
+                            "❌ Credenciales inválidas",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
             } catch (e: Exception) {
                 android.util.Log.e("LOGIN", "Exception: ${e.message}", e)
@@ -165,7 +182,5 @@ class LoginActivity : AppCompatActivity() {
         intent.putExtra("email", email)
         startActivity(intent)
     }
-
-
 
 }

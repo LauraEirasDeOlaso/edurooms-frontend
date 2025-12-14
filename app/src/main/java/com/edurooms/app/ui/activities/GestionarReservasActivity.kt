@@ -34,7 +34,9 @@ class GestionarReservasActivity : BaseActivity() {
         setupToolbar(title = "Gestionar Reservas", showBackButton = true)
         mostrarIconosToolbar(notificaciones = true, perfil = true)
         configurarIconosToolbar(
-            onNotificacionesClick = { Toast.makeText(this, "Notificaciones", Toast.LENGTH_SHORT).show() },
+            onNotificacionesClick = {
+                Toast.makeText(this, "Notificaciones", Toast.LENGTH_SHORT).show()
+            },
             onPerfilClick = { startActivity(Intent(this, PerfilActivity::class.java)) }
         )
 
@@ -62,11 +64,19 @@ class GestionarReservasActivity : BaseActivity() {
                         configurarFiltros()
                         mostrarReservas(todasLasReservas)
                     } else {
-                        Toast.makeText(this@GestionarReservasActivity, "No hay reservas", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this@GestionarReservasActivity,
+                            "No hay reservas",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             } catch (e: Exception) {
-                Toast.makeText(this@GestionarReservasActivity, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@GestionarReservasActivity,
+                    "Error: ${e.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -93,26 +103,47 @@ class GestionarReservasActivity : BaseActivity() {
         usuarioSpinner.adapter = usuarioAdapter
 
         // Listeners para filtrar
-        estadoSpinner.onItemSelectedListener = object : android.widget.AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: android.widget.AdapterView<*>, view: android.view.View?, position: Int, id: Long) {
-                aplicarFiltros()
-            }
-            override fun onNothingSelected(parent: android.widget.AdapterView<*>?) {}
-        }
+        estadoSpinner.onItemSelectedListener =
+            object : android.widget.AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: android.widget.AdapterView<*>,
+                    view: android.view.View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    aplicarFiltros()
+                }
 
-        aulaSpinner.onItemSelectedListener = object : android.widget.AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: android.widget.AdapterView<*>, view: android.view.View?, position: Int, id: Long) {
-                aplicarFiltros()
+                override fun onNothingSelected(parent: android.widget.AdapterView<*>?) {}
             }
-            override fun onNothingSelected(parent: android.widget.AdapterView<*>?) {}
-        }
 
-        usuarioSpinner.onItemSelectedListener = object : android.widget.AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: android.widget.AdapterView<*>, view: android.view.View?, position: Int, id: Long) {
-                aplicarFiltros()
+        aulaSpinner.onItemSelectedListener =
+            object : android.widget.AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: android.widget.AdapterView<*>,
+                    view: android.view.View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    aplicarFiltros()
+                }
+
+                override fun onNothingSelected(parent: android.widget.AdapterView<*>?) {}
             }
-            override fun onNothingSelected(parent: android.widget.AdapterView<*>?) {}
-        }
+
+        usuarioSpinner.onItemSelectedListener =
+            object : android.widget.AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: android.widget.AdapterView<*>,
+                    view: android.view.View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    aplicarFiltros()
+                }
+
+                override fun onNothingSelected(parent: android.widget.AdapterView<*>?) {}
+            }
     }
 
     private fun aplicarFiltros() {
@@ -122,8 +153,10 @@ class GestionarReservasActivity : BaseActivity() {
 
         val filtradas = todasLasReservas.filter { reserva ->
             val cumpleEstado = estadoSeleccionado == "Todas" || reserva.estado == estadoSeleccionado
-            val cumpleAula = aulaSeleccionada == "Todas las aulas" || reserva.aula_nombre == aulaSeleccionada
-            val cumpleUsuario = usuarioSeleccionado == "Todos los usuarios" || reserva.usuario_nombre == usuarioSeleccionado
+            val cumpleAula =
+                aulaSeleccionada == "Todas las aulas" || reserva.aula_nombre == aulaSeleccionada
+            val cumpleUsuario =
+                usuarioSeleccionado == "Todos los usuarios" || reserva.usuario_nombre == usuarioSeleccionado
 
             cumpleEstado && cumpleAula && cumpleUsuario
         }
@@ -135,6 +168,7 @@ class GestionarReservasActivity : BaseActivity() {
         val adapter = ReservasAdapter(reservas) { reserva ->
             val intent = Intent(this@GestionarReservasActivity, DetalleReservaActivity::class.java)
             intent.putExtra("reserva_id", reserva.id)
+            intent.putExtra("es_desde_gestionar", true)
             startActivity(intent)
         }
         reservasRecyclerView.adapter = adapter
@@ -144,5 +178,10 @@ class GestionarReservasActivity : BaseActivity() {
         startActivity(Intent(this, MainActivity::class.java))
         finish()
         return true
+    }
+
+    override fun onResume() {
+        super.onResume()
+        cargarTodasReservas()
     }
 }

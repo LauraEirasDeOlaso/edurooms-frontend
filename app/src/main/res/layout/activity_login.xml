@@ -109,7 +109,7 @@
                 android:textColor="@color/text_secondary"
                 android:textSize="13sp"
                 android:layout_marginBottom="20dp"
-                android:gravity="center_vertical"/>
+                android:gravity="center_vertical" />
 
             <!-- Botón Login: hereda CustomButton (texto blanco sobre beige) -->
             <Button

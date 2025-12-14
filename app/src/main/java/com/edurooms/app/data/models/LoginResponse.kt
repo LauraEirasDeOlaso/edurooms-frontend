@@ -5,6 +5,7 @@ data class LoginResponse(
     val usuario: UsuarioData,
     val token: String
 )
+
 data class UsuarioData(
     val id: Int,
     val nombre: String,

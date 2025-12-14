@@ -54,7 +54,9 @@ class CambiarPasswordActivity : BaseActivity() {
         // Solo configurar iconos si NO es primera vez
         if (!esPrimeraVez) {
             configurarIconosToolbar(
-                onNotificacionesClick = { Toast.makeText(this, "Notificaciones", Toast.LENGTH_SHORT).show() },
+                onNotificacionesClick = {
+                    Toast.makeText(this, "Notificaciones", Toast.LENGTH_SHORT).show()
+                },
                 onPerfilClick = { startActivity(Intent(this, PerfilActivity::class.java)) }
             )
         }
@@ -87,14 +89,21 @@ class CambiarPasswordActivity : BaseActivity() {
         if (esPrimeraVez) {
             supportActionBar?.setDisplayHomeAsUpEnabled(false)
 
-            onBackPressedDispatcher.addCallback(this, object : androidx.activity.OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    tokenManager.eliminarToken()
-                    tokenManager.limpiarCredencialesRecordadas()
-                    startActivity(Intent(this@CambiarPasswordActivity, LoginActivity::class.java))
-                    finish()
-                }
-            })
+            onBackPressedDispatcher.addCallback(
+                this,
+                object : androidx.activity.OnBackPressedCallback(true) {
+                    override fun handleOnBackPressed() {
+                        tokenManager.eliminarToken()
+                        tokenManager.limpiarCredencialesRecordadas()
+                        startActivity(
+                            Intent(
+                                this@CambiarPasswordActivity,
+                                LoginActivity::class.java
+                            )
+                        )
+                        finish()
+                    }
+                })
         }
 
         // SIEMPRE mostrar el campo de contraseña actual
@@ -182,7 +191,7 @@ class CambiarPasswordActivity : BaseActivity() {
                 val requestBody = CambiarPasswordRequest(
                     passwordActual = passwordActual,
                     passwordNueva = passwordNueva,
-                    passwordNuevaConfirmar =  passwordConfirmar,
+                    passwordNuevaConfirmar = passwordConfirmar,
                     esPrimeraVez = esPrimeraVez
                 )
 
@@ -196,7 +205,12 @@ class CambiarPasswordActivity : BaseActivity() {
                     if (esPrimeraVez) {
                         // PRIMERA VEZ: Limpiar todo y volver a MainActivity
                         tokenManager.limpiarCredencialesRecordadas()
-                        startActivity(Intent(this@CambiarPasswordActivity, MainActivity::class.java))
+                        startActivity(
+                            Intent(
+                                this@CambiarPasswordActivity,
+                                MainActivity::class.java
+                            )
+                        )
                         finish()
                     } else {
                         // DESDE PERFIL: Eliminar token, limpiar SOLO password y volver a LoginActivity
@@ -205,7 +219,8 @@ class CambiarPasswordActivity : BaseActivity() {
                         tokenManager.limpiarSoloPassword()
                         //Comienza de nuevo
                         val intent = Intent(this@CambiarPasswordActivity, LoginActivity::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        intent.flags =
+                            Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         startActivity(intent)
                         finish()
                     }
@@ -214,13 +229,25 @@ class CambiarPasswordActivity : BaseActivity() {
                         val errorBody = response.errorBody()?.string()
                         val errorJson = org.json.JSONObject(errorBody ?: "{}")
                         val errorMsg = errorJson.optString("mensaje", "Error desconocido")
-                        Toast.makeText(this@CambiarPasswordActivity, "❌ $errorMsg", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this@CambiarPasswordActivity,
+                            "❌ $errorMsg",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     } catch (_: Exception) {
-                        Toast.makeText(this@CambiarPasswordActivity, "❌ Error: ${response.code()}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this@CambiarPasswordActivity,
+                            "❌ Error: ${response.code()}",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             } catch (e: Exception) {
-                Toast.makeText(this@CambiarPasswordActivity, "❌ Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@CambiarPasswordActivity,
+                    "❌ Error: ${e.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -255,7 +282,8 @@ class CambiarPasswordActivity : BaseActivity() {
                 toggleIcon.setImageResource(android.R.drawable.ic_menu_view) // Ojo abierto
             } else {
                 // Ocultar contraseña
-                passwordInput.inputType = android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
+                passwordInput.inputType =
+                    android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
                 toggleIcon.setImageResource(android.R.drawable.ic_secure) // Ojo cerrado
             }
 

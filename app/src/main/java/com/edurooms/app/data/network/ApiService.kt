@@ -63,6 +63,12 @@ interface ApiService {
         @Path("id") id: Int
     ): Response<Map<String, String>>
 
+    @PUT("reservas/{id}/reactivar")
+    suspend fun reactivarReserva(
+        @Header("Authorization") token: String,
+        @Path("id") id: Int
+    ): Response<Map<String, String>>
+
     @GET("reservas/disponibilidad")
     suspend fun obtenerHorariosDisponibles(
         @Query("aula_id") aulaId: Int,
@@ -137,7 +143,7 @@ interface ApiService {
     suspend fun eliminarUsuario(
         @Header("Authorization") token: String,
         @Path("id") id: Int
-    ): Response<Map<String, String>>
+    ): Response<Map<String, Any>>
 
     @PUT("usuarios/{id}/cambiar-password")
     suspend fun cambiarPassword(

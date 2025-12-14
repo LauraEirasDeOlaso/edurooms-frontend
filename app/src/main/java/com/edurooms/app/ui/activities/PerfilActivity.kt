@@ -30,7 +30,6 @@ class PerfilActivity : BaseActivity() {
     private lateinit var logoutButton: Button
 
 
-
     private lateinit var profileImageContainer: FrameLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,7 +41,9 @@ class PerfilActivity : BaseActivity() {
         mostrarIconosToolbar(notificaciones = true, perfil = false)
 
         configurarIconosToolbar(
-            onNotificacionesClick = { Toast.makeText(this, "Notificaciones", Toast.LENGTH_SHORT).show() }
+            onNotificacionesClick = {
+                Toast.makeText(this, "Notificaciones", Toast.LENGTH_SHORT).show()
+            }
         )
 
         // Configurar Bottom Navigation
@@ -112,10 +113,11 @@ class PerfilActivity : BaseActivity() {
 
     private fun cerrarSesion() {
         tokenManager.eliminarToken()
-        startActivity(Intent(this, LoginActivity::class.java))
+        startActivity(Intent(this, LoginActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        })
         finish()
     }
-
 
 
     private val pickImageLauncher = registerForActivityResult(
@@ -127,7 +129,7 @@ class PerfilActivity : BaseActivity() {
     }
 
     private fun abrirGaleria() {
-        val opciones = arrayOf( "🖼️ Galería", "❌ Cancelar")
+        val opciones = arrayOf("🖼️ Galería", "❌ Cancelar")
         AlertDialog.Builder(this)
             .setTitle("Selecciona una opción")
             .setItems(opciones) { _, which ->
@@ -157,12 +159,15 @@ class PerfilActivity : BaseActivity() {
                 inputStream.close()
 
                 val requestBody = file.asRequestBody("image/jpeg".toMediaType())
-                val fotoPart = okhttp3.MultipartBody.Part.createFormData("foto", file.name, requestBody)
+                val fotoPart =
+                    okhttp3.MultipartBody.Part.createFormData("foto", file.name, requestBody)
 
-                val response = RetrofitClient.apiService.subirFotoPerfil("Bearer $token", usuarioId, fotoPart)
+                val response =
+                    RetrofitClient.apiService.subirFotoPerfil("Bearer $token", usuarioId, fotoPart)
 
                 if (response.isSuccessful) {
-                    Toast.makeText(this@PerfilActivity, "✅ Foto actualizada", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@PerfilActivity, "✅ Foto actualizada", Toast.LENGTH_SHORT)
+                        .show()
 
                     // LIMPIAR TODO
                     com.bumptech.glide.Glide.get(this@PerfilActivity).clearMemory()
@@ -170,10 +175,12 @@ class PerfilActivity : BaseActivity() {
                     // Recargar sin delay
                     cargarFotoPerfil()
                 } else {
-                    Toast.makeText(this@PerfilActivity, "❌ Error al subir foto", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@PerfilActivity, "❌ Error al subir foto", Toast.LENGTH_SHORT)
+                        .show()
                 }
             } catch (e: Exception) {
-                Toast.makeText(this@PerfilActivity, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@PerfilActivity, "Error: ${e.message}", Toast.LENGTH_SHORT)
+                    .show()
                 android.util.Log.e("FOTO_UPLOAD", "Error subiendo:", e)
             }
         }
@@ -199,13 +206,29 @@ class PerfilActivity : BaseActivity() {
                             .load(urlFoto)
                             .centerCrop()
                             .circleCrop()
-                            .listener(object : com.bumptech.glide.request.RequestListener<android.graphics.drawable.Drawable> {
-                                override fun onLoadFailed(e: com.bumptech.glide.load.engine.GlideException?, model: Any?, target: com.bumptech.glide.request.target.Target<android.graphics.drawable.Drawable>?, isFirstResource: Boolean): Boolean {
+                            .listener(object :
+                                com.bumptech.glide.request.RequestListener<android.graphics.drawable.Drawable> {
+                                override fun onLoadFailed(
+                                    e: com.bumptech.glide.load.engine.GlideException?,
+                                    model: Any?,
+                                    target: com.bumptech.glide.request.target.Target<android.graphics.drawable.Drawable>?,
+                                    isFirstResource: Boolean
+                                ): Boolean {
                                     android.util.Log.e("GLIDE_ERROR", "Error: ${e?.message}")
                                     return false
                                 }
-                                override fun onResourceReady(resource: android.graphics.drawable.Drawable?, model: Any?, target: com.bumptech.glide.request.target.Target<android.graphics.drawable.Drawable>?, dataSource: com.bumptech.glide.load.DataSource?, isFirstResource: Boolean): Boolean {
-                                    android.util.Log.d("GLIDE_SUCCESS", "✅ Imagen cargada correctamente")
+
+                                override fun onResourceReady(
+                                    resource: android.graphics.drawable.Drawable?,
+                                    model: Any?,
+                                    target: com.bumptech.glide.request.target.Target<android.graphics.drawable.Drawable>?,
+                                    dataSource: com.bumptech.glide.load.DataSource?,
+                                    isFirstResource: Boolean
+                                ): Boolean {
+                                    android.util.Log.d(
+                                        "GLIDE_SUCCESS",
+                                        "✅ Imagen cargada correctamente"
+                                    )
                                     return false
                                 }
                             })

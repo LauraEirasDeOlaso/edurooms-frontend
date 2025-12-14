@@ -28,7 +28,9 @@ class GestionarAulasActivity : BaseActivity() {
         setupToolbar(title = "", showBackButton = true)
         mostrarIconosToolbar(notificaciones = true, perfil = true)
         configurarIconosToolbar(
-            onNotificacionesClick = { Toast.makeText(this, "Notificaciones", Toast.LENGTH_SHORT).show() },
+            onNotificacionesClick = {
+                Toast.makeText(this, "Notificaciones", Toast.LENGTH_SHORT).show()
+            },
             onPerfilClick = { startActivity(Intent(this, PerfilActivity::class.java)) }
         )
 
@@ -57,7 +59,10 @@ class GestionarAulasActivity : BaseActivity() {
                     val aulas = response.body()!!
                     if (aulas.isNotEmpty()) {
                         val adapter = AulasAdapter(aulas) { aula ->
-                            val intent = Intent(this@GestionarAulasActivity, DetalleAulaAdminActivity::class.java)
+                            val intent = Intent(
+                                this@GestionarAulasActivity,
+                                DetalleAulaAdminActivity::class.java
+                            )
                             intent.putExtra("aula_id", aula.id)
                             startActivity(intent)
                         }
@@ -65,7 +70,11 @@ class GestionarAulasActivity : BaseActivity() {
                     }
                 }
             } catch (e: Exception) {
-                Toast.makeText(this@GestionarAulasActivity, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@GestionarAulasActivity,
+                    "Error: ${e.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }

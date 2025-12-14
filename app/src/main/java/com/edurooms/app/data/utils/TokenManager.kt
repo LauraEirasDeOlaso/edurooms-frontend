@@ -114,4 +114,12 @@ class TokenManager(context: Context) {
         }
     }
 
+    fun guardarRememberMe(recordar: Boolean) {
+        prefs.edit { putBoolean("remember_me_flag", recordar) }
+    }
+
+    fun obtenerRememberMe(): Boolean {
+        return prefs.getBoolean("remember_me_flag", false)
+    }
+
 }
