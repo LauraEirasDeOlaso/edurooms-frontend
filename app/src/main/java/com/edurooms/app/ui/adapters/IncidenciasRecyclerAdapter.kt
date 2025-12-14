@@ -6,7 +6,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.edurooms.app.R
 import com.edurooms.app.data.models.Incidencia
-import android.graphics.Color
+
 
 class IncidenciasRecyclerAdapter(
     private val incidencias: List<Incidencia>,

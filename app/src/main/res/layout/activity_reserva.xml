@@ -3,34 +3,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="20dp"
-    android:layout_margin="20dp"
     android:background="@color/background">
 
-    <!-- Título -->
+    <!-- TÍTULO -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/crear_reserva"
         style="@style/TextHeading1"
-        android:layout_marginBottom="20dp" />
+        android:padding="20dp"
+        android:layout_marginBottom="10dp" />
 
-    <!-- Calendario -->
+    <!-- CALENDARIO -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/selecciona_una_fecha"
         style="@style/TextBody"
         android:textStyle="bold"
+        android:layout_marginStart="20dp"
         android:layout_marginBottom="10dp" />
 
     <CalendarView
         android:id="@+id/calendarView"
         android:layout_width="match_parent"
         android:layout_height="320dp"
-        android:layout_marginBottom="20dp" />
+        android:layout_marginBottom="10dp" />
 
-    <!-- Estado de horarios -->
+    <!-- TEXTO HORARIOS -->
     <TextView
         android:id="@+id/horariosDisponiblesText"
         android:layout_width="match_parent"
@@ -38,13 +38,15 @@
         android:text="@string/cargando_horarios"
         style="@style/TextBody"
         android:gravity="center"
-        android:layout_marginBottom="15dp" />
+        android:layout_marginBottom="8dp" />
 
+    <!-- CABECERA HORARIOS -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginBottom="15dp">
+        android:layout_marginBottom="8dp"
+        android:paddingHorizontal="20dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -60,31 +62,37 @@
             android:layout_height="48dp"
             android:layout_marginStart="10dp"
             android:text="@string/actualizar" />
-
     </LinearLayout>
 
-    <!-- Spinner de horarios -->
-    <Spinner
-        android:id="@+id/spinnerHorarios"
+    <!-- 🔥 RECYCLERVIEW (EL SCROLL DE LA PANTALLA) -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/horariosRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@drawable/rounded_edittext"
-        android:layout_marginBottom="25dp" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingHorizontal="20dp" />
 
-    <!-- Botones -->
-    <Button
-        android:id="@+id/confirmarButton"
+    <!-- BOTONES FIJOS ABAJO -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="@string/confirmar_reserva"
-        android:layout_marginBottom="12dp" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
 
-    <Button
-        android:id="@+id/cancelarButton"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="@string/cancelar"
-        android:textColor="@color/text_primary"
-        android:backgroundTint="@color/primary_soft"/>
+        <Button
+            android:id="@+id/confirmarButton"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="@string/confirmar_reserva"
+            android:layout_marginBottom="12dp" />
+
+        <Button
+            android:id="@+id/cancelarButton"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="@string/cancelar"
+            android:textColor="@color/text_primary"
+            android:backgroundTint="@color/primary_soft" />
+    </LinearLayout>
 
 </LinearLayout>

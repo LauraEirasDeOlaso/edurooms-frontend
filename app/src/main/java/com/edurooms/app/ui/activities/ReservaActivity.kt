@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.CalendarView
-import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
@@ -15,28 +14,27 @@ import com.edurooms.app.data.utils.TokenManager
 import com.google.gson.JsonParser
 import kotlinx.coroutines.launch
 import java.util.*
-import android.widget.ArrayAdapter
+import androidx.recyclerview.widget.RecyclerView
+import com.edurooms.app.ui.adapters.HorarioItem
+import com.edurooms.app.ui.adapters.HorariosAdapter
+import androidx.recyclerview.widget.LinearLayoutManager
 
 
 
 class ReservaActivity : BaseActivity() {
 
     private lateinit var calendarView: CalendarView
-
     private lateinit var confirmarButton: Button
     private lateinit var cancelarButton: Button
+    private lateinit var horariosRecyclerView: RecyclerView
+    private lateinit var horariosDisponiblesText: TextView
+    private lateinit var actualizarButton: Button
+
+    private lateinit var horariosAdapter: HorariosAdapter
+
     private var aulaId: Int = 0
     private var fechaSeleccionada: String = ""
-
-    private lateinit var spinnerHorarios: Spinner
-
-    private lateinit var horariosDisponiblesText: TextView
-
-    private var horariosLibres: List<Pair<String, String>> = emptyList()
-
-    private var horaSeleccionada: String = ""
-
-    private lateinit var actualizarButton: Button
+    private var horarioSeleccionado: HorarioItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,9 +46,15 @@ class ReservaActivity : BaseActivity() {
         calendarView = findViewById(R.id.calendarView)
         confirmarButton = findViewById(R.id.confirmarButton)
         cancelarButton = findViewById(R.id.cancelarButton)
-        spinnerHorarios = findViewById(R.id.spinnerHorarios)
+        horariosRecyclerView = findViewById(R.id.horariosRecyclerView)
         horariosDisponiblesText = findViewById(R.id.horariosDisponiblesText)
         actualizarButton = findViewById(R.id.actualizarButton)
+
+        // Desactivar confirmar al inicio
+        confirmarButton.isEnabled = false
+
+        horariosRecyclerView.layoutManager = LinearLayoutManager(this)
+        horariosRecyclerView.setHasFixedSize(true)
 
         // Establecer fecha mínima a hoy
         val hoy = Calendar.getInstance()
@@ -76,64 +80,65 @@ class ReservaActivity : BaseActivity() {
             cargarHorariosDisponibles(fechaSeleccionada)
         }
 
-        // Listener para spinner
-        spinnerHorarios.onItemSelectedListener = object : android.widget.AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: android.widget.AdapterView<*>, view: android.view.View, position: Int, id: Long) {
-                if (position > 0 && position <= horariosLibres.size) {
-                    val (inicio, fin) = horariosLibres[position - 1]
-                    horaSeleccionada = "$inicio-$fin"
-                }
-            }
-
-            override fun onNothingSelected(parent: android.widget.AdapterView<*>) {}
-        }
 
         // Click listeners
         confirmarButton.setOnClickListener { crearReserva() }
         cancelarButton.setOnClickListener { finish() }
-        actualizarButton.setOnClickListener { recargarHorarios() }
+        actualizarButton.setOnClickListener { cargarHorariosDisponibles(fechaSeleccionada) }
 
+    }
+    override fun onResume() {
+        super.onResume()
+        cargarHorariosDisponibles(fechaSeleccionada)
     }
 
     private fun cargarHorariosDisponibles(fecha: String) {
         lifecycleScope.launch {
             try {
-                // Mostrar loading
                 horariosDisponiblesText.text = getString(R.string.horarios_cargando)
-                spinnerHorarios.isEnabled = false
+                horariosRecyclerView.adapter = null
+
+                // limpiar selección al recargar
+                horarioSeleccionado = null
+                confirmarButton.isEnabled = false
 
                 val response = RetrofitClient.apiService.obtenerHorariosDisponibles(aulaId, fecha)
 
                 if (response.isSuccessful && response.body() != null) {
                     val disponibilidad = response.body()!!.disponibilidad
-                    horariosLibres = disponibilidad.horariosLibres.map {
-                        Pair(it.hora_inicio, it.hora_fin)
-                    }
 
-                    if (horariosLibres.isEmpty()) {
+                    // Crear lista con TODOS los horarios (libres + ocupados)
+                    val todosHorarios = mutableListOf<HorarioItem>()
+
+                    // Agregar horarios libres
+                    todosHorarios.addAll(disponibilidad.horariosLibres.map { horario ->
+                        HorarioItem(horario.hora_inicio, horario.hora_fin, libre = true)
+                    })
+
+                    // Agregar horarios ocupados
+                    todosHorarios.addAll(disponibilidad.horariosOcupados.map { horario ->
+                        HorarioItem(horario.hora_inicio, horario.hora_fin, libre = false)
+                    })
+
+                    // Ordenar por hora_inicio
+                    todosHorarios.sortBy { it.hora_inicio }
+
+                    if (todosHorarios.isEmpty()) {
                         horariosDisponiblesText.text = getString(R.string.horarios_no_disponibles)
-                        spinnerHorarios.isEnabled = false
                     } else {
-                        horariosDisponiblesText.text = getString(R.string.horarios_disponibles, horariosLibres.size)
+                        val libres = disponibilidad.horariosLibres.size
+                        horariosDisponiblesText.text = getString(R.string.horarios_disponibles, libres)
 
-                        // Crear lista para el spinner
-                        val items = mutableListOf(getString(R.string.selecciona_horario))
-                        items.addAll(horariosLibres.map { (inicio, fin) ->
-                            getString(R.string.horario_formato_item, inicio, fin)
-                        })
+                        // Crear adapter
+                        horariosAdapter = HorariosAdapter(todosHorarios) { horario ->
+                            horarioSeleccionado = horario
 
-                        val adapter = ArrayAdapter(
-                            this@ReservaActivity,
-                            android.R.layout.simple_spinner_item,
-                            items
-                        )
-                        adapter.setDropDownViewResource(R.layout.custom_spinner_item)
-
-                        spinnerHorarios.adapter = adapter
-                        spinnerHorarios.isEnabled = true
+                            // activar confirmar
+                            confirmarButton.isEnabled = true
+                        }
+                        horariosRecyclerView.adapter = horariosAdapter
                     }
                 } else {
-                    // Error del backend (fecha pasada, sábado, festivo, etc)
                     val errorBody = response.errorBody()?.string()
                     val errorMsg = if (errorBody != null) {
                         try {
@@ -145,27 +150,19 @@ class ReservaActivity : BaseActivity() {
                     } else {
                         "Error: ${response.code()}"
                     }
-
                     horariosDisponiblesText.text = getString(R.string.error_mensaje_formato, errorMsg)
-                    spinnerHorarios.isEnabled = false
-                    horariosLibres = emptyList()
                 }
             } catch (e: Exception) {
                 horariosDisponiblesText.text = getString(R.string.error_excepcion_formato, e.message ?: "Desconocido")
-                spinnerHorarios.isEnabled = false
                 android.util.Log.e("RESERVA", "Error cargando horarios", e)
             }
         }
     }
 
     private fun crearReserva() {
-        if (horaSeleccionada.isEmpty()) {
-            Toast.makeText(this, "❌ Selecciona un horario", Toast.LENGTH_SHORT).show()
+        if (horarioSeleccionado == null) {
+            Toast.makeText(this, "❌ Selecciona un horario disponible", Toast.LENGTH_SHORT).show()
             return
-        }
-
-        val (horaInicio, horaFin) = horaSeleccionada.split("-").let {
-            Pair(it[0].trim(), it[1].trim())
         }
 
         lifecycleScope.launch {
@@ -178,7 +175,6 @@ class ReservaActivity : BaseActivity() {
                     return@launch
                 }
 
-                // Obtener usuario_id del perfil
                 val perfilResponse = RetrofitClient.apiService.obtenerPerfil("Bearer $token")
                 if (!perfilResponse.isSuccessful || perfilResponse.body() == null) {
                     Toast.makeText(this@ReservaActivity, "❌ Error al obtener usuario", Toast.LENGTH_SHORT).show()
@@ -196,15 +192,14 @@ class ReservaActivity : BaseActivity() {
                     usuario_id = usuarioId,
                     aula_id = aulaId,
                     fecha = fechaSeleccionada,
-                    hora_inicio = horaInicio,
-                    hora_fin = horaFin
+                    hora_inicio = horarioSeleccionado!!.hora_inicio,
+                    hora_fin = horarioSeleccionado!!.hora_fin
                 )
 
                 val response = RetrofitClient.apiService.crearReserva("Bearer $token", requestBody)
 
                 if (response.isSuccessful) {
                     Toast.makeText(this@ReservaActivity, "✅ Reserva creada correctamente", Toast.LENGTH_SHORT).show()
-                    // Ir a Mis Reservas en lugar de volver atrás
                     startActivity(Intent(this@ReservaActivity, MisReservasActivity::class.java))
                     finish()
                 } else {
@@ -227,46 +222,6 @@ class ReservaActivity : BaseActivity() {
         }
     }
 
-    private fun recargarHorarios() {
-        if (fechaSeleccionada.isEmpty()) {
-            Toast.makeText(this, "Selecciona una fecha primero", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        lifecycleScope.launch {
-            try {
-                actualizarButton.isEnabled = false
-                val response = RetrofitClient.apiService.obtenerHorariosDisponibles(aulaId, fechaSeleccionada)
-
-                if (response.isSuccessful && response.body() != null) {
-                    val disponibilidad = response.body()!!.disponibilidad
-                    horariosLibres = disponibilidad.horariosLibres.map {
-                        Pair(it.hora_inicio, it.hora_fin)
-                    }
-
-                    // Recrear el spinner
-                    val items = mutableListOf("Selecciona un horario...")
-                    items.addAll(horariosLibres.map { (inicio, fin) -> "$inicio - $fin" })
-
-                    val adapter = ArrayAdapter(
-                        this@ReservaActivity,
-                        android.R.layout.simple_spinner_item,
-                        items
-                    )
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                    spinnerHorarios.adapter = adapter
-
-                    Toast.makeText(this@ReservaActivity, "✅ Horarios actualizados", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(this@ReservaActivity, "Error al actualizar", Toast.LENGTH_SHORT).show()
-                }
-            } catch (e: Exception) {
-                Toast.makeText(this@ReservaActivity, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
-            } finally {
-                actualizarButton.isEnabled = true
-            }
-        }
-    }
 }
 
 
