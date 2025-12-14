@@ -22,6 +22,14 @@
         android:layout_marginTop="5dp" />
 
     <TextView
+        android:id="@+id/usuarioText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/TextCaption"
+        android:text="Reportado por: "
+        android:layout_marginTop="5dp" />
+
+    <TextView
         android:id="@+id/estadoText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

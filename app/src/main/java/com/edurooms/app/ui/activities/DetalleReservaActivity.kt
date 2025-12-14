@@ -85,10 +85,10 @@ class DetalleReservaActivity : BaseActivity() {
                     horaText.text = getString(R.string.horario_formato, reserva.hora_inicio, reserva.hora_fin)
                     estadoText.text = getString(R.string.estado_formato, reserva.estado)
                     //Color según estado
-                    if (reserva.estado == "confirmada") {
-                        estadoText.setTextColor(android.graphics.Color.GREEN)
-                    } else {
-                        estadoText.setTextColor(android.graphics.Color.RED)
+                    when (reserva.estado) {
+                        "confirmada" -> estadoText.setTextColor(getColor(R.color.success))
+                        "cancelada" -> estadoText.setTextColor(getColor(R.color.error))
+                        else -> estadoText.setTextColor(getColor(R.color.warning))
                     }
                     // NUEVO: Mostrar botones según rol y estado
                     val tokenManager = TokenManager(this@DetalleReservaActivity)

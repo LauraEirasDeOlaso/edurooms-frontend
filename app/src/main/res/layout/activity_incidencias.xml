@@ -20,14 +20,6 @@
             android:orientation="vertical"
             android:padding="20dp">
 
-            <!-- Título -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/incidencias"
-                style="@style/TextHeading1"
-                android:layout_marginBottom="20dp" />
-
             <!-- Reportar nueva -->
             <TextView
                 android:layout_width="wrap_content"
@@ -75,10 +67,11 @@
                 style="@style/TextHeading2"
                 android:layout_marginBottom="10dp" />
 
-            <ListView
-                android:id="@+id/incidenciasListView"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/incidenciasRecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"/>
+                android:layout_height="200dp"
+                android:nestedScrollingEnabled="false" />
 
         </LinearLayout>
     </ScrollView>

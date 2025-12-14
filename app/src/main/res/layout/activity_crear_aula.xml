@@ -71,7 +71,9 @@
                 android:id="@+id/crearButton"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:text="@string/crear_aula" />
+                style="@style/ButtonMainMenu"
+                android:text="@string/crear_aula"
+                />
 
         </LinearLayout>
     </ScrollView>

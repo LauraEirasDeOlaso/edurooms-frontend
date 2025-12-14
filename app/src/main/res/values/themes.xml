@@ -28,19 +28,18 @@
     <!-- EditText personalizado (se aplica globalmente) -->
     <style name="CustomEditText" parent="Widget.AppCompat.EditText">
         <item name="android:textColor">@color/text_primary</item>
-        <item name="android:textColorHint">@color/text_muted</item>
+        <item name="android:textColorHint">@color/text_secondary</item>
         <item name="android:textSize">14sp</item>
         <item name="android:padding">12dp</item>
         <item name="android:background">@drawable/rounded_edittext</item>
     </style>
 
     <!-- Button personalizado (se aplica globalmente) -->
-    <style name="CustomButton" parent="Widget.AppCompat.Button.Colored">
-        <item name="android:textColor">@color/text_on_primary</item>
+    <style name="CustomButton" parent="Widget.AppCompat.Button">
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:padding">12dp</item>
-        <item name="backgroundTint">@color/primary</item>
+        <item name="android:minHeight">50dp</item>
     </style>
 
 
@@ -74,7 +73,7 @@
     <!-- Button Primary: botones principales -->
     <style name="ButtonPrimary" parent="CustomButton">
         <item name="android:textColor">@color/text_on_primary</item>
-        <item name="backgroundTint">@color/primary</item>
+        <item name="android:background">@drawable/bg_button_primary</item>
     </style>
 
     <!-- Button Secondary: botones secundarios -->
@@ -83,8 +82,15 @@
         <item name="android:background">@drawable/rounded_edittext</item>
     </style>
 
+    <!-- Button MainMenu: botones del menú principal -->
+    <style name="ButtonMainMenu" parent="ButtonPrimary">
+        <item name="android:textSize">16sp</item>
+    </style>
 
-
-
+    <!-- Button Danger: botones de acción peligrosa (logout, delete, etc) -->
+    <style name="ButtonDanger" parent="ButtonMainMenu">
+        <item name="android:background">@drawable/bg_button_danger</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
 
 </resources>

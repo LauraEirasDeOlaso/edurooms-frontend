@@ -47,7 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/correo_electronico"
-                style="@style/TextCaption"
+                style="@style/TextBody"
                 android:textStyle="bold"
                 android:layout_marginBottom="6dp" />
 
@@ -66,7 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/contrasena"
-                style="@style/TextCaption"
+                style="@style/TextBody"
                 android:textStyle="bold"
                 android:layout_marginBottom="6dp" />
 
@@ -117,16 +117,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:text="@string/iniciar_sesion"
-                style="@style/CustomButton"
+                style="@style/ButtonMainMenu"
                 android:layout_marginBottom="12dp" />
 
-            <!-- Link: Olvidaste contraseña: usa TextCaption -->
+            <!-- Link: Olvidaste contraseña: usa  -->
             <TextView
                 android:id="@+id/recuperarPasswordButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/olvidaste_tu_contrasena"
-                style="@style/TextCaption"
+                style="@style/TextBody"
                 android:textColor="@color/primary_dark"
                 android:gravity="center"
                 android:padding="8dp" />

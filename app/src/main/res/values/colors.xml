@@ -2,7 +2,7 @@
 <resources>
     <!-- Colores base (mantener para compatibilidad) -->
     <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="white">#FFFFFF</color>
 
     <!-- Paleta Principal - Tierra/Beige -->
     <color name="primary">#C8B6A6</color>        <!-- Beige topo principal (botones, acentos) -->
@@ -17,7 +17,7 @@
     <color name="text_primary">#2A2A2A</color>       <!-- Texto principal (títulos, contenido) -->
     <color name="text_secondary">#6F6F6F</color>     <!-- Texto secundario, descripciones -->
     <color name="text_muted">#9A9A9A</color>         <!-- Placeholders, labels suaves -->
-    <color name="text_on_primary">#FFFFFF</color>    <!-- Texto sobre botones primary -->
+    <color name="text_on_primary">#2A2A2A</color>    <!-- Texto sobre botones primary -->
 
     <!-- Bordes y Separadores -->
     <color name="border">#E7E3DF</color>

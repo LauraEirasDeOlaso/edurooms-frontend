@@ -83,6 +83,18 @@ interface ApiService {
     @GET(Constants.ENDPOINT_INCIDENCIAS)
     suspend fun obtenerIncidencias(): Response<List<Incidencia>>
 
+    @PATCH("incidencias/{id}")
+    suspend fun actualizarIncidencia(
+        @Header("Authorization") token: String,
+        @Path("id") id: Int,
+        @Body datos: ActualizarIncidenciaRequest
+    ): Response<Incidencia>
+
+    @GET("incidencias/{id}")
+    suspend fun obtenerIncidenciaPorId(
+        @Path("id") id: Int
+    ): Response<Incidencia>
+
     @GET("incidencias/aula/{aula_id}")
     suspend fun obtenerIncidenciasAula(@Path("aula_id") aulaId: Int
     ): Response<List<Incidencia>>

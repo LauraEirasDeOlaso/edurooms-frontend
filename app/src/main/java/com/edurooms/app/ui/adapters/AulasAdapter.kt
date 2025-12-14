@@ -24,10 +24,9 @@ class AulasAdapter(
 
             // Color según estado
             val color = when(aula.estado) {
-                "disponible" -> android.graphics.Color.GREEN
-                "ocupada" -> android.graphics.Color.YELLOW
-                "mantenimiento" -> android.graphics.Color.RED
-                else -> android.graphics.Color.GRAY
+                "disponible" -> itemView.context.getColor(R.color.success)
+                "mantenimiento" -> itemView.context.getColor(R.color.danger)
+                else -> itemView.context.getColor(R.color.text_secondary)
             }
             estadoText.setTextColor(color)
 

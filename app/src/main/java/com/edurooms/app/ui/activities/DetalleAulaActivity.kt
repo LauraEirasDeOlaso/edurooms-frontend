@@ -33,7 +33,7 @@ class DetalleAulaActivity : BaseActivity() {
         setContentView(R.layout.activity_detalle_aula)
         android.util.Log.d("DETALLE", "Layout seteado")
 
-        setupToolbar(title = "Detalle del Aula", showBackButton = true)
+        setupToolbar(title = "", showBackButton = true)
         mostrarIconosToolbar(notificaciones = true, perfil = true)
         configurarIconosToolbar(
             onNotificacionesClick = { Toast.makeText(this, "Notificaciones", Toast.LENGTH_SHORT).show() },
@@ -75,9 +75,9 @@ class DetalleAulaActivity : BaseActivity() {
             irAReserva()
         }
         incidenciaButton.setOnClickListener {
-            startActivity(Intent(this, IncidenciasActivity::class.java))
-            intent.putExtra("aula_id", aulaId)
-            startActivity(intent)
+            val nuevoIntent = Intent(this, IncidenciasActivity::class.java)
+            nuevoIntent.putExtra("aula_id", aulaId)
+            startActivity(nuevoIntent)
         }
     }
 

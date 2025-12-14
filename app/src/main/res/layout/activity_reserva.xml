@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="20dp"
+    android:layout_margin="20dp"
     android:background="@color/background">
 
     <!-- Título -->
@@ -35,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/cargando_horarios"
-        style="@style/TextCaption"
+        style="@style/TextBody"
         android:gravity="center"
         android:layout_marginBottom="15dp" />
 
@@ -56,7 +57,7 @@
         <Button
             android:id="@+id/actualizarButton"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="48dp"
             android:layout_marginStart="10dp"
             android:text="@string/actualizar" />
 

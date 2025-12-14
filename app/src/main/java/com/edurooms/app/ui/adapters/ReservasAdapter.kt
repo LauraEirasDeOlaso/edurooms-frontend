@@ -39,15 +39,15 @@ class ReservasAdapter(
             // Color según estado
             when (reserva.estado) {
                 "confirmada" -> {
-                    estadoText.setTextColor(android.graphics.Color.GREEN)
+                    estadoText.setTextColor(itemView.context.getColor(R.color.success))
                 }
                 "completada" -> {
-                    estadoText.setTextColor(android.graphics.Color.GRAY)
+                    estadoText.setTextColor(itemView.context.getColor(R.color.text_secondary))
                 }
                 "cancelada" -> {
-                    estadoText.setTextColor(android.graphics.Color.RED)
+                    estadoText.setTextColor(itemView.context.getColor(R.color.danger))
                 } else ->
-                estadoText.setTextColor(android.graphics.Color.BLACK)
+                estadoText.setTextColor(itemView.context.getColor(R.color.text_primary))
             }
 
             // Click listener

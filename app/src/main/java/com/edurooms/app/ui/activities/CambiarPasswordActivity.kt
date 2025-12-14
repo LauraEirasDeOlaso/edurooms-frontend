@@ -48,7 +48,7 @@ class CambiarPasswordActivity : BaseActivity() {
         android.util.Log.d("CAMBIAR_PWD", "esPrimeraVez = $esPrimeraVez")
 
         // Configurar Toolbar
-        setupToolbar(title = "Cambiar Contraseña", showBackButton = true)
+        setupToolbar(title = "", showBackButton = true)
         mostrarIconosToolbar(notificaciones = !esPrimeraVez, perfil = !esPrimeraVez)
 
         // Solo configurar iconos si NO es primera vez

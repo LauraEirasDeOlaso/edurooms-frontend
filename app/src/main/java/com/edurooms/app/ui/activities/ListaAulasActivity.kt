@@ -22,7 +22,7 @@ class ListaAulasActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista_aulas)
 
-        setupToolbar(title = "Aulas Disponibles", showBackButton = true)
+        setupToolbar(title = "", showBackButton = true)
         mostrarIconosToolbar(notificaciones = true, perfil = true)
         configurarIconosToolbar(
             onNotificacionesClick = { Toast.makeText(this, "Notificaciones", Toast.LENGTH_SHORT).show() },

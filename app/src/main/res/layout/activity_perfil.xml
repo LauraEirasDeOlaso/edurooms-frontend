@@ -94,7 +94,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/rol"
-                            style="@style/TextCaption"
+                            style="@style/TextBody"
                             android:textStyle="bold"
                             android:layout_marginEnd="8dp" />
 
@@ -104,7 +104,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/profesor"
-                            style="@style/TextCaption" />
+                            style="@style/TextBody" />
 
                     </LinearLayout>
 
@@ -118,7 +118,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/departamento"
-                            style="@style/TextCaption"
+                            style="@style/TextBody"
                             android:textStyle="bold"
                             android:layout_marginEnd="8dp" />
 
@@ -128,7 +128,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/matem_ticas"
-                            style="@style/TextCaption"/>
+                            style="@style/TextBody"/>
 
                     </LinearLayout>
 
@@ -239,7 +239,7 @@
                     android:text="@string/cerrar_sesion"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:background="@color/danger"
+                    style="@style/ButtonDanger"
                     android:elevation="0dp" />
 
             </androidx.cardview.widget.CardView>

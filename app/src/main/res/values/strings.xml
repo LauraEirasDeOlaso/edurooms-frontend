@@ -136,6 +136,7 @@
     <string name="actualizar">🔄 Actualizar</string>
     <string name="profesor_formato">Profesor: %s</string>
     <string name="hora_formato">Hora: %1$s - %2$s</string>
+    <string name="gestionar_incidencias">📋 Gestionar Incidencias</string>
 
 
     <string-array name="roles_array">
@@ -144,7 +145,6 @@
     </string-array>
     <string-array name="estados_aula">
         <item>disponible</item>
-        <item>ocupada</item>
         <item>mantenimiento</item>
     </string-array>
     <string-array name="tipos_incidencia">

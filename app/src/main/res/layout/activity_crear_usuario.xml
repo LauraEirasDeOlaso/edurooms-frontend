@@ -49,7 +49,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/nombre_completo"
-                        style="@style/TextCaption"
+                        style="@style/TextBody"
                         android:textStyle="bold"
                         android:layout_marginBottom="6dp" />
 
@@ -69,7 +69,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/email"
-                        style="@style/TextCaption"
+                        style="@style/TextBody"
                         android:textStyle="bold"
                         android:layout_marginBottom="6dp" />
 
@@ -89,7 +89,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/departamento"
-                        style="@style/TextCaption"
+                        style="@style/TextBody"
                         android:layout_marginBottom="6dp" />
 
                     <!-- Departamento Input -->

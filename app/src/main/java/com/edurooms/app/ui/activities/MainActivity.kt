@@ -24,6 +24,8 @@ class MainActivity : BaseActivity() {
     private lateinit var gestionarReservasButton: Button
     private lateinit var cerrarSesionButton: Button
 
+    private lateinit var gestionarIncidenciasButton: Button
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,6 +59,7 @@ class MainActivity : BaseActivity() {
         cerrarSesionButton = findViewById(R.id.cerrarSesionButton)
         bottomNavigation = findViewById(R.id.bottom_navigation)
         gestionarReservasButton = findViewById(R.id.gestionarReservasButton)
+        gestionarIncidenciasButton = findViewById(R.id.gestionarIncidenciasButton)
 
 
         // Configurar Bottom Navigation desde BaseActivity
@@ -92,6 +95,10 @@ class MainActivity : BaseActivity() {
             startActivity(Intent(this, GestionarReservasActivity::class.java))
         }
 
+        gestionarIncidenciasButton.setOnClickListener {
+            startActivity(Intent(this, GestionarIncidenciasActivity::class.java))
+        }
+
         cerrarSesionButton.setOnClickListener {
             tokenManager.eliminarToken()
             irAlLogin()
@@ -114,11 +121,13 @@ class MainActivity : BaseActivity() {
             gestionarAulasButton.visibility = View.VISIBLE
             gestionarUsuariosButton.visibility = View.VISIBLE
             gestionarReservasButton.visibility = View.VISIBLE
+            gestionarIncidenciasButton.visibility = View.VISIBLE
         } else {
             android.util.Log.d("MAIN_ACTIVITY", "Mostrando botones de PROFESOR")
             // Profesor solo ve los botones comunes
             gestionarAulasButton.visibility = View.GONE
             gestionarUsuariosButton.visibility = View.GONE
+            gestionarIncidenciasButton.visibility = View.GONE
         }
     }
 

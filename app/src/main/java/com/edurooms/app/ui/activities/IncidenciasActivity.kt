@@ -5,21 +5,23 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ListView
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.edurooms.app.R
 import com.edurooms.app.data.models.CrearIncidenciaRequest
 import com.edurooms.app.data.models.Incidencia
 import com.edurooms.app.data.network.RetrofitClient
 import com.edurooms.app.data.utils.TokenManager
-import com.edurooms.app.ui.adapters.IncidenciasAdapter
+import com.edurooms.app.ui.adapters.IncidenciasRecyclerAdapter
 import kotlinx.coroutines.launch
 
 class IncidenciasActivity : BaseActivity() {
 
-    private lateinit var incidenciasListView: ListView
+    private lateinit var incidenciasRecyclerView: RecyclerView
+    private lateinit var incidenciasAdapter: IncidenciasRecyclerAdapter
     private lateinit var descripcionInput: EditText
     private lateinit var tipoSpinner: Spinner
     private lateinit var reportarButton: Button
@@ -49,7 +51,8 @@ class IncidenciasActivity : BaseActivity() {
         aulaIdRecibido = intent.getIntExtra("aula_id", 0)
 
         // Vincular vistas
-        incidenciasListView = findViewById(R.id.incidenciasListView)
+        incidenciasRecyclerView = findViewById(R.id.incidenciasRecyclerView)
+        incidenciasRecyclerView.layoutManager = LinearLayoutManager(this)
         descripcionInput = findViewById(R.id.descripcionInput)
         tipoSpinner = findViewById(R.id.tipoSpinner)
         reportarButton = findViewById(R.id.reportarButton)
@@ -72,8 +75,13 @@ class IncidenciasActivity : BaseActivity() {
                 if (response.isSuccessful) {
                     if (response.body() != null) {
                         incidenciasLista = response.body()!!.toMutableList()
-                        val adapter = IncidenciasAdapter(this@IncidenciasActivity, incidenciasLista)
-                        incidenciasListView.adapter = adapter
+
+                        incidenciasAdapter = IncidenciasRecyclerAdapter(incidenciasLista) { incidencia ->
+                            val intent = Intent(this@IncidenciasActivity, DetalleIncidenciaActivity::class.java)
+                            intent.putExtra("incidencia_id", incidencia.id)
+                            startActivity(intent)
+                        }
+                        incidenciasRecyclerView.adapter = incidenciasAdapter
                     } else {
                         Toast.makeText(this@IncidenciasActivity, "Sin incidencias", Toast.LENGTH_SHORT).show()
                     }
@@ -84,6 +92,11 @@ class IncidenciasActivity : BaseActivity() {
                 Toast.makeText(this@IncidenciasActivity, "Exception: ${e.message}", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        cargarIncidencias()  // Se ejecuta automáticamente cuando vuelves
     }
 
     private fun reportarIncidencia() {

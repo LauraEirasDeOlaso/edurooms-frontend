@@ -27,9 +27,9 @@ class UsuariosAdapter(
 
             // Color según estado
             if (usuario.estado == "habilitado") {
-                estadoText.setTextColor(android.graphics.Color.GREEN)
+                estadoText.setTextColor(itemView.context.getColor(R.color.success))
             } else {
-                estadoText.setTextColor(android.graphics.Color.RED)
+                estadoText.setTextColor(itemView.context.getColor(R.color.danger))
             }
 
             itemView.setOnClickListener {
