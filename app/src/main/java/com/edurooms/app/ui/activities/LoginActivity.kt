@@ -115,6 +115,7 @@ class LoginActivity : AppCompatActivity() {
                     tokenManager.guardarEmail(loginResponse.usuario.email)
                     tokenManager.guardarRol(loginResponse.usuario.rol)
                     tokenManager.guardarIdUsuario(loginResponse.usuario.id)
+                    tokenManager.guardarDepartamento(loginResponse.usuario.departamento)
                     tokenManager.guardarPrimeraVezLogin(loginResponse.usuario.primera_vez_login)
 
                     // Guardar o limpiar credenciales según checkbox

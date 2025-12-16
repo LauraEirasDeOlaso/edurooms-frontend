@@ -49,7 +49,7 @@ class HorariosAdapter(
                     horarioText.alpha = 1f
 
                     itemView.setOnClickListener {
-                        seleccionarHorario(adapterPosition)
+                        seleccionarHorario(bindingAdapterPosition)
                     }
                 }
 
@@ -64,7 +64,7 @@ class HorariosAdapter(
                     horarioText.alpha = 1f
 
                     itemView.setOnClickListener {
-                        seleccionarHorario(adapterPosition)
+                        seleccionarHorario(bindingAdapterPosition)
                     }
                 }
             }

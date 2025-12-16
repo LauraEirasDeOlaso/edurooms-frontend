@@ -4,24 +4,24 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFF</color>
 
-    <!-- Paleta Principal - Tierra/Beige -->
-    <color name="primary">#C8B6A6</color>        <!-- Beige topo principal (botones, acentos) -->
-    <color name="primary_dark">#B89F8D</color>  <!-- Versión más oscura para pressed/hover -->
-    <color name="primary_soft">#EDE6E1</color>  <!-- Fondos suaves, tags, chips activos -->
+    <!-- Paleta Principal - Azules Educación -->
+    <color name="primary">#4A7BA7</color>           <!-- Azul principal (botones, acentos) -->
+    <color name="primary_dark">#2C5282</color>      <!-- Azul oscuro para pressed/hover -->
+    <color name="primary_soft">#E8F0F7</color>      <!-- Azul muy claro para fondos -->
 
     <!-- Fondos y Superficies -->
-    <color name="background">#F9F9F7</color>    <!-- Fondo general de la app -->
-    <color name="surface">#FFFFFF</color>       <!-- Tarjetas,contenedores -->
+    <color name="background">#F8FAFC</color>        <!-- Fondo general de la app -->
+    <color name="surface">#FFFFFF</color>           <!-- Tarjetas, contenedores -->
 
     <!-- Texto -->
-    <color name="text_primary">#2A2A2A</color>       <!-- Texto principal (títulos, contenido) -->
-    <color name="text_secondary">#6F6F6F</color>     <!-- Texto secundario, descripciones -->
-    <color name="text_muted">#9A9A9A</color>         <!-- Placeholders, labels suaves -->
-    <color name="text_on_primary">#2A2A2A</color>    <!-- Texto sobre botones primary -->
+    <color name="text_primary">#1E293B</color>       <!-- Texto principal (títulos, contenido) -->
+    <color name="text_secondary">#64748B</color>     <!-- Texto secundario, descripciones -->
+    <color name="text_muted">#94A3B8</color>         <!-- Placeholders, labels suaves -->
+    <color name="text_on_primary">#FFFFFF</color>    <!-- Texto sobre botones primary -->
 
     <!-- Bordes y Separadores -->
-    <color name="border">#E7E3DF</color>
-    <color name="divider">#E7DFD4</color>
+    <color name="border">#CBD5E1</color>
+    <color name="divider">#E2E8F0</color>
 
     <!-- Estados -->
     <color name="success">#4CAF50</color>
@@ -31,22 +31,22 @@
     <color name="error_light">#FFEBEE</color>
 
     <!-- Iconos -->
-    <color name="icon">#5B5B5B</color>
-    <color name="icon_active">#2F2F2F</color>
+    <color name="icon">#64748B</color>
+    <color name="icon_active">#2C5282</color>
 
     <!-- Chips -->
     <color name="chip_background">#FFFFFF</color>
-    <color name="chip_background_active">#2F2F2F</color>
-    <color name="chip_text">#5A5A5A</color>
+    <color name="chip_background_active">#2C5282</color>
+    <color name="chip_text">#64748B</color>
     <color name="chip_text_active">#FFFFFF</color>
 
     <!-- Calendario -->
-    <color name="calendar_available">#4CAF50</color>
-    <color name="calendar_full">#E53935</color>
-    <color name="calendar_disabled_bg">#F9F9F7</color>
+    <color name="calendar_available">#10B981</color>
+    <color name="calendar_full">#EF4444</color>
+    <color name="calendar_disabled_bg">#F8FAFC</color>
 
     <!-- Horarios -->
-    <color name="horario_libre">#F1F8F4</color>
-    <color name="horario_ocupado">#FEF5F5</color>
+    <color name="horario_libre">#F0F9FF</color>
+    <color name="horario_ocupado">#FEF2F2</color>
     <color name="horario_ocupado_text">#7F1D1D</color>
 </resources>

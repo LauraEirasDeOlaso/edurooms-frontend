@@ -11,7 +11,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.lifecycleScope
 import com.edurooms.app.R
 import com.edurooms.app.data.network.RetrofitClient
-import com.edurooms.app.data.utils.Constants
 import com.edurooms.app.data.utils.TokenManager
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaType
@@ -193,45 +192,16 @@ class PerfilActivity : BaseActivity() {
                 val response = RetrofitClient.apiService.obtenerFotoPerfil(usuarioId)
 
                 if (response.isSuccessful) {
-                    val fotoRuta = response.body()?.get("foto_ruta")
+                    val fotoUrl = response.body()?.get("foto_ruta") as? String
 
-                    if (!fotoRuta.isNullOrEmpty()) {
-                        val baseUrl = Constants.BASE_URL.replace("/api/", "")
-                        val urlFoto = baseUrl + "/" + fotoRuta + "?t=" + System.currentTimeMillis()
-
-                        android.util.Log.d("FOTO_DEBUG", "URL FINAL: $urlFoto")
+                    if (!fotoUrl.isNullOrEmpty()) {
+                        android.util.Log.d("FOTO_DEBUG", "URL: $fotoUrl")
 
                         val profileImage = findViewById<ImageView>(R.id.profileImage)
                         com.bumptech.glide.Glide.with(this@PerfilActivity)
-                            .load(urlFoto)
+                            .load(fotoUrl)  // URL absoluta, sin modificaciones
                             .centerCrop()
                             .circleCrop()
-                            .listener(object :
-                                com.bumptech.glide.request.RequestListener<android.graphics.drawable.Drawable> {
-                                override fun onLoadFailed(
-                                    e: com.bumptech.glide.load.engine.GlideException?,
-                                    model: Any?,
-                                    target: com.bumptech.glide.request.target.Target<android.graphics.drawable.Drawable>?,
-                                    isFirstResource: Boolean
-                                ): Boolean {
-                                    android.util.Log.e("GLIDE_ERROR", "Error: ${e?.message}")
-                                    return false
-                                }
-
-                                override fun onResourceReady(
-                                    resource: android.graphics.drawable.Drawable?,
-                                    model: Any?,
-                                    target: com.bumptech.glide.request.target.Target<android.graphics.drawable.Drawable>?,
-                                    dataSource: com.bumptech.glide.load.DataSource?,
-                                    isFirstResource: Boolean
-                                ): Boolean {
-                                    android.util.Log.d(
-                                        "GLIDE_SUCCESS",
-                                        "✅ Imagen cargada correctamente"
-                                    )
-                                    return false
-                                }
-                            })
                             .into(profileImage)
                     }
                 }

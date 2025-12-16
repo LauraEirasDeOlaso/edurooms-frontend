@@ -47,9 +47,8 @@ class TokenManager(context: Context) {
         return prefs.getString("user_email", null)
     }
 
-    // Guardar departamento (opcional)
-    fun guardarDepartamento(departamento: String) {
-        prefs.edit().putString("user_department", departamento).apply()
+    fun guardarDepartamento(departamento: String?) {
+        prefs.edit().putString("user_department", departamento ?: "No asignado").apply()
     }
 
     // Obtener departamento (opcional)

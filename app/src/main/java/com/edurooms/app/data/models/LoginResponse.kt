@@ -12,7 +12,7 @@ data class UsuarioData(
     val email: String,
     val rol: String,
     val estado: String = "habilitado",
-    val departamento: String = "",
+    val departamento: String? = null,
     val primera_vez_login: Boolean = false
 )
 
